@@ -1,5 +1,5 @@
-import builder from '@/server/graphql/builder'
-import { Book } from '@/server/books/models/Book'
+import builder from '#/graphql/builder'
+import { Book } from '#/books/models/Book'
 
 const books: Book[] = [
   {

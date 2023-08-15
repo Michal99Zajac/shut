@@ -2,7 +2,7 @@
 import builder from './builder'
 
 // install domains
-import '@/server/books/graphql'
+import '#/books/graphql'
 
 // create schema
 const schema = builder.toSchema()
