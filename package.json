@@ -9,6 +9,8 @@
     "lint": "next lint",
     "prepare": "husky install",
     "db:push": "npx prisma db push",
+    "db:pull": "npx prisma db pull",
+    "db:reset": "npx prisma migrate reset",
     "db:deploy": "npx prisma migrate deploy",
     "db:generate": "npx prisma generate",
     "db:seed": "npx prisma db seed",
