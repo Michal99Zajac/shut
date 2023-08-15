@@ -1,4 +1,4 @@
-import { handler } from '@/graphql'
+import { handler } from '@/server/graphql'
 
 export async function GET(request: Request) {
   return handler(request)
