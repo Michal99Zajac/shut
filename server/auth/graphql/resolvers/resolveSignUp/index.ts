@@ -1,8 +1,10 @@
 import { GraphQLError } from 'graphql'
+import bcrypt from 'bcrypt'
 
 import { Context } from '#/graphql/context'
 import InputShape from '#/common/types/InputShape'
 import Parent from '#/common/types/Parent'
+import config from '#/config'
 
 import { SignUpInput } from '../../inputs/SignUpInput'
 
@@ -30,11 +32,13 @@ export const resolveSignUp = async (_: Parent, args: Args, context: Context) => 
 
   if (user) throw new GraphQLError('User already exists')
 
+  const hashedPassword = await bcrypt.hash(password, config.secure.saltRounds)
+
   // User does not exist, create it
   user = await context.prisma.user.create({
     data: {
       email,
-      password,
+      password: hashedPassword,
     },
   })
 
