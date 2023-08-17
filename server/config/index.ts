@@ -15,6 +15,9 @@ export const config = {
       },
     },
   },
+  secure: {
+    saltRounds: 10,
+  },
 }
 
 export default config
