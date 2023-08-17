@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { headers } from 'next/headers'
 
 import { prisma } from '#/db'
-import decodeAccessToken from '#/auth/utils/decodeAccessToken'
+import decodeToken from '#/auth/utils/decodeToken'
 import dismantleAuthHeader from '#/auth/utils/dismantleAuthHeader'
 
 export interface Context {
@@ -34,7 +34,7 @@ export const buildContext = async (req: NextApiRequest, res: NextApiResponse) =>
 
   // Decode token and get user
   if (token) {
-    const decoded = decodeAccessToken(token)
+    const decoded = decodeToken(token, 'access')
 
     const user = await prisma.user.findFirst({ where: { id: decoded.userId } })
     context.user = user
