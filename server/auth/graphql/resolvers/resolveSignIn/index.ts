@@ -1,4 +1,6 @@
 import { GraphQLError } from 'graphql'
+import { Prisma } from '@prisma/client'
+import { DefaultArgs } from '@prisma/client/runtime/library'
 
 import InputShape from '#/common/types/InputShape'
 import Parent from '#/common/types/Parent'
@@ -13,16 +15,26 @@ interface Args {
   input: InputShape<typeof SignInInput>
 }
 
+interface SignInQuery extends Query {
+  include?: Prisma.UserInclude<DefaultArgs>
+  select?: Prisma.UserSelect<DefaultArgs>
+}
+
 /**
  * Resolves the sign-in process for a GraphQL query.
  *
  * @param query Query
- * @param parent Parent
+ * @param _ Parent
  * @param args Args
  * @param context Context
  * @returns Authenticated user object or throws a GraphQL error
  */
-export const resolveSignIn = async (query: Query, parent: Parent, args: Args, context: Context) => {
+export const resolveSignIn = async (
+  query: SignInQuery,
+  _: Parent,
+  args: Args,
+  context: Context,
+) => {
   // prepare service
   const authenticator = new AuthenticationService(context.prisma)
   const cookizer = new CookieService()
@@ -31,13 +43,19 @@ export const resolveSignIn = async (query: Query, parent: Parent, args: Args, co
 
   try {
     // authenticate user
-    const user = await authenticator.authenticate(email, password)
+    const authenticatedUser = await authenticator.authenticate(email, password)
 
     // encode access token
-    const accessToken = await authenticator.encode(user)
+    const accessToken = await authenticator.encode(authenticatedUser)
 
     // set access token cookie
     cookizer.access(accessToken)
+
+    // get full user from database
+    const user = await context.prisma.user.findFirstOrThrow({
+      ...query,
+      where: { id: authenticatedUser.id },
+    })
 
     return user
   } catch (error) {
