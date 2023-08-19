@@ -35,7 +35,7 @@ const builder = new SchemaBuilder<SchemaTypes>({
   },
   relayOptions: {
     clientMutationId: 'optional',
-    cursorType: 'ID',
+    cursorType: 'String', // the string created based on the uuid id
   },
 })
 
