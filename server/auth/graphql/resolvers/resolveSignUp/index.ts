@@ -18,7 +18,7 @@ interface Args {
  * @param _ Parent
  * @param args Args
  * @param context Context
- * @returns SignedUpResponse
+ * @returns user id
  */
 export const resolveSignUp = async (_: Parent, args: Args, context: Context) => {
   const { email, password } = args.input
@@ -43,9 +43,7 @@ export const resolveSignUp = async (_: Parent, args: Args, context: Context) => 
   })
 
   // Return user id
-  return {
-    id: user.id,
-  }
+  return user.id
 }
 
 export default resolveSignUp
