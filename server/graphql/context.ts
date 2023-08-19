@@ -1,10 +1,10 @@
 import { User, PrismaClient } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { headers } from 'next/headers'
 
 import { prisma } from '#/db'
-import decodeToken from '#/auth/utils/decodeToken'
-import dismantleAuthHeader from '#/auth/utils/dismantleAuthHeader'
+import { CookieService } from '#/common/service/CookieService'
+
+import AuthenticationService from '../auth/services/AuthenticationService'
 
 export interface Context {
   user: User | null
@@ -18,6 +18,11 @@ export interface AuthContext extends Context {
 }
 
 export const buildContext = async (req: NextApiRequest, res: NextApiResponse) => {
+  // preapre services
+  const cookizer = new CookieService()
+  const authenticator = new AuthenticationService(prisma)
+
+  // prepare default context values
   const context: Context = {
     req,
     res,
@@ -25,18 +30,15 @@ export const buildContext = async (req: NextApiRequest, res: NextApiResponse) =>
     user: null,
   }
 
-  // Get authorization header
-  const headersList = headers()
-  const authHeader = headersList.get('Authorization')
+  // Get access token from cookies
+  const accessToken = cookizer.get('accessToken')
 
-  // Get token from authorization header
-  const token = dismantleAuthHeader(authHeader)
+  // If access token exists, decode it, set user in context and refresh cookie
+  if (accessToken) {
+    // decode token
+    const user = await authenticator.decode(accessToken.value)
 
-  // Decode token and get user
-  if (token) {
-    const decoded = decodeToken(token, 'access')
-
-    const user = await prisma.user.findFirst({ where: { id: decoded.userId } })
+    // set user in context
     context.user = user
   }
 
