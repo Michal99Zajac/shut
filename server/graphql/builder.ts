@@ -14,7 +14,7 @@ interface SchemaTypes {
     logged: boolean
   }
   AuthContexts: {
-    loggedIn: AuthContext
+    logged: AuthContext
   }
   PrismaTypes: PrismaTypes
 }
