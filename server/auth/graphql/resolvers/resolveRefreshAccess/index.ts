@@ -1,3 +1,6 @@
+import { Prisma } from '@prisma/client'
+import { DefaultArgs } from '@prisma/client/runtime/library'
+
 import { Parent } from '#/common/types/Parent'
 import { Query } from '#/common/types/Query'
 import { AuthContext } from '#/graphql/context'
@@ -6,17 +9,22 @@ import { CookieService } from '#/common/service/CookieService'
 
 interface Args {}
 
+interface RefreshAccessQuery extends Query {
+  include?: Prisma.UserInclude<DefaultArgs>
+  select?: Prisma.UserSelect<DefaultArgs>
+}
+
 /**
  * GraphQL resolver to refresh the access token for a user.
  *
- * @param _ Query
+ * @param query Query
  * @param __ Parent
  * @param ___ Args
  * @param context AuthContext
  * @returns Refreshed user object
  */
 export const resolveRefreshAccess = async (
-  _: Query,
+  query: RefreshAccessQuery,
   __: Parent,
   ___: Args,
   context: AuthContext,
@@ -33,7 +41,13 @@ export const resolveRefreshAccess = async (
   // set new access token in cookies
   cookizer.access(accessToken)
 
-  return user
+  // get user from database
+  const refreshedUser = await context.prisma.user.findFirstOrThrow({
+    ...query,
+    where: { id: user.id },
+  })
+
+  return refreshedUser
 }
 
 export default resolveRefreshAccess
