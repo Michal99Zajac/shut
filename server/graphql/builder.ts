@@ -3,6 +3,7 @@ import ScopeAuthPlugin from '@pothos/plugin-scope-auth'
 import type PrismaTypes from '@pothos/plugin-prisma/generated'
 import PrismaPlugin from '@pothos/plugin-prisma'
 import ValidationPlugin from '@pothos/plugin-validation'
+import RelayPlugin from '@pothos/plugin-relay'
 
 import { prisma } from '#/db'
 
@@ -20,7 +21,7 @@ interface SchemaTypes {
 }
 
 const builder = new SchemaBuilder<SchemaTypes>({
-  plugins: [ScopeAuthPlugin, PrismaPlugin, ValidationPlugin],
+  plugins: [ScopeAuthPlugin, PrismaPlugin, ValidationPlugin, RelayPlugin],
   authScopes: (context) => ({
     logged: !!context.user,
   }),
@@ -31,6 +32,10 @@ const builder = new SchemaBuilder<SchemaTypes>({
     validationError: (error, args, context, info) => {
       return error
     },
+  },
+  relayOptions: {
+    clientMutationId: 'optional',
+    cursorType: 'ID',
   },
 })
 
