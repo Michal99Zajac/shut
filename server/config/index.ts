@@ -1,17 +1,14 @@
 import { env } from './env'
 
 export const config = {
+  node: {
+    env: env.NODE_ENV,
+  },
   jwt: {
     access: {
       secret: env.JWT_SECRET,
       options: {
-        expiresIn: '15m',
-      },
-    },
-    refresh: {
-      secret: env.JWT_REFRESH_SECRET,
-      options: {
-        expiresIn: '7d',
+        expiresIn: 60 * 60 * 24 * 7, // 7 days
       },
     },
   },
