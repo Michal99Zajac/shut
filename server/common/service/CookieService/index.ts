@@ -3,6 +3,8 @@ import { cookies } from 'next/headers'
 
 import { config } from '#/config'
 
+export type CookieKey = 'accessToken'
+
 /**
  * Service class for managing cookies.
  */
@@ -22,7 +24,7 @@ export class CookieService {
    * @param token JWT access token
    */
   access(token: string) {
-    const expires = new Date(Date.now() + config.jwt.access.options.expiresIn * 1000) // 7 days in milliseconds
+    const expires = new Date(Date.now() + config.jwt.access.options.expiresIn * 1000) // days in milliseconds
 
     this.cookie.set('accessToken', token, {
       httpOnly: true,
@@ -36,6 +38,10 @@ export class CookieService {
    */
   removeAccess() {
     this.cookie.delete('accessToken')
+  }
+
+  get(key: CookieKey) {
+    return this.cookie.get(key)
   }
 }
 
