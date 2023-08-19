@@ -16,8 +16,8 @@
     "db:generate": "npx prisma generate",
     "db:seed": "npx prisma db seed",
     "db:studio": "npx prisma studio",
-    "db:make": "npx prisma migrate dev --create-only --name",
-    "db:migrate": "npx prisma migrate dev --name"
+    "db:make": "npx prisma migrate dev --create-only",
+    "db:migrate": "npx prisma migrate dev"
   },
   "dependencies": {
     "@apollo/server": "^4.9.1",
