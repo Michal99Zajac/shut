@@ -1,1 +1,2 @@
 import './createBookmarkGroup'
+import './updateBookmarkGroup'
