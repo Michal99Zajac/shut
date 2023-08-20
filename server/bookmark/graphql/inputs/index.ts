@@ -1,1 +1,2 @@
 import './CreateBookmarkInput'
+import './CreateBookmarkGroupInput'
