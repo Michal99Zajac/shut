@@ -5,8 +5,8 @@ export interface AuthLayoutProps {
 export const AuthLayout = ({ children }: AuthLayoutProps) => {
   return (
     <main className="flex flex-row w-full h-full">
-      <section className="bg-red-500 w-1/2"></section>
-      <section className="w-1/2">{children}</section>
+      <section className="bg-primary w-1/2 p-8"></section>
+      <section className="w-1/2 p-8">{children}</section>
     </main>
   )
 }
