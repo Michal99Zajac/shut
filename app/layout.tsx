@@ -1,9 +1,13 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Roboto, Koulen } from 'next/font/google'
+import clsx from 'clsx'
 
-const inter = Inter({ subsets: ['latin'] })
+// install fonts
+export const roboto = Roboto({ subsets: ['latin'], weight: ['400'], variable: '--font-roboto' })
+export const koulen = Koulen({ subsets: ['latin'], weight: ['400'], variable: '--font-koulen' })
 
+// set metadata
 export const metadata: Metadata = {
   title: 'Shut - ',
   description: 'Shut is a universal safe for your bookmarks. Save once and have everywhere.',
@@ -16,7 +20,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={clsx(roboto.className, roboto.variable, koulen.variable)}>{children}</body>
     </html>
   )
 }
