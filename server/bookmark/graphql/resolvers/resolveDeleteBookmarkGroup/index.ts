@@ -16,11 +16,15 @@ interface Args {
 export const resolveDeleteBookmarkGroup = async (_: Parent, args: Args, context: AuthContext) => {
   const { id } = args
 
-  const deletedBookmarkGroup = await context.prisma.bookmarkGroup.delete({
-    where: { id: id.toString(), user: { id: context.user.id } },
-  })
+  try {
+    const deletedBookmarkGroup = await context.prisma.bookmarkGroup.delete({
+      where: { id: id.toString(), user: { id: context.user.id } },
+    })
 
-  return deletedBookmarkGroup.id
+    return deletedBookmarkGroup.id
+  } catch (error) {
+    throw new Error('Delete bookmark group failed')
+  }
 }
 
 export default resolveDeleteBookmarkGroup
