@@ -3,8 +3,14 @@ import type { Metadata } from 'next'
 import { Roboto, Koulen } from 'next/font/google'
 import clsx from 'clsx'
 
+import { ThemeRegistry } from '@/theme/ThemeRegistry'
+
 // install fonts
-export const roboto = Roboto({ subsets: ['latin'], weight: ['400'], variable: '--font-roboto' })
+export const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['400', '300', '500', '700'],
+  variable: '--font-roboto',
+})
 export const koulen = Koulen({ subsets: ['latin'], weight: ['400'], variable: '--font-koulen' })
 
 // set metadata
@@ -20,7 +26,9 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body className={clsx(roboto.className, roboto.variable, koulen.variable)}>{children}</body>
+      <body className={clsx(roboto.className, roboto.variable, koulen.variable)}>
+        <ThemeRegistry options={{ key: 'mui' }}>{children}</ThemeRegistry>
+      </body>
     </html>
   )
 }
