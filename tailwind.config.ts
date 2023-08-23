@@ -5,7 +5,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: '#EF2E51',
+        primary: '#4F9D69',
       },
       fontFamily: {
         koulen: 'var(--font-koulen)',
