@@ -4,4 +4,4 @@ export const metadata: Metadata = {
   title: 'Shut - Authentication',
 }
 
-export { default } from '@/layout/AuthLayout'
+export { default } from '@/layouts/AuthLayout'
