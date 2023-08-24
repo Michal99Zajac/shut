@@ -36,10 +36,10 @@ export const resolveRefreshAccess = async (
   const cookizer = new CookieService()
 
   // get new access token
-  const accessToken = await authenticator.encode(user)
+  const session = await authenticator.encode(user)
 
   // set new access token in cookies
-  cookizer.access(accessToken)
+  cookizer.access(session)
 
   // get user from database
   const refreshedUser = await context.prisma.user.findFirstOrThrow({

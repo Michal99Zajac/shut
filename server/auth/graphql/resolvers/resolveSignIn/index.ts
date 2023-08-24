@@ -46,10 +46,10 @@ export const resolveSignIn = async (
     const authenticatedUser = await authenticator.authenticate(email, password)
 
     // encode access token
-    const accessToken = await authenticator.encode(authenticatedUser)
+    const session = await authenticator.encode(authenticatedUser)
 
     // set access token cookie
-    cookizer.access(accessToken)
+    cookizer.access(session)
 
     // get full user from database
     const user = await context.prisma.user.findFirstOrThrow({

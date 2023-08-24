@@ -31,12 +31,12 @@ export const buildContext = async (req: NextApiRequest, res: NextApiResponse) =>
   }
 
   // Get access token from cookies
-  const accessToken = cookizer.get('accessToken')
+  const session = cookizer.get('session')
 
   // If access token exists, decode it, set user in context and refresh cookie
-  if (accessToken) {
+  if (session) {
     // decode token
-    const user = await authenticator.decode(accessToken.value)
+    const user = await authenticator.decode(session.value)
 
     // set user in context
     context.user = user

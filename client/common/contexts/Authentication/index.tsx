@@ -10,7 +10,7 @@ const MeQuery = `#graphql
 `
 
 export const getMe = async () => {
-  const cookie = cookies().get('accessToken')
+  const cookie = cookies().get('session')
 
   if (!cookie) return null
 
@@ -18,7 +18,7 @@ export const getMe = async () => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Cookie: `accessToken=${cookie.value}`,
+      Cookie: `session=${cookie.value}`,
     },
     body: JSON.stringify({
       query: MeQuery,
