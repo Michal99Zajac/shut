@@ -1,6 +1,3 @@
-const appRoutes = ['/']
-const authRoutes = ['/auth/signin', '/auth/signup', '/auth/forgot-password']
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   redirects: async () => {
@@ -10,8 +7,8 @@ const nextConfig = {
         destination: '/auth/signin',
         permanent: true,
       },
-      ...appRoutes.map((route) => ({
-        source: route,
+      {
+        source: '/((?!auth/).)*',
         destination: '/auth/signin',
         permanent: false,
         missing: [
@@ -20,9 +17,9 @@ const nextConfig = {
             key: 'session',
           },
         ],
-      })),
-      ...authRoutes.map((route) => ({
-        source: route,
+      },
+      {
+        source: '/auth/:path*',
         destination: '/',
         permanent: false,
         has: [
@@ -31,7 +28,7 @@ const nextConfig = {
             key: 'session',
           },
         ],
-      })),
+      },
     ]
   },
 }
