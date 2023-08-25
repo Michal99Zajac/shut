@@ -79,7 +79,7 @@ export const SignInPage = () => {
       </Button>
       <p className="text-right text-sm my-2">
         Are you new here?{' '}
-        <Link href="/auth/forgot-password" className="text-primary underline">
+        <Link href="/auth/signup" className="text-primary underline">
           Sign Up!
         </Link>
       </p>
