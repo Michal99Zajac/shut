@@ -15,7 +15,7 @@ export const koulen = Koulen({ subsets: ['latin'], weight: ['400'], variable: '-
 
 // set metadata
 export const metadata: Metadata = {
-  title: 'Shut - ',
+  title: 'Shut',
   description: 'Shut is a universal safe for your bookmarks. Save once and have everywhere.',
 }
 
