@@ -20,6 +20,8 @@
     "db:migrate": "npx prisma migrate dev"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.0-rc.2",
+    "@apollo/experimental-nextjs-app-support": "^0.4.1",
     "@apollo/server": "^4.9.1",
     "@as-integrations/next": "^2.0.1",
     "@emotion/react": "^11.11.1",
