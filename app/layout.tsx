@@ -4,6 +4,7 @@ import { Roboto, Koulen } from 'next/font/google'
 import clsx from 'clsx'
 
 import { ThemeRegistry } from '@/theme/ThemeRegistry'
+import { ApolloProvider } from '@/graphql/client'
 
 // install fonts
 export const roboto = Roboto({
@@ -27,7 +28,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={clsx(roboto.className, roboto.variable, koulen.variable)}>
-        <ThemeRegistry options={{ key: 'mui' }}>{children}</ThemeRegistry>
+        <ApolloProvider>
+          <ThemeRegistry options={{ key: 'mui' }}>{children}</ThemeRegistry>
+        </ApolloProvider>
       </body>
     </html>
   )

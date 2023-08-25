@@ -4,10 +4,12 @@ import { Button, TextField } from '@mui/material'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation, gql } from '@apollo/client'
+import { useRouter } from 'next/navigation'
 
 import { signInSchema, SignInSchema } from '@/auth/schemas/signInSchema'
 
-const signInMutation = `#graphql
+const signInMutation = gql`
   mutation SignIn($input: SignInInput!) {
     signIn(input: $input) {
       email
@@ -17,22 +19,20 @@ const signInMutation = `#graphql
 `
 
 export const SignInPage = () => {
+  const router = useRouter()
+  const [signIn, { loading }] = useMutation(signInMutation)
   const { register, handleSubmit } = useForm<SignInSchema>({
     resolver: zodResolver(signInSchema),
   })
 
-  const onSubmit = handleSubmit(async (data) => {
-    await fetch('/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+  const onSubmit = handleSubmit((data) => {
+    signIn({
+      variables: {
+        input: data,
       },
-      body: JSON.stringify({
-        query: signInMutation,
-        variables: {
-          input: data,
-        },
-      }),
+      onCompleted: () => {
+        router.push('/')
+      },
     })
   })
 
@@ -49,6 +49,7 @@ export const SignInPage = () => {
         type="email"
         variant="outlined"
         required
+        disabled={loading}
       />
       <TextField
         {...register('password')}
@@ -59,13 +60,21 @@ export const SignInPage = () => {
         size="medium"
         variant="outlined"
         required
+        disabled={loading}
       />
       <div className="text-right">
         <Link href="/auth/forgot-password" className="text-sm text-gray-500 my-2 underline">
           Forgot password?
         </Link>
       </div>
-      <Button fullWidth type="submit" sx={{ mt: '16px' }} size="large" variant="contained">
+      <Button
+        disabled={loading}
+        fullWidth
+        type="submit"
+        sx={{ mt: '16px' }}
+        size="large"
+        variant="contained"
+      >
         Sign In
       </Button>
       <p className="text-right text-sm my-2">
