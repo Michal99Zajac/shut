@@ -12,15 +12,19 @@ export const theme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          background: '#F7F7F7',
-          borderRadius: '4px',
-          '& fieldset': {
-            borderColor: '#F7F7F7',
-            borderWidth: '2px',
-            transition: 'border-color 0.2s ease-in-out',
-            '&:hover': {
+          '.MuiInputBase-root': {
+            fieldset: {
+              borderColor: '#F7F7F7',
+              borderWidth: '2px',
+              transition: 'border-color 0.2s ease-in-out',
+            },
+            '&:hover fieldset': {
               borderColor: '#9F9F9F',
             },
+          },
+          '.MuiInputBase-input': {
+            background: '#F7F7F7',
+            borderRadius: '4px',
           },
         },
       },
