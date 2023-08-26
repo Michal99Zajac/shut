@@ -6,7 +6,7 @@ export interface AuthLayoutProps {
 
 export const AuthLayout = ({ children }: AuthLayoutProps) => {
   return (
-    <main className="flex flex-row w-full h-full">
+    <main className="flex flex-row min-h-screen">
       <section className="hidden bg-primary w-1/2 p-8 relative md:flex items-center justify-center -z-[1] overflow-hidden">
         {Array(10)
           .fill(0)
