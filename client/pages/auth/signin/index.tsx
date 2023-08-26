@@ -38,8 +38,8 @@ export const SignInPage = () => {
 
   return (
     <form onSubmit={onSubmit} className="w-[400px] max-w-full">
-      <h1 className="font-koulen text-5xl">Sign In</h1>
-      <h2>Welcome back! Sign in to your account!</h2>
+      <h1 className="font-koulen text-5xl mb-2">Sign In</h1>
+      <h2 className="mb-8">Welcome back! Sign in to your account!</h2>
       <TextField
         {...register('email')}
         fullWidth

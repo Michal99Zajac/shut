@@ -26,8 +26,8 @@ export function ForgotPasswordPage() {
 
   return (
     <form onSubmit={onSubmit} className="w-[400px] max-w-full">
-      <h1 className="font-koulen text-5xl">Reset password</h1>
-      <h2>
+      <h1 className="font-koulen text-5xl mb-2">Reset password</h1>
+      <h2 className="mb-8">
         Enter the email associated with your account and we&apos;ll send an email with instructions
         to reset your password.
       </h2>

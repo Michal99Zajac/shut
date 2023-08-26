@@ -46,8 +46,8 @@ export const SignUpPage = () => {
 
   return (
     <form onSubmit={onSubmit} className="w-[400px] max-w-full">
-      <h1 className="font-koulen text-5xl">Sign Up</h1>
-      <h2>Shut it all down in one place!</h2>
+      <h1 className="font-koulen text-5xl mb-2">Sign Up</h1>
+      <h2 className="mb-8">Shut it all down in one place!</h2>
       <TextField
         {...register('email')}
         fullWidth
