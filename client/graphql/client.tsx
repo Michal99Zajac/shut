@@ -8,11 +8,9 @@ import {
   SSRMultipartLink,
 } from '@apollo/experimental-nextjs-app-support/ssr'
 
-import { config } from '@/config'
-
 function makeClient() {
   const httpLink = new HttpLink({
-    uri: `${config.url.http}://${config.url.host}/graphql`,
+    uri: `/graphql`,
   })
 
   return new NextSSRApolloClient({

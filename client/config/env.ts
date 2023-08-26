@@ -6,8 +6,6 @@ export const publicEnv = cleanEnv(process.env, {
     choices: ['development', 'production', 'test'],
     default: 'development',
   }),
-  // URL
-  NEXT_PUBLIC_VERCEL_URL: str({ desc: 'Vercel URL', default: 'localhost:3000' }),
 })
 
 export default publicEnv
