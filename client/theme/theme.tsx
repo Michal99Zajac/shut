@@ -9,6 +9,13 @@ export const theme = createTheme({
     },
   },
   components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontFamily: 'var(--font-koulen)',
+        },
+      },
+    },
     MuiTextField: {
       styleOverrides: {
         root: {
