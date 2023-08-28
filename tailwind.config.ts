@@ -6,6 +6,7 @@ const config: Config = {
     extend: {
       colors: {
         primary: '#4F9D69',
+        'area-hover': '#4f9d69',
       },
       fontFamily: {
         koulen: 'var(--font-koulen)',
