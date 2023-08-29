@@ -10,6 +10,10 @@ builder.prismaObject('BookmarkGroup', {
     bookmarks: t.relatedConnection('bookmarks', {
       cursor: 'id',
     }),
+    children: t.relatedConnection('children', {
+      cursor: 'id',
+    }),
+    parent: t.relation('parent', { nullable: true }),
     user: t.relation('user'),
   }),
 })
