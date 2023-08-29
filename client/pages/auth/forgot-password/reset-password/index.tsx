@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 import Link from 'next/link'
 
 import { resetPasswordSchema, ResetPasswordSchema } from '@/auth/schemas/resetPasswordSchema'
-import { sleep } from '@/common/utils/sleep'
+import { sleep } from '@/utils/sleep'
 
 export function ResetPasswordPage() {
   const router = useRouter()

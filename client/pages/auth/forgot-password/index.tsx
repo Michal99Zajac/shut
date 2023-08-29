@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import { sleep } from '@/common/utils/sleep'
+import { sleep } from '@/utils/sleep'
 import { passwordRequestSchema, PasswordRequestSchema } from '@/auth/schemas/passwordRequestSchema'
 
 export function ForgotPasswordPage() {
