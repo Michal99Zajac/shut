@@ -37,7 +37,7 @@ model BookmarkGroup {
   parentId    String?
 
   children BookmarkGroup[] @relation("BookmarkGroupsToBookmarkGroups")
-  parent   BookmarkGroup?  @relation("BookmarkGroupsToBookmarkGroups", fields: [parentId], references: [id])
+  parent   BookmarkGroup?  @relation("BookmarkGroupsToBookmarkGroups", fields: [parentId], references: [id], onDelete: Cascade)
   user     User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
