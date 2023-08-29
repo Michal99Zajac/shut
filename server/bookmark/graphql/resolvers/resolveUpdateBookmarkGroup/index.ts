@@ -44,8 +44,13 @@ export const resolveUpdateBookmarkGroup = async (
       },
     },
     data: {
-      description: input.description || undefined,
-      name: input.name || undefined,
+      description: input.description === null ? undefined : input.description,
+      name: input.name === null ? undefined : input.name,
+      parent: {
+        connect: {
+          id: input.parentId === null ? undefined : input.parentId?.toString(),
+        },
+      },
     },
   })
 

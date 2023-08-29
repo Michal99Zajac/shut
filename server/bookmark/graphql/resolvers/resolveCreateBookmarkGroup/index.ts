@@ -44,6 +44,11 @@ export const resolveCreateBookmarkGroup = async (
           id: context.user.id,
         },
       },
+      parent: {
+        connect: {
+          id: input.parentId?.toString() || undefined,
+        },
+      },
     },
   })
 

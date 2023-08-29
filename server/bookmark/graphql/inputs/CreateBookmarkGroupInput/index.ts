@@ -16,6 +16,12 @@ export const CreateBookmarkGroupInput = builder.inputType('CreateBookmarkGroupIn
         maxLength: 255,
       },
     }),
+    parentId: t.id({
+      description: 'ID of the parent bookmark group',
+      validate: {
+        uuid: true,
+      },
+    }),
   }),
 })
 
