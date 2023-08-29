@@ -34,8 +34,11 @@ model BookmarkGroup {
   updatedAt   DateTime   @updatedAt
   bookmarks   Bookmark[]
   userId      String
+  parentId    String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  children BookmarkGroup[] @relation("BookmarkGroupsToBookmarkGroups")
+  parent   BookmarkGroup?  @relation("BookmarkGroupsToBookmarkGroups", fields: [parentId], references: [id])
+  user     User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
