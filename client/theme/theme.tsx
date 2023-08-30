@@ -1,6 +1,8 @@
 'use client'
 
+import type {} from '@mui/lab/themeAugmentation'
 import { createTheme } from '@mui/material/styles'
+import { treeItemClasses } from '@mui/lab/TreeItem'
 
 export const theme = createTheme({
   palette: {
@@ -13,6 +15,22 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           fontFamily: 'var(--font-koulen)',
+        },
+      },
+    },
+    MuiTreeItem: {
+      styleOverrides: {
+        root: {
+          '& > .MuiTreeItem-content': {
+            height: '32px',
+            borderRadius: '4px',
+          },
+          [`& .${treeItemClasses.group}`]: {
+            marginLeft: '0px',
+            [`& .${treeItemClasses.content}`]: {
+              paddingLeft: '16px',
+            },
+          },
         },
       },
     },
