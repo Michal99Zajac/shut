@@ -1,7 +1,7 @@
-import { User, PrismaClient } from '@prisma/client'
+import { User } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { prisma } from '#/db'
+import { prisma, PrismaClient } from '#/db'
 import { CookieService } from '#/common/service/CookieService'
 
 import AuthenticationService from '../auth/services/AuthenticationService'
