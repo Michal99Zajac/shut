@@ -1,0 +1,21 @@
+/*
+ * https://github.com/minop1205/react-dnd-treeview#component-styling
+ */
+
+.root {
+  @apply p-4 rounded bg-gray-50;
+}
+
+.container {
+
+}
+
+.dropTarget {
+  @apply bg-primary-100 rounded;
+}
+
+.listItem {}
+
+.draggingSource {}
+
+.placeholder {}

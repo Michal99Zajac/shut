@@ -1,0 +1,7 @@
+.node {
+  @apply hover:bg-gray-100 border-2 border-transparent cursor-pointer h-8 rounded flex items-center px-2 w-full focus:bg-primary-200;
+}
+
+.active {
+  @apply bg-primary-200 border-primary hover:bg-primary-200;
+}

@@ -5,8 +5,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: '#4F9D69',
-        'area-hover': '#4f9d69',
+        primary: 'rgba(79, 157, 105)',
+        'primary-50': 'rgba(79, 157, 105, 0.05)',
+        'primary-200': 'rgba(79, 157, 105, 0.2)',
+        'primary-100': 'rgba(79, 157, 105, 0.12)',
       },
       fontFamily: {
         koulen: 'var(--font-koulen)',

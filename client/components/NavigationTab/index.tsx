@@ -16,7 +16,7 @@ export function NavigationTab({ href, children }: React.PropsWithChildren<Naviga
   return (
     <ActiveLink
       href={href}
-      className="border-b-2 font-koulen px-2 hover:bg-area-hover hover:bg-opacity-5"
+      className="border-b-2 font-koulen px-2 hover:bg-primary-50"
       activeClassName="border-primary"
     >
       {children}

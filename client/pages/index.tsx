@@ -1,4 +1,4 @@
-import BookmarkGroupTree from '@/bookmarks/components/BookmarkGroupTree'
+import { BookmarkGroupTree } from '@/bookmarks/components/BookmarkGroupTree'
 
 export function RootPage() {
   return (
