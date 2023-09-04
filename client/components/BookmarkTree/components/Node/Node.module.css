@@ -1,5 +1,6 @@
 .node {
   @apply hover:bg-gray-100 border-2 border-transparent cursor-pointer h-8 rounded flex items-center px-2 w-full focus:bg-primary-200;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .active {

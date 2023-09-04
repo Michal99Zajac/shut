@@ -10,6 +10,7 @@ import {
 } from '@minoru/react-dnd-treeview'
 
 import { Node } from './components/Node'
+import { DraggedNode } from './components/DraggedNode'
 import classes from './BookmarkTree.module.css'
 
 export type BookmarkTreeNode = NodeModel<{ active: boolean }>
@@ -47,7 +48,7 @@ export function BookmarkTree({ tree, onDrop, onSelect }: BookmarkTreeProps) {
             hasChild={hasChild}
           />
         )}
-        dragPreviewRender={({ clientOffset, isDragging, item }) => <div>{item.text}</div>}
+        dragPreviewRender={({ item }) => <DraggedNode text={item.text} />}
         onDrop={onDrop}
         enableAnimateExpand={true}
       />
