@@ -14,7 +14,7 @@ import { DraggedNode } from './components/DraggedNode'
 import { InputNode, InputNodeProps } from './components/InputNode'
 import classes from './BookmarkTree.module.css'
 
-export type BookmarkTreeNodeData = { active: boolean } | { input: boolean }
+export type BookmarkTreeNodeData = { selected: boolean } | { input: boolean }
 export type BookmarkTreeNode = NodeModel<BookmarkTreeNodeData>
 
 export interface BookmarkTreeProps {
@@ -48,7 +48,7 @@ export function BookmarkTree({ tree, onDrop, onSelect, inputProps }: BookmarkTre
             return <InputNode depth={depth} parent={parent} id={id} {...inputProps} />
           }
 
-          if (data && 'active' in data)
+          if (data && 'selected' in data)
             return (
               <Node
                 id={id}
@@ -56,7 +56,7 @@ export function BookmarkTree({ tree, onDrop, onSelect, inputProps }: BookmarkTre
                 isOpen={isOpen}
                 text={text}
                 onToggle={onToggle}
-                active={data.active}
+                selected={data.selected}
                 depth={depth}
                 hasChild={hasChild}
               />

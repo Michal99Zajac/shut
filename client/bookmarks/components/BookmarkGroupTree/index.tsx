@@ -11,7 +11,7 @@ const SampleData: BookmarkTreeNode[] = [
     droppable: true,
     text: 'Folder 1',
     data: {
-      active: false,
+      selected: false,
     },
   },
   {
@@ -20,7 +20,7 @@ const SampleData: BookmarkTreeNode[] = [
     text: 'File 1-1',
     droppable: true,
     data: {
-      active: false,
+      selected: false,
     },
   },
   {
@@ -38,7 +38,7 @@ const SampleData: BookmarkTreeNode[] = [
     text: 'File 1-2',
     droppable: true,
     data: {
-      active: false,
+      selected: false,
     },
   },
   {
@@ -47,7 +47,7 @@ const SampleData: BookmarkTreeNode[] = [
     droppable: true,
     text: 'Folder 2',
     data: {
-      active: false,
+      selected: false,
     },
   },
   {
@@ -56,7 +56,7 @@ const SampleData: BookmarkTreeNode[] = [
     droppable: true,
     text: 'Folder 2-1',
     data: {
-      active: false,
+      selected: false,
     },
   },
   {
@@ -65,7 +65,7 @@ const SampleData: BookmarkTreeNode[] = [
     droppable: true,
     text: 'File 2-1-1',
     data: {
-      active: false,
+      selected: false,
     },
   },
 ]
@@ -78,30 +78,13 @@ export function BookmarkGroupTree() {
       tree={tree}
       onDrop={(newTree) => setTree(newTree)}
       inputProps={{
-        // onChange: (position, value) => {
-        //   setTree((tree) => {
-        //     const index = tree.findIndex((node) => node.id === position.id)
-        //     if (index === -1) return tree
-        //     return [
-        //       ...tree.slice(0, index),
-        //       {
-        //         ...tree[index],
-        //         data: {
-        //           ...tree[index].data,
-        //           value,
-        //         },
-        //       },
-        //       ...tree.slice(index + 1),
-        //     ]
-        //   })
-        // },
         onSubmit: (position, value) => {
           alert(`Submit ${value} to ${position.id}`)
         },
         onCancel: (id) => {
           alert(`Cancel ${id}`)
         },
-        placeholder: 'New Folder',
+        placeholder: 'New folder',
       }}
     />
   )

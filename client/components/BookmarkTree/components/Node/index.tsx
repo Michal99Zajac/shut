@@ -16,18 +16,18 @@ interface NodeProps {
   onToggle?: () => void
   depth?: number
   hasChild?: boolean
-  active?: boolean
+  selected?: boolean
   id: number | string
   onSelect?: (id: number | string) => void
 }
 
 export const Node = React.forwardRef<any, NodeProps>(
-  ({ isOpen, text, onToggle, depth = 0, hasChild, active, onSelect, id }, ref) => {
+  ({ isOpen, text, onToggle, depth = 0, hasChild, selected, onSelect, id }, ref) => {
     return (
       <button
         ref={ref}
         style={{ paddingInlineStart: 24 * depth + 8 }}
-        className={clsx(classes.node, active && classes.active)}
+        className={clsx(classes.node, selected && classes.active)}
         onClick={hasChild ? onToggle : undefined}
         onDoubleClick={(e) => onSelect?.(id)}
       >
