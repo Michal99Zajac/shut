@@ -14,14 +14,14 @@ import { DraggedNode } from './components/DraggedNode'
 import { InputNode, InputNodeProps } from './components/InputNode'
 import classes from './BookmarkTree.module.css'
 
-export type BookmarkTreeNodeData = { active: boolean } | { value: string }
+export type BookmarkTreeNodeData = { active: boolean } | { input: boolean }
 export type BookmarkTreeNode = NodeModel<BookmarkTreeNodeData>
 
 export interface BookmarkTreeProps {
   tree: BookmarkTreeNode[]
   onDrop: (tree: BookmarkTreeNode[], options: DropOptions<BookmarkTreeNodeData>) => void
   onSelect?: (id: number | string) => void
-  inputProps?: Omit<InputNodeProps, 'id' | 'value' | 'parent' | 'depth'>
+  inputProps?: Omit<InputNodeProps, 'id' | 'parent' | 'depth'>
 }
 
 export function BookmarkTree({ tree, onDrop, onSelect, inputProps }: BookmarkTreeProps) {
@@ -42,12 +42,10 @@ export function BookmarkTree({ tree, onDrop, onSelect, inputProps }: BookmarkTre
           placeholder: classes.placeholder,
         }}
         render={({ id, text, data, droppable, parent }, { depth, isOpen, onToggle, hasChild }) => {
-          if (data && 'value' in data) {
+          if (data && 'input' in data) {
             if (droppable) throw new Error('InputNode cannot be droppable')
 
-            return (
-              <InputNode depth={depth} parent={parent} id={id} value={data.value} {...inputProps} />
-            )
+            return <InputNode depth={depth} parent={parent} id={id} {...inputProps} />
           }
 
           if (data && 'active' in data)

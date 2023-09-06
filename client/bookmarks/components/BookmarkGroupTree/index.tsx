@@ -29,7 +29,7 @@ const SampleData: BookmarkTreeNode[] = [
     text: 'ww',
     droppable: false,
     data: {
-      value: 'aaa',
+      input: true,
     },
   },
   {
@@ -78,29 +78,30 @@ export function BookmarkGroupTree() {
       tree={tree}
       onDrop={(newTree) => setTree(newTree)}
       inputProps={{
-        onChange: (position, value) => {
-          setTree((tree) => {
-            const index = tree.findIndex((node) => node.id === position.id)
-            if (index === -1) return tree
-            return [
-              ...tree.slice(0, index),
-              {
-                ...tree[index],
-                data: {
-                  ...tree[index].data,
-                  value,
-                },
-              },
-              ...tree.slice(index + 1),
-            ]
-          })
-        },
+        // onChange: (position, value) => {
+        //   setTree((tree) => {
+        //     const index = tree.findIndex((node) => node.id === position.id)
+        //     if (index === -1) return tree
+        //     return [
+        //       ...tree.slice(0, index),
+        //       {
+        //         ...tree[index],
+        //         data: {
+        //           ...tree[index].data,
+        //           value,
+        //         },
+        //       },
+        //       ...tree.slice(index + 1),
+        //     ]
+        //   })
+        // },
         onSubmit: (position, value) => {
           alert(`Submit ${value} to ${position.id}`)
         },
         onCancel: (id) => {
           alert(`Cancel ${id}`)
         },
+        placeholder: 'New Folder',
       }}
     />
   )
