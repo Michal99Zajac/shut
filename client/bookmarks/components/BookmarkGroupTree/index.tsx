@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { produce } from 'immer'
 
 import { BookmarkTree, BookmarkTreeNode } from '@/components/BookmarkTree'
 
@@ -73,17 +74,44 @@ const SampleData: BookmarkTreeNode[] = [
 export function BookmarkGroupTree() {
   const [tree, setTree] = useState<BookmarkTreeNode[]>(SampleData)
 
+  const onSelect = (id: number | string) => {
+    setTree(
+      produce((draft) => {
+        draft.forEach((node) => {
+          if (node.data && 'selected' in node.data) {
+            // set all selected to false except the selected one
+            node.data.selected = node.id === id ? true : false
+          }
+        })
+      }),
+    )
+  }
+
+  const onCancel = (id: number | string) => {
+    setTree(
+      produce((draft) => {
+        draft.forEach((node) => {
+          if (node.data && 'input' in node.data) {
+            // remove input node
+            if (node.id === id) {
+              draft.splice(draft.indexOf(node), 1)
+            }
+          }
+        })
+      }),
+    )
+  }
+
   return (
     <BookmarkTree
       tree={tree}
       onDrop={(newTree) => setTree(newTree)}
+      onSelect={onSelect}
       inputProps={{
         onSubmit: (position, value) => {
           alert(`Submit ${value} to ${position.id}`)
         },
-        onCancel: (id) => {
-          alert(`Cancel ${id}`)
-        },
+        onCancel: onCancel,
         placeholder: 'New folder',
       }}
     />
