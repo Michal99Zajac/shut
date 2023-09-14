@@ -3,7 +3,7 @@
  */
 
 .root {
-  @apply p-4 rounded bg-gray-50;
+  @apply p-4 rounded bg-gray-50 min-h-[400px];
 }
 
 .container {

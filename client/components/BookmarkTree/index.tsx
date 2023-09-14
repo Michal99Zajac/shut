@@ -9,9 +9,10 @@ import {
   NodeModel,
 } from '@minoru/react-dnd-treeview'
 
-import { Node } from './components/Node'
+import { Node, NodeProps } from './components/Node'
 import { DraggedNode } from './components/DraggedNode'
 import { InputNode, InputNodeProps } from './components/InputNode'
+import { EmptyTree, EmptyTreeProps } from './components/EmptyTree'
 import classes from './BookmarkTree.module.css'
 
 export type BookmarkTreeNodeData = { selected: boolean } | { input: boolean }
@@ -20,12 +21,21 @@ export type BookmarkTreeNode = NodeModel<BookmarkTreeNodeData>
 export interface BookmarkTreeProps {
   tree: BookmarkTreeNode[]
   onDrop: (tree: BookmarkTreeNode[], options: DropOptions<BookmarkTreeNodeData>) => void
-  onSelect?: (id: number | string) => void
+  onSelect?: (id: number | string | null) => void
   inputProps?: Omit<InputNodeProps, 'id' | 'parent' | 'depth'>
+  emptyProps?: EmptyTreeProps
+  moreProps?: NodeProps['moreProps']
 }
 
-export function BookmarkTree({ tree, onDrop, onSelect, inputProps }: BookmarkTreeProps) {
-  if (tree.length === 0) return <div className={classes.root}>Empty</div>
+export function BookmarkTree({
+  tree,
+  onDrop,
+  onSelect,
+  inputProps,
+  emptyProps,
+  moreProps,
+}: BookmarkTreeProps) {
+  if (tree.length === 0) return <EmptyTree {...emptyProps} />
 
   return (
     <DndProvider backend={MultiBackend} options={getBackendOptions()}>
@@ -45,7 +55,15 @@ export function BookmarkTree({ tree, onDrop, onSelect, inputProps }: BookmarkTre
           if (data && 'input' in data) {
             if (droppable) throw new Error('InputNode cannot be droppable')
 
-            return <InputNode depth={depth} parent={parent} id={id} {...inputProps} />
+            return (
+              <InputNode
+                depth={depth}
+                defaultValue={text}
+                parent={parent}
+                id={id}
+                {...inputProps}
+              />
+            )
           }
 
           if (data && 'selected' in data)
@@ -59,6 +77,7 @@ export function BookmarkTree({ tree, onDrop, onSelect, inputProps }: BookmarkTre
                 selected={data.selected}
                 depth={depth}
                 hasChild={hasChild}
+                moreProps={moreProps}
               />
             )
 
@@ -68,6 +87,7 @@ export function BookmarkTree({ tree, onDrop, onSelect, inputProps }: BookmarkTre
         onDrop={onDrop}
         enableAnimateExpand={true}
         canDrag={(node) => (node?.data && 'value' in node.data ? false : true)}
+        sort={(a, b) => a.text.localeCompare(b.text)}
       />
     </DndProvider>
   )

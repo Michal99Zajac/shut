@@ -1,7 +1,10 @@
+'use client'
+
 import { FcCheckmark, FcCancel } from 'react-icons/fc'
 import { AiOutlineFolder } from 'react-icons/ai'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
 
 import { StyledTextField } from './components/StyledTextField'
 import { StyledIconButton } from './components/StyledIconButton'
@@ -16,13 +19,25 @@ export interface InputNodeProps {
   id: string | number
   parent: string | number
   depth: number
+  defaultValue?: string
   placeholder?: string
   onSubmit?: (position: InputNodePosition, value: string) => void
   onCancel?: (id: string | number) => void
 }
 
-export function InputNode({ onCancel, onSubmit, id, parent, depth, placeholder }: InputNodeProps) {
-  const { register, handleSubmit } = useForm<InputSchema>({
+export function InputNode({
+  onCancel,
+  onSubmit,
+  id,
+  parent,
+  depth,
+  placeholder,
+  defaultValue,
+}: InputNodeProps) {
+  const { register, handleSubmit, setFocus } = useForm<InputSchema>({
+    defaultValues: {
+      input: defaultValue,
+    },
     resolver: zodResolver(inputSchema),
   })
 
@@ -30,13 +45,17 @@ export function InputNode({ onCancel, onSubmit, id, parent, depth, placeholder }
     onSubmit?.({ id, parent }, data.input)
   })
 
+  useEffect(() => {
+    setFocus('input')
+  }, [setFocus])
+
   return (
     <form
       className="h-8 flex gap-2 items-center"
       onSubmit={onInnerSubmit}
       style={{ paddingInlineStart: 24 * depth + 8 }}
     >
-      <span className="ml-[18px]">
+      <span className="ml-[34px]">
         <AiOutlineFolder />
       </span>
       <StyledTextField
