@@ -2,79 +2,52 @@
 
 import { useState } from 'react'
 import { produce } from 'immer'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 
 import { BookmarkTree, BookmarkTreeNode } from '@/components/BookmarkTree'
+import { generateTreeInputNode } from '@/bookmarks/utils/generateTreeInputNode'
 
 const SampleData: BookmarkTreeNode[] = [
   {
     id: 1,
     parent: 0,
-    droppable: true,
     text: 'Folder 1',
+    droppable: true,
     data: {
       selected: false,
     },
   },
   {
     id: 2,
-    parent: 1,
-    text: 'File 1-1',
+    parent: 0,
+    text: 'Folder 2',
     droppable: true,
     data: {
       selected: false,
-    },
-  },
-  {
-    id: 7,
-    parent: 1,
-    text: 'ww',
-    droppable: false,
-    data: {
-      input: true,
     },
   },
   {
     id: 3,
-    parent: 1,
-    text: 'File 1-2',
-    droppable: true,
-    data: {
-      selected: false,
-    },
-  },
-  {
-    id: 4,
-    parent: 0,
-    droppable: true,
-    text: 'Folder 2',
-    data: {
-      selected: false,
-    },
-  },
-  {
-    id: 5,
-    parent: 4,
-    droppable: true,
+    parent: 2,
     text: 'Folder 2-1',
-    data: {
-      selected: false,
-    },
-  },
-  {
-    id: 6,
-    parent: 5,
     droppable: true,
-    text: 'File 2-1-1',
     data: {
       selected: false,
     },
   },
 ]
 
+interface Anchor {
+  target: HTMLElement
+  id: number | string
+}
+
 export function BookmarkGroupTree() {
   const [tree, setTree] = useState<BookmarkTreeNode[]>(SampleData)
+  const [anchor, setAnchor] = useState<Anchor | null>(null)
 
-  const onSelect = (id: number | string) => {
+  const onSelect = (id: number | string | null) => {
     setTree(
       produce((draft) => {
         draft.forEach((node) => {
@@ -102,19 +75,92 @@ export function BookmarkGroupTree() {
     )
   }
 
+  const onInputSubmit = (
+    position: { id: number | string; parent: number | string },
+    value: string,
+  ) => {
+    setTree(
+      produce((draft) => {
+        const input = draft.find(
+          (node) => node.data && 'input' in node.data && node.id === position.id,
+        )
+
+        if (input) {
+          // change input node into normal node
+          input.id = position.id
+          input.parent = position.parent
+          input.text = value
+          input.data = {
+            selected: false,
+          }
+        }
+      }),
+    )
+  }
+
+  const onEmptyCreate = () => {
+    setTree([generateTreeInputNode()])
+  }
+
+  const onMoreClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    id: number | string,
+  ) => {
+    setAnchor({
+      target: event.currentTarget,
+      id,
+    })
+  }
+
+  const onMenuClose = () => {
+    setAnchor(null)
+  }
+
+  const onMenuOptionClick = () => {
+    if (!anchor) return
+
+    setTree(
+      produce((draft) => {
+        const node = draft.find(
+          (node) => node.data && 'selected' in node.data && node.id === anchor.id,
+        )
+
+        if (node) {
+          node.droppable = false
+          node.data = {
+            input: true,
+          }
+        }
+      }),
+    )
+
+    setAnchor(null)
+  }
+
   return (
-    <BookmarkTree
-      tree={tree}
-      onDrop={(newTree) => setTree(newTree)}
-      onSelect={onSelect}
-      inputProps={{
-        onSubmit: (position, value) => {
-          alert(`Submit ${value} to ${position.id}`)
-        },
-        onCancel: onCancel,
-        placeholder: 'New folder',
-      }}
-    />
+    <>
+      <BookmarkTree
+        tree={tree}
+        onDrop={(newTree) => setTree(newTree)}
+        onSelect={onSelect}
+        inputProps={{
+          onSubmit: onInputSubmit,
+          onCancel: onCancel,
+          placeholder: 'New folder',
+        }}
+        emptyProps={{
+          onCreate: onEmptyCreate,
+        }}
+        moreProps={{
+          onClick: onMoreClick,
+        }}
+      />
+      <Menu anchorEl={anchor?.target} open={!!anchor} onClose={onMenuClose}>
+        <MenuItem onClick={onMenuOptionClick}>Profile</MenuItem>
+        <MenuItem onClick={onMenuOptionClick}>My account</MenuItem>
+        <MenuItem onClick={onMenuOptionClick}>Logout</MenuItem>
+      </Menu>
+    </>
   )
 }
 
