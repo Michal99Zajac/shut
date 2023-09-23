@@ -4,42 +4,27 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Button from '@mui/material/Button'
 
-import { BookmarkTree, BookmarkTreeNode } from '@/components/BookmarkTree'
+import { BookmarkTree } from '@/components/BookmarkTree'
+import { ZIBookmarkGroupsQuery } from '@/graphql/generated'
 
 import { useBookmarkGroupTreeToolbox } from './hooks/useBookmarkGroupTreeToolbox'
 
-const SampleData: BookmarkTreeNode[] = [
-  // {
-  //   id: 1,
-  //   parent: 0,
-  //   text: 'Folder 1',
-  //   droppable: true,
-  //   data: {
-  //     selected: false,
-  //   },
-  // },
-  // {
-  //   id: 2,
-  //   parent: 0,
-  //   text: 'Folder 2',
-  //   droppable: true,
-  //   data: {
-  //     selected: false,
-  //   },
-  // },
-  // {
-  //   id: 3,
-  //   parent: 2,
-  //   text: 'Folder 2-1',
-  //   droppable: true,
-  //   data: {
-  //     selected: false,
-  //   },
-  // },
-]
+export interface BookmarkGroupTreeProps {
+  bookmarkGroups: ZIBookmarkGroupsQuery['bookmarkGroups']
+}
 
-export function BookmarkGroupTree() {
-  const toolbox = useBookmarkGroupTreeToolbox(SampleData)
+export function BookmarkGroupTree({ bookmarkGroups }: BookmarkGroupTreeProps) {
+  const toolbox = useBookmarkGroupTreeToolbox(
+    bookmarkGroups.edges.map((edge) => ({
+      id: edge.node.id,
+      parent: edge.node.parent?.id ?? 0,
+      text: edge.node.name,
+      droppable: true,
+      data: {
+        selected: false,
+      },
+    })),
+  )
 
   return (
     <>

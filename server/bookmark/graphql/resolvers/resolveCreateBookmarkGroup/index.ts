@@ -44,11 +44,8 @@ export const resolveCreateBookmarkGroup = async (
           id: context.user.id,
         },
       },
-      parent: {
-        connect: {
-          id: input.parentId?.toString() || undefined,
-        },
-      },
+      // FIXME: the parentId says it's only a undefined, but it's actually a string or null
+      parentId: (input.parentId?.toString() ?? undefined) as any,
     },
   })
 

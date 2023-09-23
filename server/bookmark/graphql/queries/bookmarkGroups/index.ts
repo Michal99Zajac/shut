@@ -8,6 +8,7 @@ builder.queryField('bookmarkGroups', (t) =>
     description: 'Get bookmark groups of the current user',
     cursor: 'id',
     maxSize: 100,
+    edgesNullable: false,
     resolve: resolveBookmarkGroups,
   }),
 )

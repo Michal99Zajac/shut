@@ -216,7 +216,7 @@ export type ZIQueryBookmarksArgs = {
 
 export type ZIQueryBookmarkGroupsConnection = {
   __typename?: 'QueryBookmarkGroupsConnection';
-  edges: Array<Maybe<ZIQueryBookmarkGroupsConnectionEdge>>;
+  edges: Array<ZIQueryBookmarkGroupsConnectionEdge>;
   pageInfo: ZIPageInfo;
 };
 
@@ -375,6 +375,92 @@ export function useSignOutMutation(baseOptions?: Apollo.MutationHookOptions<ZISi
 export type SignOutMutationHookResult = ReturnType<typeof useSignOutMutation>;
 export type SignOutMutationResult = Apollo.MutationResult<ZISignOutMutation>;
 export type SignOutMutationOptions = Apollo.BaseMutationOptions<ZISignOutMutation, ZISignOutMutationVariables>;
+export const CreateBookmarkGroupDocument = gql`
+    mutation CreateBookmarkGroup($input: CreateBookmarkGroupInput!) {
+  createBookmarkGroup(input: $input) {
+    id
+  }
+}
+    `;
+export type ZICreateBookmarkGroupMutationFn = Apollo.MutationFunction<ZICreateBookmarkGroupMutation, ZICreateBookmarkGroupMutationVariables>;
+
+/**
+ * __useCreateBookmarkGroupMutation__
+ *
+ * To run a mutation, you first call `useCreateBookmarkGroupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateBookmarkGroupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createBookmarkGroupMutation, { data, loading, error }] = useCreateBookmarkGroupMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateBookmarkGroupMutation(baseOptions?: Apollo.MutationHookOptions<ZICreateBookmarkGroupMutation, ZICreateBookmarkGroupMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ZICreateBookmarkGroupMutation, ZICreateBookmarkGroupMutationVariables>(CreateBookmarkGroupDocument, options);
+      }
+export type CreateBookmarkGroupMutationHookResult = ReturnType<typeof useCreateBookmarkGroupMutation>;
+export type CreateBookmarkGroupMutationResult = Apollo.MutationResult<ZICreateBookmarkGroupMutation>;
+export type CreateBookmarkGroupMutationOptions = Apollo.BaseMutationOptions<ZICreateBookmarkGroupMutation, ZICreateBookmarkGroupMutationVariables>;
+export const BookmarkGroupsDocument = gql`
+    query BookmarkGroups($after: String, $before: String, $first: Int, $last: Int) {
+  bookmarkGroups(after: $after, before: $before, first: $first, last: $last) {
+    edges {
+      cursor
+      node {
+        id
+        name
+        parent {
+          id
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
+  }
+}
+    `;
+
+/**
+ * __useBookmarkGroupsQuery__
+ *
+ * To run a query within a React component, call `useBookmarkGroupsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBookmarkGroupsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBookmarkGroupsQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      before: // value for 'before'
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *   },
+ * });
+ */
+export function useBookmarkGroupsQuery(baseOptions?: Apollo.QueryHookOptions<ZIBookmarkGroupsQuery, ZIBookmarkGroupsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ZIBookmarkGroupsQuery, ZIBookmarkGroupsQueryVariables>(BookmarkGroupsDocument, options);
+      }
+export function useBookmarkGroupsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ZIBookmarkGroupsQuery, ZIBookmarkGroupsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ZIBookmarkGroupsQuery, ZIBookmarkGroupsQueryVariables>(BookmarkGroupsDocument, options);
+        }
+export type BookmarkGroupsQueryHookResult = ReturnType<typeof useBookmarkGroupsQuery>;
+export type BookmarkGroupsLazyQueryHookResult = ReturnType<typeof useBookmarkGroupsLazyQuery>;
+export type BookmarkGroupsQueryResult = Apollo.QueryResult<ZIBookmarkGroupsQuery, ZIBookmarkGroupsQueryVariables>;
 export type ZISignInMutationVariables = Exact<{
   input: ZISignInInput;
 }>;
@@ -394,11 +480,32 @@ export type ZISignOutMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type ZISignOutMutation = { __typename?: 'Mutation', signOut: string };
 
+export type ZICreateBookmarkGroupMutationVariables = Exact<{
+  input: ZICreateBookmarkGroupInput;
+}>;
+
+
+export type ZICreateBookmarkGroupMutation = { __typename?: 'Mutation', createBookmarkGroup: { __typename?: 'BookmarkGroup', id: string } };
+
+export type ZIBookmarkGroupsQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ZIBookmarkGroupsQuery = { __typename?: 'Query', bookmarkGroups: { __typename?: 'QueryBookmarkGroupsConnection', edges: Array<{ __typename?: 'QueryBookmarkGroupsConnectionEdge', cursor: string, node: { __typename?: 'BookmarkGroup', id: string, name: string, parent?: { __typename?: 'BookmarkGroup', id: string } | null } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null } } };
+
 export const namedOperations = {
+  Query: {
+    BookmarkGroups: 'BookmarkGroups'
+  },
   Mutation: {
     SignIn: 'SignIn',
     SignUp: 'SignUp',
-    SignOut: 'SignOut'
+    SignOut: 'SignOut',
+    CreateBookmarkGroup: 'CreateBookmarkGroup'
   }
 }
 

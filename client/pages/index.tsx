@@ -1,12 +1,24 @@
+'use client'
+
 import { BookmarkGroupTree } from '@/bookmarks/components/BookmarkGroupTree'
+import {
+  ZIBookmarkGroupsQuery,
+  ZIBookmarkGroupsQueryVariables,
+  BookmarkGroupsDocument,
+} from '@/graphql/generated'
+import { useSuspenseQuery } from '@apollo/client'
 
 export function RootPage() {
+  const { data } = useSuspenseQuery<ZIBookmarkGroupsQuery, ZIBookmarkGroupsQueryVariables>(
+    BookmarkGroupsDocument,
+  )
+
   return (
     <>
       <h1 className="font-koulen text-4xl">Dashboard</h1>
       <p className="text-gray-500">Welcome to your dashboard!</p>
       <div>
-        <BookmarkGroupTree />
+        <BookmarkGroupTree bookmarkGroups={data.bookmarkGroups} />
       </div>
     </>
   )

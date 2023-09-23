@@ -5,6 +5,7 @@ import { produce } from 'immer'
 import { TreeMethods } from '@minoru/react-dnd-treeview'
 
 import { BookmarkTreeNode } from '@/components/BookmarkTree'
+import { useCreateBookmarkGroupMutation } from '~/client/graphql/generated'
 
 interface Anchor {
   target: HTMLElement
@@ -15,6 +16,8 @@ export const useBookmarkGroupTreeToolbox = (defaultTree: BookmarkTreeNode[] = []
   const ref = useRef<TreeMethods>(null)
   const [anchor, setAnchor] = useState<Anchor | null>(null)
   const [tree, setTree] = useState<BookmarkTreeNode[]>(defaultTree)
+  const [createBookmarkGroupMutation, createBookmarkGroupMutationState] =
+    useCreateBookmarkGroupMutation()
 
   /* -------------------------------------------------------------------------- */
   /*                                Tree Methods                                */
@@ -54,24 +57,33 @@ export const useBookmarkGroupTreeToolbox = (defaultTree: BookmarkTreeNode[] = []
     position: { id: number | string; parent: number | string },
     value: string,
   ) => {
-    setTree(
-      produce((draft) => {
-        const input = draft.find(
-          (node) => node.data && 'input' in node.data && node.id === position.id,
-        )
+    createBookmarkGroupMutation({
+      variables: {
+        input: {
+          name: value,
+          parentId: position.parent == 0 ? null : position.parent.toString(),
+        },
+      },
+    })
 
-        if (input) {
-          // change input node into normal node
-          input.id = position.id
-          input.parent = position.parent
-          input.text = value
-          input.droppable = true
-          input.data = {
-            selected: false,
-          }
-        }
-      }),
-    )
+    // setTree(
+    //   produce((draft) => {
+    //     const input = draft.find(
+    //       (node) => node.data && 'input' in node.data && node.id === position.id,
+    //     )
+
+    //     if (input) {
+    //       // change input node into normal node
+    //       input.id = position.id
+    //       input.parent = position.parent
+    //       input.text = value
+    //       input.droppable = true
+    //       input.data = {
+    //         selected: false,
+    //       }
+    //     }
+    //   }),
+    // )
   }
 
   const onInputCreate = (parent: string | number) => {

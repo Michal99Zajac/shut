@@ -20,3 +20,11 @@ export const signOut = gql`
     signOut
   }
 `
+
+export const createBookmarkGroup = gql`
+  mutation CreateBookmarkGroup($input: CreateBookmarkGroupInput!) {
+    createBookmarkGroup(input: $input) {
+      id
+    }
+  }
+`
