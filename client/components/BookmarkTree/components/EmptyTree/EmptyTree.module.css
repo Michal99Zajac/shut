@@ -3,5 +3,5 @@
 }
 
 .icon {
-  @apply text-8xl text-primary mb-4;
+  @apply text-8xl text-gray-400 mb-4;
 }

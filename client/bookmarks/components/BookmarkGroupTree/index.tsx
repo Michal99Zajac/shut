@@ -14,17 +14,7 @@ export interface BookmarkGroupTreeProps {
 }
 
 export function BookmarkGroupTree({ bookmarkGroups }: BookmarkGroupTreeProps) {
-  const toolbox = useBookmarkGroupTreeToolbox(
-    bookmarkGroups.edges.map((edge) => ({
-      id: edge.node.id,
-      parent: edge.node.parent?.id ?? 0,
-      text: edge.node.name,
-      droppable: true,
-      data: {
-        selected: false,
-      },
-    })),
-  )
+  const toolbox = useBookmarkGroupTreeToolbox(bookmarkGroups)
 
   return (
     <>
@@ -34,11 +24,11 @@ export function BookmarkGroupTree({ bookmarkGroups }: BookmarkGroupTreeProps) {
       <BookmarkTree
         ref={toolbox.tree.ref}
         tree={toolbox.tree.tree}
-        onDrop={(newTree) => toolbox.tree.setTree(newTree)}
+        onDrop={toolbox.tree.onDrop}
         onSelect={toolbox.tree.onSelect}
         inputProps={{
           onSubmit: toolbox.tree.onInputSubmit,
-          onCancel: toolbox.tree.onCancel,
+          onCancel: toolbox.tree.clearInputs,
           placeholder: 'New folder',
         }}
         emptyProps={{
@@ -53,9 +43,9 @@ export function BookmarkGroupTree({ bookmarkGroups }: BookmarkGroupTreeProps) {
         open={!!toolbox.menu.anchor?.target}
         onClose={toolbox.menu.closeMenu}
       >
-        <MenuItem onClick={toolbox.menu.onMenuCreateNewGroup}>Add Bookmark Group</MenuItem>
-        <MenuItem onClick={() => alert(toolbox.menu.anchor?.target.id)}>My account</MenuItem>
-        <MenuItem onClick={() => alert(toolbox.menu.anchor?.target.id)}>Logout</MenuItem>
+        <MenuItem onClick={toolbox.menu.onAdd}>Add Bookmark Group</MenuItem>
+        <MenuItem onClick={toolbox.menu.onRename}>Rename Bookmark Group</MenuItem>
+        <MenuItem onClick={toolbox.menu.onDelete}>Delete Bookmark Group</MenuItem>
       </Menu>
     </>
   )

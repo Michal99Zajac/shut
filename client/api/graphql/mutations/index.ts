@@ -28,3 +28,17 @@ export const createBookmarkGroup = gql`
     }
   }
 `
+
+export const updateBookmarkGroup = gql`
+  mutation UpdateBookmarkGroup($updateBookmarkGroupId: ID!, $input: UpdateBookmarkGroupInput!) {
+    updateBookmarkGroup(id: $updateBookmarkGroupId, input: $input) {
+      id
+    }
+  }
+`
+
+export const deleteBookmarkGroup = gql`
+  mutation DeleteBookmarkGroup($deleteBookmarkGroupId: ID!) {
+    deleteBookmarkGroup(id: $deleteBookmarkGroupId)
+  }
+`
