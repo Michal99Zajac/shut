@@ -19,30 +19,30 @@ export type Scalars = {
 };
 
 /** A bookmark */
-export type ZIBookmark = {
+export type GQL_Bookmark = {
   __typename?: 'Bookmark';
   description?: Maybe<Scalars['String']['output']>;
   friendlyName: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   url: Scalars['String']['output'];
-  user: ZIUser;
+  user: GQL_User;
 };
 
 /** A bookmark group */
-export type ZIBookmarkGroup = {
+export type GQL_BookmarkGroup = {
   __typename?: 'BookmarkGroup';
-  bookmarks: ZIBookmarkGroupBookmarksConnection;
-  children: ZIBookmarkGroupChildrenConnection;
+  bookmarks: GQL_BookmarkGroupBookmarksConnection;
+  children: GQL_BookmarkGroupChildrenConnection;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
-  parent?: Maybe<ZIBookmarkGroup>;
-  user: ZIUser;
+  parent?: Maybe<GQL_BookmarkGroup>;
+  user: GQL_User;
 };
 
 
 /** A bookmark group */
-export type ZIBookmarkGroupBookmarksArgs = {
+export type GQL_BookmarkGroupBookmarksArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -51,39 +51,39 @@ export type ZIBookmarkGroupBookmarksArgs = {
 
 
 /** A bookmark group */
-export type ZIBookmarkGroupChildrenArgs = {
+export type GQL_BookmarkGroupChildrenArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type ZIBookmarkGroupBookmarksConnection = {
+export type GQL_BookmarkGroupBookmarksConnection = {
   __typename?: 'BookmarkGroupBookmarksConnection';
-  edges: Array<Maybe<ZIBookmarkGroupBookmarksConnectionEdge>>;
-  pageInfo: ZIPageInfo;
+  edges: Array<Maybe<GQL_BookmarkGroupBookmarksConnectionEdge>>;
+  pageInfo: GQL_PageInfo;
 };
 
-export type ZIBookmarkGroupBookmarksConnectionEdge = {
+export type GQL_BookmarkGroupBookmarksConnectionEdge = {
   __typename?: 'BookmarkGroupBookmarksConnectionEdge';
   cursor: Scalars['String']['output'];
-  node: ZIBookmark;
+  node: GQL_Bookmark;
 };
 
-export type ZIBookmarkGroupChildrenConnection = {
+export type GQL_BookmarkGroupChildrenConnection = {
   __typename?: 'BookmarkGroupChildrenConnection';
-  edges: Array<Maybe<ZIBookmarkGroupChildrenConnectionEdge>>;
-  pageInfo: ZIPageInfo;
+  edges: Array<Maybe<GQL_BookmarkGroupChildrenConnectionEdge>>;
+  pageInfo: GQL_PageInfo;
 };
 
-export type ZIBookmarkGroupChildrenConnectionEdge = {
+export type GQL_BookmarkGroupChildrenConnectionEdge = {
   __typename?: 'BookmarkGroupChildrenConnectionEdge';
   cursor: Scalars['String']['output'];
-  node: ZIBookmarkGroup;
+  node: GQL_BookmarkGroup;
 };
 
 /** Input type for creating a bookmark group */
-export type ZICreateBookmarkGroupInput = {
+export type GQL_CreateBookmarkGroupInput = {
   /** Description of the bookmark group */
   description?: InputMaybe<Scalars['String']['input']>;
   /** Name of the bookmark group */
@@ -93,7 +93,7 @@ export type ZICreateBookmarkGroupInput = {
 };
 
 /** Input type for creating a bookmark */
-export type ZICreateBookmarkInput = {
+export type GQL_CreateBookmarkInput = {
   /** ID of the bookmark group to add the bookmark to */
   bookmarkGroupId: Scalars['ID']['input'];
   /** Description of the bookmark */
@@ -104,70 +104,70 @@ export type ZICreateBookmarkInput = {
   url: Scalars['String']['input'];
 };
 
-export type ZIMutation = {
+export type GQL_Mutation = {
   __typename?: 'Mutation';
-  createBookmark: ZIBookmark;
+  createBookmark: GQL_Bookmark;
   /** Create bookmark group */
-  createBookmarkGroup: ZIBookmarkGroup;
+  createBookmarkGroup: GQL_BookmarkGroup;
   /** Delete a bookmark */
   deleteBookmark: Scalars['ID']['output'];
   /** Delete a bookmark group */
   deleteBookmarkGroup: Scalars['ID']['output'];
   /** Refresh the access token for the current user. */
-  refreshAccess: ZIUser;
+  refreshAccess: GQL_User;
   /** Sign in */
-  signIn: ZIUser;
+  signIn: GQL_User;
   /** Sign out the current user. */
   signOut: Scalars['ID']['output'];
   /** Sign up */
   signUp: Scalars['ID']['output'];
-  updateBookmark: ZIBookmark;
-  updateBookmarkGroup: ZIBookmarkGroup;
+  updateBookmark: GQL_Bookmark;
+  updateBookmarkGroup: GQL_BookmarkGroup;
 };
 
 
-export type ZIMutationCreateBookmarkArgs = {
-  input: ZICreateBookmarkInput;
+export type GQL_MutationCreateBookmarkArgs = {
+  input: GQL_CreateBookmarkInput;
 };
 
 
-export type ZIMutationCreateBookmarkGroupArgs = {
-  input: ZICreateBookmarkGroupInput;
+export type GQL_MutationCreateBookmarkGroupArgs = {
+  input: GQL_CreateBookmarkGroupInput;
 };
 
 
-export type ZIMutationDeleteBookmarkArgs = {
+export type GQL_MutationDeleteBookmarkArgs = {
   id: Scalars['ID']['input'];
 };
 
 
-export type ZIMutationDeleteBookmarkGroupArgs = {
+export type GQL_MutationDeleteBookmarkGroupArgs = {
   id: Scalars['ID']['input'];
 };
 
 
-export type ZIMutationSignInArgs = {
-  input: ZISignInInput;
+export type GQL_MutationSignInArgs = {
+  input: GQL_SignInInput;
 };
 
 
-export type ZIMutationSignUpArgs = {
-  input: ZISignUpInput;
+export type GQL_MutationSignUpArgs = {
+  input: GQL_SignUpInput;
 };
 
 
-export type ZIMutationUpdateBookmarkArgs = {
+export type GQL_MutationUpdateBookmarkArgs = {
   id: Scalars['ID']['input'];
-  input: ZIUpdateBookmarkInput;
+  input: GQL_UpdateBookmarkInput;
 };
 
 
-export type ZIMutationUpdateBookmarkGroupArgs = {
+export type GQL_MutationUpdateBookmarkGroupArgs = {
   id: Scalars['ID']['input'];
-  input: ZIUpdateBookmarkGroupInput;
+  input: GQL_UpdateBookmarkGroupInput;
 };
 
-export type ZIPageInfo = {
+export type GQL_PageInfo = {
   __typename?: 'PageInfo';
   endCursor?: Maybe<Scalars['String']['output']>;
   hasNextPage: Scalars['Boolean']['output'];
@@ -175,31 +175,31 @@ export type ZIPageInfo = {
   startCursor?: Maybe<Scalars['String']['output']>;
 };
 
-export type ZIQuery = {
+export type GQL_Query = {
   __typename?: 'Query';
   /** Get a bookmark by ID */
-  bookmark: ZIBookmark;
-  bookmarkGroup: ZIBookmarkGroup;
+  bookmark: GQL_Bookmark;
+  bookmarkGroup: GQL_BookmarkGroup;
   /** Get bookmark groups of the current user */
-  bookmarkGroups: ZIQueryBookmarkGroupsConnection;
+  bookmarkGroups: GQL_QueryBookmarkGroupsConnection;
   /** Get bookmarks of the current user */
-  bookmarks: ZIQueryBookmarksConnection;
+  bookmarks: GQL_QueryBookmarksConnection;
   /** Get the current user */
-  me: ZIUser;
+  me: GQL_User;
 };
 
 
-export type ZIQueryBookmarkArgs = {
+export type GQL_QueryBookmarkArgs = {
   id: Scalars['ID']['input'];
 };
 
 
-export type ZIQueryBookmarkGroupArgs = {
+export type GQL_QueryBookmarkGroupArgs = {
   id: Scalars['ID']['input'];
 };
 
 
-export type ZIQueryBookmarkGroupsArgs = {
+export type GQL_QueryBookmarkGroupsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -207,51 +207,51 @@ export type ZIQueryBookmarkGroupsArgs = {
 };
 
 
-export type ZIQueryBookmarksArgs = {
+export type GQL_QueryBookmarksArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type ZIQueryBookmarkGroupsConnection = {
+export type GQL_QueryBookmarkGroupsConnection = {
   __typename?: 'QueryBookmarkGroupsConnection';
-  edges: Array<ZIQueryBookmarkGroupsConnectionEdge>;
-  pageInfo: ZIPageInfo;
+  edges: Array<GQL_QueryBookmarkGroupsConnectionEdge>;
+  pageInfo: GQL_PageInfo;
 };
 
-export type ZIQueryBookmarkGroupsConnectionEdge = {
+export type GQL_QueryBookmarkGroupsConnectionEdge = {
   __typename?: 'QueryBookmarkGroupsConnectionEdge';
   cursor: Scalars['String']['output'];
-  node: ZIBookmarkGroup;
+  node: GQL_BookmarkGroup;
 };
 
-export type ZIQueryBookmarksConnection = {
+export type GQL_QueryBookmarksConnection = {
   __typename?: 'QueryBookmarksConnection';
-  edges: Array<Maybe<ZIQueryBookmarksConnectionEdge>>;
-  pageInfo: ZIPageInfo;
+  edges: Array<Maybe<GQL_QueryBookmarksConnectionEdge>>;
+  pageInfo: GQL_PageInfo;
 };
 
-export type ZIQueryBookmarksConnectionEdge = {
+export type GQL_QueryBookmarksConnectionEdge = {
   __typename?: 'QueryBookmarksConnectionEdge';
   cursor: Scalars['String']['output'];
-  node: ZIBookmark;
+  node: GQL_Bookmark;
 };
 
 /** Input for signing in */
-export type ZISignInInput = {
+export type GQL_SignInInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
 };
 
 /** Input for signing up */
-export type ZISignUpInput = {
+export type GQL_SignUpInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
 };
 
 /** Input type for updating a bookmark group */
-export type ZIUpdateBookmarkGroupInput = {
+export type GQL_UpdateBookmarkGroupInput = {
   /** Description of the bookmark group */
   description?: InputMaybe<Scalars['String']['input']>;
   /** Name of the bookmark group */
@@ -261,7 +261,7 @@ export type ZIUpdateBookmarkGroupInput = {
 };
 
 /** Input type for updating a bookmark */
-export type ZIUpdateBookmarkInput = {
+export type GQL_UpdateBookmarkInput = {
   /** ID of the bookmark group to add the bookmark to */
   bookmarkGroupId?: InputMaybe<Scalars['ID']['input']>;
   /** Description of the bookmark */
@@ -273,7 +273,7 @@ export type ZIUpdateBookmarkInput = {
 };
 
 /** A user */
-export type ZIUser = {
+export type GQL_User = {
   __typename?: 'User';
   email: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -288,7 +288,7 @@ export const SignInDocument = gql`
   }
 }
     `;
-export type ZISignInMutationFn = Apollo.MutationFunction<ZISignInMutation, ZISignInMutationVariables>;
+export type GQL_SignInMutationFn = Apollo.MutationFunction<GQL_SignInMutation, GQL_SignInMutationVariables>;
 
 /**
  * __useSignInMutation__
@@ -307,19 +307,19 @@ export type ZISignInMutationFn = Apollo.MutationFunction<ZISignInMutation, ZISig
  *   },
  * });
  */
-export function useSignInMutation(baseOptions?: Apollo.MutationHookOptions<ZISignInMutation, ZISignInMutationVariables>) {
+export function useSignInMutation(baseOptions?: Apollo.MutationHookOptions<GQL_SignInMutation, GQL_SignInMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ZISignInMutation, ZISignInMutationVariables>(SignInDocument, options);
+        return Apollo.useMutation<GQL_SignInMutation, GQL_SignInMutationVariables>(SignInDocument, options);
       }
 export type SignInMutationHookResult = ReturnType<typeof useSignInMutation>;
-export type SignInMutationResult = Apollo.MutationResult<ZISignInMutation>;
-export type SignInMutationOptions = Apollo.BaseMutationOptions<ZISignInMutation, ZISignInMutationVariables>;
+export type SignInMutationResult = Apollo.MutationResult<GQL_SignInMutation>;
+export type SignInMutationOptions = Apollo.BaseMutationOptions<GQL_SignInMutation, GQL_SignInMutationVariables>;
 export const SignUpDocument = gql`
     mutation SignUp($input: SignUpInput!) {
   signUp(input: $input)
 }
     `;
-export type ZISignUpMutationFn = Apollo.MutationFunction<ZISignUpMutation, ZISignUpMutationVariables>;
+export type GQL_SignUpMutationFn = Apollo.MutationFunction<GQL_SignUpMutation, GQL_SignUpMutationVariables>;
 
 /**
  * __useSignUpMutation__
@@ -338,19 +338,19 @@ export type ZISignUpMutationFn = Apollo.MutationFunction<ZISignUpMutation, ZISig
  *   },
  * });
  */
-export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<ZISignUpMutation, ZISignUpMutationVariables>) {
+export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<GQL_SignUpMutation, GQL_SignUpMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ZISignUpMutation, ZISignUpMutationVariables>(SignUpDocument, options);
+        return Apollo.useMutation<GQL_SignUpMutation, GQL_SignUpMutationVariables>(SignUpDocument, options);
       }
 export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
-export type SignUpMutationResult = Apollo.MutationResult<ZISignUpMutation>;
-export type SignUpMutationOptions = Apollo.BaseMutationOptions<ZISignUpMutation, ZISignUpMutationVariables>;
+export type SignUpMutationResult = Apollo.MutationResult<GQL_SignUpMutation>;
+export type SignUpMutationOptions = Apollo.BaseMutationOptions<GQL_SignUpMutation, GQL_SignUpMutationVariables>;
 export const SignOutDocument = gql`
     mutation SignOut {
   signOut
 }
     `;
-export type ZISignOutMutationFn = Apollo.MutationFunction<ZISignOutMutation, ZISignOutMutationVariables>;
+export type GQL_SignOutMutationFn = Apollo.MutationFunction<GQL_SignOutMutation, GQL_SignOutMutationVariables>;
 
 /**
  * __useSignOutMutation__
@@ -368,13 +368,13 @@ export type ZISignOutMutationFn = Apollo.MutationFunction<ZISignOutMutation, ZIS
  *   },
  * });
  */
-export function useSignOutMutation(baseOptions?: Apollo.MutationHookOptions<ZISignOutMutation, ZISignOutMutationVariables>) {
+export function useSignOutMutation(baseOptions?: Apollo.MutationHookOptions<GQL_SignOutMutation, GQL_SignOutMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ZISignOutMutation, ZISignOutMutationVariables>(SignOutDocument, options);
+        return Apollo.useMutation<GQL_SignOutMutation, GQL_SignOutMutationVariables>(SignOutDocument, options);
       }
 export type SignOutMutationHookResult = ReturnType<typeof useSignOutMutation>;
-export type SignOutMutationResult = Apollo.MutationResult<ZISignOutMutation>;
-export type SignOutMutationOptions = Apollo.BaseMutationOptions<ZISignOutMutation, ZISignOutMutationVariables>;
+export type SignOutMutationResult = Apollo.MutationResult<GQL_SignOutMutation>;
+export type SignOutMutationOptions = Apollo.BaseMutationOptions<GQL_SignOutMutation, GQL_SignOutMutationVariables>;
 export const CreateBookmarkGroupDocument = gql`
     mutation CreateBookmarkGroup($input: CreateBookmarkGroupInput!) {
   createBookmarkGroup(input: $input) {
@@ -382,7 +382,7 @@ export const CreateBookmarkGroupDocument = gql`
   }
 }
     `;
-export type ZICreateBookmarkGroupMutationFn = Apollo.MutationFunction<ZICreateBookmarkGroupMutation, ZICreateBookmarkGroupMutationVariables>;
+export type GQL_CreateBookmarkGroupMutationFn = Apollo.MutationFunction<GQL_CreateBookmarkGroupMutation, GQL_CreateBookmarkGroupMutationVariables>;
 
 /**
  * __useCreateBookmarkGroupMutation__
@@ -401,13 +401,13 @@ export type ZICreateBookmarkGroupMutationFn = Apollo.MutationFunction<ZICreateBo
  *   },
  * });
  */
-export function useCreateBookmarkGroupMutation(baseOptions?: Apollo.MutationHookOptions<ZICreateBookmarkGroupMutation, ZICreateBookmarkGroupMutationVariables>) {
+export function useCreateBookmarkGroupMutation(baseOptions?: Apollo.MutationHookOptions<GQL_CreateBookmarkGroupMutation, GQL_CreateBookmarkGroupMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ZICreateBookmarkGroupMutation, ZICreateBookmarkGroupMutationVariables>(CreateBookmarkGroupDocument, options);
+        return Apollo.useMutation<GQL_CreateBookmarkGroupMutation, GQL_CreateBookmarkGroupMutationVariables>(CreateBookmarkGroupDocument, options);
       }
 export type CreateBookmarkGroupMutationHookResult = ReturnType<typeof useCreateBookmarkGroupMutation>;
-export type CreateBookmarkGroupMutationResult = Apollo.MutationResult<ZICreateBookmarkGroupMutation>;
-export type CreateBookmarkGroupMutationOptions = Apollo.BaseMutationOptions<ZICreateBookmarkGroupMutation, ZICreateBookmarkGroupMutationVariables>;
+export type CreateBookmarkGroupMutationResult = Apollo.MutationResult<GQL_CreateBookmarkGroupMutation>;
+export type CreateBookmarkGroupMutationOptions = Apollo.BaseMutationOptions<GQL_CreateBookmarkGroupMutation, GQL_CreateBookmarkGroupMutationVariables>;
 export const BookmarkGroupsDocument = gql`
     query BookmarkGroups($after: String, $before: String, $first: Int, $last: Int) {
   bookmarkGroups(after: $after, before: $before, first: $first, last: $last) {
@@ -450,44 +450,44 @@ export const BookmarkGroupsDocument = gql`
  *   },
  * });
  */
-export function useBookmarkGroupsQuery(baseOptions?: Apollo.QueryHookOptions<ZIBookmarkGroupsQuery, ZIBookmarkGroupsQueryVariables>) {
+export function useBookmarkGroupsQuery(baseOptions?: Apollo.QueryHookOptions<GQL_BookmarkGroupsQuery, GQL_BookmarkGroupsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ZIBookmarkGroupsQuery, ZIBookmarkGroupsQueryVariables>(BookmarkGroupsDocument, options);
+        return Apollo.useQuery<GQL_BookmarkGroupsQuery, GQL_BookmarkGroupsQueryVariables>(BookmarkGroupsDocument, options);
       }
-export function useBookmarkGroupsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ZIBookmarkGroupsQuery, ZIBookmarkGroupsQueryVariables>) {
+export function useBookmarkGroupsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GQL_BookmarkGroupsQuery, GQL_BookmarkGroupsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ZIBookmarkGroupsQuery, ZIBookmarkGroupsQueryVariables>(BookmarkGroupsDocument, options);
+          return Apollo.useLazyQuery<GQL_BookmarkGroupsQuery, GQL_BookmarkGroupsQueryVariables>(BookmarkGroupsDocument, options);
         }
 export type BookmarkGroupsQueryHookResult = ReturnType<typeof useBookmarkGroupsQuery>;
 export type BookmarkGroupsLazyQueryHookResult = ReturnType<typeof useBookmarkGroupsLazyQuery>;
-export type BookmarkGroupsQueryResult = Apollo.QueryResult<ZIBookmarkGroupsQuery, ZIBookmarkGroupsQueryVariables>;
-export type ZISignInMutationVariables = Exact<{
-  input: ZISignInInput;
+export type BookmarkGroupsQueryResult = Apollo.QueryResult<GQL_BookmarkGroupsQuery, GQL_BookmarkGroupsQueryVariables>;
+export type GQL_SignInMutationVariables = Exact<{
+  input: GQL_SignInInput;
 }>;
 
 
-export type ZISignInMutation = { __typename?: 'Mutation', signIn: { __typename?: 'User', email: string, id: string } };
+export type GQL_SignInMutation = { __typename?: 'Mutation', signIn: { __typename?: 'User', email: string, id: string } };
 
-export type ZISignUpMutationVariables = Exact<{
-  input: ZISignUpInput;
+export type GQL_SignUpMutationVariables = Exact<{
+  input: GQL_SignUpInput;
 }>;
 
 
-export type ZISignUpMutation = { __typename?: 'Mutation', signUp: string };
+export type GQL_SignUpMutation = { __typename?: 'Mutation', signUp: string };
 
-export type ZISignOutMutationVariables = Exact<{ [key: string]: never; }>;
+export type GQL_SignOutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ZISignOutMutation = { __typename?: 'Mutation', signOut: string };
+export type GQL_SignOutMutation = { __typename?: 'Mutation', signOut: string };
 
-export type ZICreateBookmarkGroupMutationVariables = Exact<{
-  input: ZICreateBookmarkGroupInput;
+export type GQL_CreateBookmarkGroupMutationVariables = Exact<{
+  input: GQL_CreateBookmarkGroupInput;
 }>;
 
 
-export type ZICreateBookmarkGroupMutation = { __typename?: 'Mutation', createBookmarkGroup: { __typename?: 'BookmarkGroup', id: string } };
+export type GQL_CreateBookmarkGroupMutation = { __typename?: 'Mutation', createBookmarkGroup: { __typename?: 'BookmarkGroup', id: string } };
 
-export type ZIBookmarkGroupsQueryVariables = Exact<{
+export type GQL_BookmarkGroupsQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -495,7 +495,7 @@ export type ZIBookmarkGroupsQueryVariables = Exact<{
 }>;
 
 
-export type ZIBookmarkGroupsQuery = { __typename?: 'Query', bookmarkGroups: { __typename?: 'QueryBookmarkGroupsConnection', edges: Array<{ __typename?: 'QueryBookmarkGroupsConnectionEdge', cursor: string, node: { __typename?: 'BookmarkGroup', id: string, name: string, parent?: { __typename?: 'BookmarkGroup', id: string } | null } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null } } };
+export type GQL_BookmarkGroupsQuery = { __typename?: 'Query', bookmarkGroups: { __typename?: 'QueryBookmarkGroupsConnection', edges: Array<{ __typename?: 'QueryBookmarkGroupsConnectionEdge', cursor: string, node: { __typename?: 'BookmarkGroup', id: string, name: string, parent?: { __typename?: 'BookmarkGroup', id: string } | null } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null } } };
 
 export const namedOperations = {
   Query: {
@@ -519,7 +519,7 @@ export const isDefinedNonNullAny = (v: any): v is definedNonNullAny => v !== und
 
 export const definedNonNullAnySchema = z.any().refine((v) => isDefinedNonNullAny(v));
 
-export function ZICreateBookmarkGroupInputSchema(): z.ZodObject<Properties<ZICreateBookmarkGroupInput>> {
+export function GQL_CreateBookmarkGroupInputSchema(): z.ZodObject<Properties<GQL_CreateBookmarkGroupInput>> {
   return z.object({
     description: z.string().nullish(),
     name: z.string(),
@@ -527,7 +527,7 @@ export function ZICreateBookmarkGroupInputSchema(): z.ZodObject<Properties<ZICre
   })
 }
 
-export function ZICreateBookmarkInputSchema(): z.ZodObject<Properties<ZICreateBookmarkInput>> {
+export function GQL_CreateBookmarkInputSchema(): z.ZodObject<Properties<GQL_CreateBookmarkInput>> {
   return z.object({
     bookmarkGroupId: z.string(),
     description: z.string().nullish(),
@@ -536,21 +536,21 @@ export function ZICreateBookmarkInputSchema(): z.ZodObject<Properties<ZICreateBo
   })
 }
 
-export function ZISignInInputSchema(): z.ZodObject<Properties<ZISignInInput>> {
+export function GQL_SignInInputSchema(): z.ZodObject<Properties<GQL_SignInInput>> {
   return z.object({
     email: z.string(),
     password: z.string()
   })
 }
 
-export function ZISignUpInputSchema(): z.ZodObject<Properties<ZISignUpInput>> {
+export function GQL_SignUpInputSchema(): z.ZodObject<Properties<GQL_SignUpInput>> {
   return z.object({
     email: z.string(),
     password: z.string()
   })
 }
 
-export function ZIUpdateBookmarkGroupInputSchema(): z.ZodObject<Properties<ZIUpdateBookmarkGroupInput>> {
+export function GQL_UpdateBookmarkGroupInputSchema(): z.ZodObject<Properties<GQL_UpdateBookmarkGroupInput>> {
   return z.object({
     description: z.string().nullish(),
     name: z.string().nullish(),
@@ -558,7 +558,7 @@ export function ZIUpdateBookmarkGroupInputSchema(): z.ZodObject<Properties<ZIUpd
   })
 }
 
-export function ZIUpdateBookmarkInputSchema(): z.ZodObject<Properties<ZIUpdateBookmarkInput>> {
+export function GQL_UpdateBookmarkInputSchema(): z.ZodObject<Properties<GQL_UpdateBookmarkInput>> {
   return z.object({
     bookmarkGroupId: z.string().nullish(),
     description: z.string().nullish(),

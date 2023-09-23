@@ -2,14 +2,14 @@
 
 import { BookmarkGroupTree } from '@/bookmarks/components/BookmarkGroupTree'
 import {
-  ZIBookmarkGroupsQuery,
-  ZIBookmarkGroupsQueryVariables,
+  GQL_BookmarkGroupsQuery,
+  GQL_BookmarkGroupsQueryVariables,
   BookmarkGroupsDocument,
 } from '@/graphql/generated'
 import { useSuspenseQuery } from '@apollo/client'
 
 export function RootPage() {
-  const { data } = useSuspenseQuery<ZIBookmarkGroupsQuery, ZIBookmarkGroupsQueryVariables>(
+  const { data } = useSuspenseQuery<GQL_BookmarkGroupsQuery, GQL_BookmarkGroupsQueryVariables>(
     BookmarkGroupsDocument,
   )
 

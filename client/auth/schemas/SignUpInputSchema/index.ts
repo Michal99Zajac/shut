@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
-import { ZISignUpInputSchema } from '@/graphql/generated'
+import { GQL_SignUpInputSchema } from '@/graphql/generated'
 
-export const signUpInputSchema = ZISignUpInputSchema().extend({
+export const signUpInputSchema = GQL_SignUpInputSchema().extend({
   email: z.string().email(),
   repeatedPassword: z.string(),
 })

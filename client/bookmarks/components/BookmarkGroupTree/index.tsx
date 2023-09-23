@@ -5,12 +5,12 @@ import MenuItem from '@mui/material/MenuItem'
 import Button from '@mui/material/Button'
 
 import { BookmarkTree } from '@/components/BookmarkTree'
-import { ZIBookmarkGroupsQuery } from '@/graphql/generated'
+import { GQL_BookmarkGroupsQuery } from '@/graphql/generated'
 
 import { useBookmarkGroupTreeToolbox } from './hooks/useBookmarkGroupTreeToolbox'
 
 export interface BookmarkGroupTreeProps {
-  bookmarkGroups: ZIBookmarkGroupsQuery['bookmarkGroups']
+  bookmarkGroups: GQL_BookmarkGroupsQuery['bookmarkGroups']
 }
 
 export function BookmarkGroupTree({ bookmarkGroups }: BookmarkGroupTreeProps) {
