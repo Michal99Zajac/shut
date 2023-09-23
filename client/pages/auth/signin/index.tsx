@@ -4,25 +4,16 @@ import { Button, TextField } from '@mui/material'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, gql } from '@apollo/client'
 import { useRouter } from 'next/navigation'
 
-import { signInSchema, SignInSchema } from '@/auth/schemas/signInSchema'
-
-const signInMutation = gql`
-  mutation SignIn($input: SignInInput!) {
-    signIn(input: $input) {
-      email
-      id
-    }
-  }
-`
+import { signInInputSchema, SignInInputSchema } from '@/auth/schemas/SignInInputSchema'
+import { useSignInMutation } from '@/graphql/generated'
 
 export const SignInPage = () => {
   const router = useRouter()
-  const [signIn, { loading }] = useMutation(signInMutation)
-  const { register, handleSubmit } = useForm<SignInSchema>({
-    resolver: zodResolver(signInSchema),
+  const [signIn, { loading }] = useSignInMutation()
+  const { register, handleSubmit } = useForm<SignInInputSchema>({
+    resolver: zodResolver(signInInputSchema),
   })
 
   const onSubmit = handleSubmit((data) => {

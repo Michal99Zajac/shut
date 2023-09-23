@@ -19,30 +19,30 @@ export type Scalars = {
 };
 
 /** A bookmark */
-export type Bookmark = {
+export type ZIBookmark = {
   __typename?: 'Bookmark';
   description?: Maybe<Scalars['String']['output']>;
   friendlyName: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   url: Scalars['String']['output'];
-  user: User;
+  user: ZIUser;
 };
 
 /** A bookmark group */
-export type BookmarkGroup = {
+export type ZIBookmarkGroup = {
   __typename?: 'BookmarkGroup';
-  bookmarks: BookmarkGroupBookmarksConnection;
-  children: BookmarkGroupChildrenConnection;
+  bookmarks: ZIBookmarkGroupBookmarksConnection;
+  children: ZIBookmarkGroupChildrenConnection;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
-  parent?: Maybe<BookmarkGroup>;
-  user: User;
+  parent?: Maybe<ZIBookmarkGroup>;
+  user: ZIUser;
 };
 
 
 /** A bookmark group */
-export type BookmarkGroupBookmarksArgs = {
+export type ZIBookmarkGroupBookmarksArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -51,39 +51,39 @@ export type BookmarkGroupBookmarksArgs = {
 
 
 /** A bookmark group */
-export type BookmarkGroupChildrenArgs = {
+export type ZIBookmarkGroupChildrenArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type BookmarkGroupBookmarksConnection = {
+export type ZIBookmarkGroupBookmarksConnection = {
   __typename?: 'BookmarkGroupBookmarksConnection';
-  edges: Array<Maybe<BookmarkGroupBookmarksConnectionEdge>>;
-  pageInfo: PageInfo;
+  edges: Array<Maybe<ZIBookmarkGroupBookmarksConnectionEdge>>;
+  pageInfo: ZIPageInfo;
 };
 
-export type BookmarkGroupBookmarksConnectionEdge = {
+export type ZIBookmarkGroupBookmarksConnectionEdge = {
   __typename?: 'BookmarkGroupBookmarksConnectionEdge';
   cursor: Scalars['String']['output'];
-  node: Bookmark;
+  node: ZIBookmark;
 };
 
-export type BookmarkGroupChildrenConnection = {
+export type ZIBookmarkGroupChildrenConnection = {
   __typename?: 'BookmarkGroupChildrenConnection';
-  edges: Array<Maybe<BookmarkGroupChildrenConnectionEdge>>;
-  pageInfo: PageInfo;
+  edges: Array<Maybe<ZIBookmarkGroupChildrenConnectionEdge>>;
+  pageInfo: ZIPageInfo;
 };
 
-export type BookmarkGroupChildrenConnectionEdge = {
+export type ZIBookmarkGroupChildrenConnectionEdge = {
   __typename?: 'BookmarkGroupChildrenConnectionEdge';
   cursor: Scalars['String']['output'];
-  node: BookmarkGroup;
+  node: ZIBookmarkGroup;
 };
 
 /** Input type for creating a bookmark group */
-export type CreateBookmarkGroupInput = {
+export type ZICreateBookmarkGroupInput = {
   /** Description of the bookmark group */
   description?: InputMaybe<Scalars['String']['input']>;
   /** Name of the bookmark group */
@@ -93,7 +93,7 @@ export type CreateBookmarkGroupInput = {
 };
 
 /** Input type for creating a bookmark */
-export type CreateBookmarkInput = {
+export type ZICreateBookmarkInput = {
   /** ID of the bookmark group to add the bookmark to */
   bookmarkGroupId: Scalars['ID']['input'];
   /** Description of the bookmark */
@@ -104,70 +104,70 @@ export type CreateBookmarkInput = {
   url: Scalars['String']['input'];
 };
 
-export type Mutation = {
+export type ZIMutation = {
   __typename?: 'Mutation';
-  createBookmark: Bookmark;
+  createBookmark: ZIBookmark;
   /** Create bookmark group */
-  createBookmarkGroup: BookmarkGroup;
+  createBookmarkGroup: ZIBookmarkGroup;
   /** Delete a bookmark */
   deleteBookmark: Scalars['ID']['output'];
   /** Delete a bookmark group */
   deleteBookmarkGroup: Scalars['ID']['output'];
   /** Refresh the access token for the current user. */
-  refreshAccess: User;
+  refreshAccess: ZIUser;
   /** Sign in */
-  signIn: User;
+  signIn: ZIUser;
   /** Sign out the current user. */
   signOut: Scalars['ID']['output'];
   /** Sign up */
   signUp: Scalars['ID']['output'];
-  updateBookmark: Bookmark;
-  updateBookmarkGroup: BookmarkGroup;
+  updateBookmark: ZIBookmark;
+  updateBookmarkGroup: ZIBookmarkGroup;
 };
 
 
-export type MutationCreateBookmarkArgs = {
-  input: CreateBookmarkInput;
+export type ZIMutationCreateBookmarkArgs = {
+  input: ZICreateBookmarkInput;
 };
 
 
-export type MutationCreateBookmarkGroupArgs = {
-  input: CreateBookmarkGroupInput;
+export type ZIMutationCreateBookmarkGroupArgs = {
+  input: ZICreateBookmarkGroupInput;
 };
 
 
-export type MutationDeleteBookmarkArgs = {
+export type ZIMutationDeleteBookmarkArgs = {
   id: Scalars['ID']['input'];
 };
 
 
-export type MutationDeleteBookmarkGroupArgs = {
+export type ZIMutationDeleteBookmarkGroupArgs = {
   id: Scalars['ID']['input'];
 };
 
 
-export type MutationSignInArgs = {
-  input: SignInInput;
+export type ZIMutationSignInArgs = {
+  input: ZISignInInput;
 };
 
 
-export type MutationSignUpArgs = {
-  input: SignUpInput;
+export type ZIMutationSignUpArgs = {
+  input: ZISignUpInput;
 };
 
 
-export type MutationUpdateBookmarkArgs = {
+export type ZIMutationUpdateBookmarkArgs = {
   id: Scalars['ID']['input'];
-  input: UpdateBookmarkInput;
+  input: ZIUpdateBookmarkInput;
 };
 
 
-export type MutationUpdateBookmarkGroupArgs = {
+export type ZIMutationUpdateBookmarkGroupArgs = {
   id: Scalars['ID']['input'];
-  input: UpdateBookmarkGroupInput;
+  input: ZIUpdateBookmarkGroupInput;
 };
 
-export type PageInfo = {
+export type ZIPageInfo = {
   __typename?: 'PageInfo';
   endCursor?: Maybe<Scalars['String']['output']>;
   hasNextPage: Scalars['Boolean']['output'];
@@ -175,31 +175,31 @@ export type PageInfo = {
   startCursor?: Maybe<Scalars['String']['output']>;
 };
 
-export type Query = {
+export type ZIQuery = {
   __typename?: 'Query';
   /** Get a bookmark by ID */
-  bookmark: Bookmark;
-  bookmarkGroup: BookmarkGroup;
+  bookmark: ZIBookmark;
+  bookmarkGroup: ZIBookmarkGroup;
   /** Get bookmark groups of the current user */
-  bookmarkGroups: QueryBookmarkGroupsConnection;
+  bookmarkGroups: ZIQueryBookmarkGroupsConnection;
   /** Get bookmarks of the current user */
-  bookmarks: QueryBookmarksConnection;
+  bookmarks: ZIQueryBookmarksConnection;
   /** Get the current user */
-  me: User;
+  me: ZIUser;
 };
 
 
-export type QueryBookmarkArgs = {
+export type ZIQueryBookmarkArgs = {
   id: Scalars['ID']['input'];
 };
 
 
-export type QueryBookmarkGroupArgs = {
+export type ZIQueryBookmarkGroupArgs = {
   id: Scalars['ID']['input'];
 };
 
 
-export type QueryBookmarkGroupsArgs = {
+export type ZIQueryBookmarkGroupsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -207,51 +207,51 @@ export type QueryBookmarkGroupsArgs = {
 };
 
 
-export type QueryBookmarksArgs = {
+export type ZIQueryBookmarksArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type QueryBookmarkGroupsConnection = {
+export type ZIQueryBookmarkGroupsConnection = {
   __typename?: 'QueryBookmarkGroupsConnection';
-  edges: Array<Maybe<QueryBookmarkGroupsConnectionEdge>>;
-  pageInfo: PageInfo;
+  edges: Array<Maybe<ZIQueryBookmarkGroupsConnectionEdge>>;
+  pageInfo: ZIPageInfo;
 };
 
-export type QueryBookmarkGroupsConnectionEdge = {
+export type ZIQueryBookmarkGroupsConnectionEdge = {
   __typename?: 'QueryBookmarkGroupsConnectionEdge';
   cursor: Scalars['String']['output'];
-  node: BookmarkGroup;
+  node: ZIBookmarkGroup;
 };
 
-export type QueryBookmarksConnection = {
+export type ZIQueryBookmarksConnection = {
   __typename?: 'QueryBookmarksConnection';
-  edges: Array<Maybe<QueryBookmarksConnectionEdge>>;
-  pageInfo: PageInfo;
+  edges: Array<Maybe<ZIQueryBookmarksConnectionEdge>>;
+  pageInfo: ZIPageInfo;
 };
 
-export type QueryBookmarksConnectionEdge = {
+export type ZIQueryBookmarksConnectionEdge = {
   __typename?: 'QueryBookmarksConnectionEdge';
   cursor: Scalars['String']['output'];
-  node: Bookmark;
+  node: ZIBookmark;
 };
 
 /** Input for signing in */
-export type SignInInput = {
+export type ZISignInInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
 };
 
 /** Input for signing up */
-export type SignUpInput = {
+export type ZISignUpInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
 };
 
 /** Input type for updating a bookmark group */
-export type UpdateBookmarkGroupInput = {
+export type ZIUpdateBookmarkGroupInput = {
   /** Description of the bookmark group */
   description?: InputMaybe<Scalars['String']['input']>;
   /** Name of the bookmark group */
@@ -261,7 +261,7 @@ export type UpdateBookmarkGroupInput = {
 };
 
 /** Input type for updating a bookmark */
-export type UpdateBookmarkInput = {
+export type ZIUpdateBookmarkInput = {
   /** ID of the bookmark group to add the bookmark to */
   bookmarkGroupId?: InputMaybe<Scalars['ID']['input']>;
   /** Description of the bookmark */
@@ -273,7 +273,7 @@ export type UpdateBookmarkInput = {
 };
 
 /** A user */
-export type User = {
+export type ZIUser = {
   __typename?: 'User';
   email: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -288,7 +288,7 @@ export const SignInDocument = gql`
   }
 }
     `;
-export type SignInMutationFn = Apollo.MutationFunction<SignInMutation, SignInMutationVariables>;
+export type ZISignInMutationFn = Apollo.MutationFunction<ZISignInMutation, ZISignInMutationVariables>;
 
 /**
  * __useSignInMutation__
@@ -307,23 +307,98 @@ export type SignInMutationFn = Apollo.MutationFunction<SignInMutation, SignInMut
  *   },
  * });
  */
-export function useSignInMutation(baseOptions?: Apollo.MutationHookOptions<SignInMutation, SignInMutationVariables>) {
+export function useSignInMutation(baseOptions?: Apollo.MutationHookOptions<ZISignInMutation, ZISignInMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SignInMutation, SignInMutationVariables>(SignInDocument, options);
+        return Apollo.useMutation<ZISignInMutation, ZISignInMutationVariables>(SignInDocument, options);
       }
 export type SignInMutationHookResult = ReturnType<typeof useSignInMutation>;
-export type SignInMutationResult = Apollo.MutationResult<SignInMutation>;
-export type SignInMutationOptions = Apollo.BaseMutationOptions<SignInMutation, SignInMutationVariables>;
-export type SignInMutationVariables = Exact<{
-  input: SignInInput;
+export type SignInMutationResult = Apollo.MutationResult<ZISignInMutation>;
+export type SignInMutationOptions = Apollo.BaseMutationOptions<ZISignInMutation, ZISignInMutationVariables>;
+export const SignUpDocument = gql`
+    mutation SignUp($input: SignUpInput!) {
+  signUp(input: $input)
+}
+    `;
+export type ZISignUpMutationFn = Apollo.MutationFunction<ZISignUpMutation, ZISignUpMutationVariables>;
+
+/**
+ * __useSignUpMutation__
+ *
+ * To run a mutation, you first call `useSignUpMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignUpMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [signUpMutation, { data, loading, error }] = useSignUpMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<ZISignUpMutation, ZISignUpMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ZISignUpMutation, ZISignUpMutationVariables>(SignUpDocument, options);
+      }
+export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
+export type SignUpMutationResult = Apollo.MutationResult<ZISignUpMutation>;
+export type SignUpMutationOptions = Apollo.BaseMutationOptions<ZISignUpMutation, ZISignUpMutationVariables>;
+export const SignOutDocument = gql`
+    mutation SignOut {
+  signOut
+}
+    `;
+export type ZISignOutMutationFn = Apollo.MutationFunction<ZISignOutMutation, ZISignOutMutationVariables>;
+
+/**
+ * __useSignOutMutation__
+ *
+ * To run a mutation, you first call `useSignOutMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignOutMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [signOutMutation, { data, loading, error }] = useSignOutMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSignOutMutation(baseOptions?: Apollo.MutationHookOptions<ZISignOutMutation, ZISignOutMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ZISignOutMutation, ZISignOutMutationVariables>(SignOutDocument, options);
+      }
+export type SignOutMutationHookResult = ReturnType<typeof useSignOutMutation>;
+export type SignOutMutationResult = Apollo.MutationResult<ZISignOutMutation>;
+export type SignOutMutationOptions = Apollo.BaseMutationOptions<ZISignOutMutation, ZISignOutMutationVariables>;
+export type ZISignInMutationVariables = Exact<{
+  input: ZISignInInput;
 }>;
 
 
-export type SignInMutation = { __typename?: 'Mutation', signIn: { __typename?: 'User', email: string, id: string } };
+export type ZISignInMutation = { __typename?: 'Mutation', signIn: { __typename?: 'User', email: string, id: string } };
+
+export type ZISignUpMutationVariables = Exact<{
+  input: ZISignUpInput;
+}>;
+
+
+export type ZISignUpMutation = { __typename?: 'Mutation', signUp: string };
+
+export type ZISignOutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ZISignOutMutation = { __typename?: 'Mutation', signOut: string };
 
 export const namedOperations = {
   Mutation: {
-    SignIn: 'SignIn'
+    SignIn: 'SignIn',
+    SignUp: 'SignUp',
+    SignOut: 'SignOut'
   }
 }
 
@@ -337,7 +412,7 @@ export const isDefinedNonNullAny = (v: any): v is definedNonNullAny => v !== und
 
 export const definedNonNullAnySchema = z.any().refine((v) => isDefinedNonNullAny(v));
 
-export function CreateBookmarkGroupInputSchema(): z.ZodObject<Properties<CreateBookmarkGroupInput>> {
+export function ZICreateBookmarkGroupInputSchema(): z.ZodObject<Properties<ZICreateBookmarkGroupInput>> {
   return z.object({
     description: z.string().nullish(),
     name: z.string(),
@@ -345,7 +420,7 @@ export function CreateBookmarkGroupInputSchema(): z.ZodObject<Properties<CreateB
   })
 }
 
-export function CreateBookmarkInputSchema(): z.ZodObject<Properties<CreateBookmarkInput>> {
+export function ZICreateBookmarkInputSchema(): z.ZodObject<Properties<ZICreateBookmarkInput>> {
   return z.object({
     bookmarkGroupId: z.string(),
     description: z.string().nullish(),
@@ -354,21 +429,21 @@ export function CreateBookmarkInputSchema(): z.ZodObject<Properties<CreateBookma
   })
 }
 
-export function SignInInputSchema(): z.ZodObject<Properties<SignInInput>> {
+export function ZISignInInputSchema(): z.ZodObject<Properties<ZISignInInput>> {
   return z.object({
     email: z.string(),
     password: z.string()
   })
 }
 
-export function SignUpInputSchema(): z.ZodObject<Properties<SignUpInput>> {
+export function ZISignUpInputSchema(): z.ZodObject<Properties<ZISignUpInput>> {
   return z.object({
     email: z.string(),
     password: z.string()
   })
 }
 
-export function UpdateBookmarkGroupInputSchema(): z.ZodObject<Properties<UpdateBookmarkGroupInput>> {
+export function ZIUpdateBookmarkGroupInputSchema(): z.ZodObject<Properties<ZIUpdateBookmarkGroupInput>> {
   return z.object({
     description: z.string().nullish(),
     name: z.string().nullish(),
@@ -376,7 +451,7 @@ export function UpdateBookmarkGroupInputSchema(): z.ZodObject<Properties<UpdateB
   })
 }
 
-export function UpdateBookmarkInputSchema(): z.ZodObject<Properties<UpdateBookmarkInput>> {
+export function ZIUpdateBookmarkInputSchema(): z.ZodObject<Properties<ZIUpdateBookmarkInput>> {
   return z.object({
     bookmarkGroupId: z.string().nullish(),
     description: z.string().nullish(),

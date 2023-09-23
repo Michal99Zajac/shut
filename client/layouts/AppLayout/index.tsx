@@ -3,20 +3,14 @@
 import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import { Button } from '@mui/material'
-import { useMutation, gql } from '@apollo/client'
 import { useRouter } from 'next/navigation'
 
 import { NavigationTab } from '@/components/NavigationTab'
-
-const signOutMutation = gql`
-  mutation SignOut {
-    signOut
-  }
-`
+import { useSignOutMutation } from '@/graphql/generated'
 
 export function AppLayout({ children }: React.PropsWithChildren) {
   const { handleSubmit } = useForm()
-  const [signOut, { loading }] = useMutation(signOutMutation)
+  const [signOut, { loading }] = useSignOutMutation()
   const router = useRouter()
 
   const onSubmit = handleSubmit(() => {

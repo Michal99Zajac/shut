@@ -4,22 +4,16 @@ import { Button, TextField } from '@mui/material'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, gql } from '@apollo/client'
 import { useRouter } from 'next/navigation'
 
-import { signUpSchema, SignUpSchema } from '@/auth/schemas/signupSchema'
-
-const signUpMutation = gql`
-  mutation SignUp($input: SignUpInput!) {
-    signUp(input: $input)
-  }
-`
+import { useSignUpMutation } from '@/graphql/generated'
+import { signUpInputSchema, SignUpInputSchema } from '@/auth/schemas/SignUpInputSchema'
 
 export const SignUpPage = () => {
   const router = useRouter()
-  const [signUp, { loading }] = useMutation(signUpMutation)
-  const { register, handleSubmit, setError, formState } = useForm<SignUpSchema>({
-    resolver: zodResolver(signUpSchema),
+  const [signUp, { loading }] = useSignUpMutation()
+  const { register, handleSubmit, setError, formState } = useForm<SignUpInputSchema>({
+    resolver: zodResolver(signUpInputSchema),
   })
 
   const onSubmit = handleSubmit((data) => {

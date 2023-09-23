@@ -8,3 +8,15 @@ export const signIn = gql`
     }
   }
 `
+
+export const signUp = gql`
+  mutation SignUp($input: SignUpInput!) {
+    signUp(input: $input)
+  }
+`
+
+export const signOut = gql`
+  mutation SignOut {
+    signOut
+  }
+`

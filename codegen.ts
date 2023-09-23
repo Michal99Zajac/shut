@@ -17,6 +17,7 @@ const config: CodegenConfig = {
         schema: 'zod',
         strictScalars: true,
         withHooks: true,
+        typesPrefix: 'ZI',
       },
     },
   },
