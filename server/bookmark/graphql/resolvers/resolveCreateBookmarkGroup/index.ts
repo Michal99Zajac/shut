@@ -33,20 +33,28 @@ export const resolveCreateBookmarkGroup = async (
 ) => {
   const { input } = args
 
+  const data: Prisma.Args<typeof context.prisma.bookmarkGroup, 'create'>['data'] = {
+    name: input.name,
+    description: input.description,
+    user: {
+      connect: {
+        id: context.user.id,
+      },
+    },
+  }
+
+  if (input.parentId) {
+    data.parent = {
+      connect: {
+        id: input.parentId.toString(),
+      },
+    }
+  }
+
   // create new bookmark group assigned to the current user
   const newBookmarkGroup = await context.prisma.bookmarkGroup.create({
     ...query,
-    data: {
-      name: input.name,
-      description: input.description,
-      user: {
-        connect: {
-          id: context.user.id,
-        },
-      },
-      // FIXME: the parentId says it's only a undefined, but it's actually a string or null
-      parentId: (input.parentId?.toString() ?? undefined) as any,
-    },
+    data,
   })
 
   return newBookmarkGroup

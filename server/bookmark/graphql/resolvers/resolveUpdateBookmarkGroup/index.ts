@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client'
+import type { Prisma } from '@prisma/client'
 import { DefaultArgs } from '@prisma/client/runtime/library'
 
 import { Parent } from '#/common/types/Parent'
@@ -35,6 +35,25 @@ export const resolveUpdateBookmarkGroup = async (
 ) => {
   const { input, id } = args
 
+  const data: Prisma.Args<typeof context.prisma.bookmarkGroup, 'update'>['data'] = {
+    description: input.description === null ? null : input.description,
+    name: input.name ? input.name : undefined,
+  }
+
+  if (input.parentId === null) {
+    data.parent = {
+      disconnect: true,
+    }
+  }
+
+  if (input.parentId) {
+    data.parent = {
+      connect: {
+        id: input.parentId.toString(),
+      },
+    }
+  }
+
   const updatedBookmarkGroup = context.prisma.bookmarkGroup.update({
     ...query,
     where: {
@@ -43,15 +62,7 @@ export const resolveUpdateBookmarkGroup = async (
         id: context.user.id,
       },
     },
-    data: {
-      description: input.description === null ? undefined : input.description,
-      name: input.name === null ? undefined : input.name,
-      parent: {
-        connect: {
-          id: input.parentId === null ? undefined : input.parentId?.toString(),
-        },
-      },
-    },
+    data,
   })
 
   return updatedBookmarkGroup
