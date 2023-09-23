@@ -15,7 +15,7 @@ export function EmptyTree({ onCreate }: EmptyTreeProps) {
         alt="A hand with a phone that has an x icon"
         src="/media/dashboard/hands-phone.png"
         width={300}
-        height={400}
+        height={230}
         className="object-contain mb-4"
       />
       <Button
