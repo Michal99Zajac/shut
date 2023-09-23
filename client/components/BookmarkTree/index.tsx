@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { DndProvider } from 'react-dnd'
 import {
   Tree as DnDTree,
@@ -7,6 +8,7 @@ import {
   getBackendOptions,
   MultiBackend,
   NodeModel,
+  TreeMethods,
 } from '@minoru/react-dnd-treeview'
 
 import { Node, NodeProps } from './components/Node'
@@ -27,70 +29,71 @@ export interface BookmarkTreeProps {
   moreProps?: NodeProps['moreProps']
 }
 
-export function BookmarkTree({
-  tree,
-  onDrop,
-  onSelect,
-  inputProps,
-  emptyProps,
-  moreProps,
-}: BookmarkTreeProps) {
-  if (tree.length === 0) return <EmptyTree {...emptyProps} />
+export const BookmarkTree = React.forwardRef<TreeMethods, BookmarkTreeProps>(
+  ({ tree, onDrop, onSelect, inputProps, emptyProps, moreProps }, ref) => {
+    if (tree.length === 0) return <EmptyTree {...emptyProps} />
 
-  return (
-    <DndProvider backend={MultiBackend} options={getBackendOptions()}>
-      <DnDTree
-        tree={tree}
-        rootId={0}
-        initialOpen
-        classes={{
-          root: classes.root,
-          container: classes.container,
-          dropTarget: classes.dropTarget,
-          listItem: classes.listItem,
-          draggingSource: classes.draggingSource,
-          placeholder: classes.placeholder,
-        }}
-        render={({ id, text, data, droppable, parent }, { depth, isOpen, onToggle, hasChild }) => {
-          if (data && 'input' in data) {
-            if (droppable) throw new Error('InputNode cannot be droppable')
+    return (
+      <DndProvider backend={MultiBackend} options={getBackendOptions()}>
+        <DnDTree
+          tree={tree}
+          rootId={0}
+          ref={ref}
+          initialOpen
+          classes={{
+            root: classes.root,
+            container: classes.container,
+            dropTarget: classes.dropTarget,
+            listItem: classes.listItem,
+            draggingSource: classes.draggingSource,
+            placeholder: classes.placeholder,
+          }}
+          render={(
+            { id, text, data, droppable, parent },
+            { depth, isOpen, onToggle, hasChild },
+          ) => {
+            if (data && 'input' in data) {
+              if (droppable) throw new Error('InputNode cannot be droppable')
 
-            return (
-              <InputNode
-                depth={depth}
-                defaultValue={text}
-                parent={parent}
-                id={id}
-                {...inputProps}
-              />
-            )
-          }
+              return (
+                <InputNode
+                  depth={depth}
+                  defaultValue={text}
+                  parent={parent}
+                  id={id}
+                  {...inputProps}
+                />
+              )
+            }
 
-          if (data && 'selected' in data)
-            return (
-              <Node
-                id={id}
-                onSelect={onSelect}
-                isOpen={isOpen}
-                text={text}
-                onToggle={onToggle}
-                selected={data.selected}
-                depth={depth}
-                hasChild={hasChild}
-                moreProps={moreProps}
-              />
-            )
+            if (data && 'selected' in data)
+              return (
+                <Node
+                  id={id}
+                  onSelect={onSelect}
+                  isOpen={isOpen}
+                  text={text}
+                  onToggle={onToggle}
+                  selected={data.selected}
+                  depth={depth}
+                  hasChild={hasChild}
+                  moreProps={moreProps}
+                />
+              )
 
-          return <></>
-        }}
-        dragPreviewRender={({ item }) => <DraggedNode text={item.text} />}
-        onDrop={onDrop}
-        enableAnimateExpand={true}
-        canDrag={(node) => (node?.data && 'value' in node.data ? false : true)}
-        sort={(a, b) => a.text.localeCompare(b.text)}
-      />
-    </DndProvider>
-  )
-}
+            return <></>
+          }}
+          dragPreviewRender={({ item }) => <DraggedNode text={item.text} />}
+          onDrop={onDrop}
+          enableAnimateExpand={true}
+          canDrag={(node) => (node?.data && 'value' in node.data ? false : true)}
+          sort={(a, b) => a.text.localeCompare(b.text)}
+        />
+      </DndProvider>
+    )
+  },
+)
+
+BookmarkTree.displayName = 'BookmarkTree'
 
 export default BookmarkTree
