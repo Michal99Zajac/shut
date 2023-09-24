@@ -254,4 +254,6 @@ export const useBookmarkGroupTreeToolbox = (
   }
 }
 
+export type BookmarkGroupTreeToolbox = ReturnType<typeof useBookmarkGroupTreeToolbox>
+
 export default useBookmarkGroupTreeToolbox

@@ -10,10 +10,14 @@ import {
   BookmarkGroupsDocument,
 } from '@/graphql/generated'
 import { useSuspenseQuery } from '@apollo/client'
+import { MdCreateNewFolder } from 'react-icons/md'
+import IconButton from '@mui/material/IconButton'
 
+import { BookmarkGroupSearch } from '@/bookmarks/components/BookmarkGroupSearch'
 import { useQuery } from '@/hooks/useQuery'
 import BookmarkSearch from '@/bookmarks/components/BookmarkSearch'
 import BookmarksTable from '@/bookmarks/components/BookmarksTable'
+import { useBookmarkGroupTreeToolbox } from '@/bookmarks/hooks/useBookmarkGroupTreeToolbox'
 
 interface Query {
   qGroup: string
@@ -38,6 +42,7 @@ export function RootPage() {
   const {
     data: { bookmarks },
   } = useSuspenseQuery<GQL_BookmarksQuery, GQL_BookmarksQueryVariables>(BookmarksDocument)
+  const bookmarkGroupsToolbox = useBookmarkGroupTreeToolbox(bookmarkGroups)
 
   return (
     <>
@@ -45,7 +50,16 @@ export function RootPage() {
       <p className="text-gray-500">Welcome to your dashboard!</p>
       <div className="grid grid-cols-dashboard gap-4">
         <aside>
-          <BookmarkGroupTree bookmarkGroups={bookmarkGroups} />
+          <div className="flex gap-2 items-center mb-2">
+            <BookmarkGroupSearch />
+            <IconButton
+              className="!rounded"
+              onClick={() => bookmarkGroupsToolbox.tree.createInput(0)}
+            >
+              <MdCreateNewFolder />
+            </IconButton>
+          </div>
+          <BookmarkGroupTree toolbox={bookmarkGroupsToolbox} />
         </aside>
         <section>
           <BookmarkSearch className="!mb-2" />
