@@ -15,7 +15,6 @@ import orderBy from 'lodash/orderBy'
 import { Node, NodeProps } from './components/Node'
 import { DraggedNode } from './components/DraggedNode'
 import { InputNode, InputNodeProps } from './components/InputNode'
-import { EmptyTree, EmptyTreeProps } from './components/EmptyTree'
 import classes from './BookmarkTree.module.css'
 
 export type BookmarkTreeNodeData = { selected: boolean; input: boolean }
@@ -26,14 +25,11 @@ export interface BookmarkTreeProps {
   onDrop: (tree: BookmarkTreeNode[], options: DropOptions<BookmarkTreeNodeData>) => void
   onSelect?: (id: number | string | null) => void
   inputProps?: Omit<InputNodeProps, 'id' | 'parent' | 'depth'>
-  emptyProps?: EmptyTreeProps
   moreProps?: NodeProps['moreProps']
 }
 
 export const BookmarkTree = React.forwardRef<TreeMethods, BookmarkTreeProps>(
-  ({ tree, onDrop, onSelect, inputProps, emptyProps, moreProps }, ref) => {
-    if (tree.length === 0) return <EmptyTree {...emptyProps} />
-
+  ({ tree, onDrop, onSelect, inputProps, moreProps }, ref) => {
     return (
       <DndProvider backend={MultiBackend} options={getBackendOptions()}>
         <DnDTree

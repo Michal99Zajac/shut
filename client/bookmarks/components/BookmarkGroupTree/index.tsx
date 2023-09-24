@@ -1,5 +1,3 @@
-'use client'
-
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { MdCreateNewFolder } from 'react-icons/md'
@@ -10,6 +8,7 @@ import { BookmarkTree } from '@/components/BookmarkTree'
 import { GQL_BookmarkGroupsQuery } from '@/graphql/generated'
 
 import { useBookmarkGroupTreeToolbox } from './hooks/useBookmarkGroupTreeToolbox'
+import { EmptyTree } from './components/EmptyTree'
 
 export interface BookmarkGroupTreeProps {
   bookmarkGroups: GQL_BookmarkGroupsQuery['bookmarkGroups']
@@ -17,6 +16,9 @@ export interface BookmarkGroupTreeProps {
 
 export function BookmarkGroupTree({ bookmarkGroups }: BookmarkGroupTreeProps) {
   const toolbox = useBookmarkGroupTreeToolbox(bookmarkGroups)
+
+  if (toolbox.tree.tree.length === 0)
+    return <EmptyTree onCreate={() => toolbox.tree.createInput(0)} />
 
   return (
     <>
@@ -35,9 +37,6 @@ export function BookmarkGroupTree({ bookmarkGroups }: BookmarkGroupTreeProps) {
           onSubmit: toolbox.tree.submitInput,
           onCancel: toolbox.tree.resetBookmarkGroupTree,
           placeholder: 'New folder',
-        }}
-        emptyProps={{
-          onCreate: () => toolbox.tree.createInput(0),
         }}
         moreProps={{
           onClick: toolbox.menu.openMenu,
