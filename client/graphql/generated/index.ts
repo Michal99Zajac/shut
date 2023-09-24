@@ -219,7 +219,7 @@ export type GQL_QueryBookmarksArgs = {
 
 export type GQL_QueryBookmarksConnection = {
   __typename?: 'QueryBookmarksConnection';
-  edges: Array<Maybe<GQL_QueryBookmarksConnectionEdge>>;
+  edges: Array<GQL_QueryBookmarksConnectionEdge>;
   pageInfo: GQL_PageInfo;
 };
 
@@ -503,6 +503,51 @@ export function useBookmarkGroupsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type BookmarkGroupsQueryHookResult = ReturnType<typeof useBookmarkGroupsQuery>;
 export type BookmarkGroupsLazyQueryHookResult = ReturnType<typeof useBookmarkGroupsLazyQuery>;
 export type BookmarkGroupsQueryResult = Apollo.QueryResult<GQL_BookmarkGroupsQuery, GQL_BookmarkGroupsQueryVariables>;
+export const BookmarksDocument = gql`
+    query Bookmarks($after: String, $before: String, $first: Int, $last: Int) {
+  bookmarks(after: $after, before: $before, first: $first, last: $last) {
+    edges {
+      cursor
+      node {
+        friendlyName
+        id
+        url
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useBookmarksQuery__
+ *
+ * To run a query within a React component, call `useBookmarksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBookmarksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBookmarksQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      before: // value for 'before'
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *   },
+ * });
+ */
+export function useBookmarksQuery(baseOptions?: Apollo.QueryHookOptions<GQL_BookmarksQuery, GQL_BookmarksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GQL_BookmarksQuery, GQL_BookmarksQueryVariables>(BookmarksDocument, options);
+      }
+export function useBookmarksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GQL_BookmarksQuery, GQL_BookmarksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GQL_BookmarksQuery, GQL_BookmarksQueryVariables>(BookmarksDocument, options);
+        }
+export type BookmarksQueryHookResult = ReturnType<typeof useBookmarksQuery>;
+export type BookmarksLazyQueryHookResult = ReturnType<typeof useBookmarksLazyQuery>;
+export type BookmarksQueryResult = Apollo.QueryResult<GQL_BookmarksQuery, GQL_BookmarksQueryVariables>;
 export type GQL_SignInMutationVariables = Exact<{
   input: GQL_SignInInput;
 }>;
@@ -551,9 +596,20 @@ export type GQL_BookmarkGroupsQueryVariables = Exact<{
 
 export type GQL_BookmarkGroupsQuery = { __typename?: 'Query', bookmarkGroups: Array<{ __typename?: 'BookmarkGroup', id: string, name: string, parent?: { __typename?: 'BookmarkGroup', id: string } | null }> };
 
+export type GQL_BookmarksQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GQL_BookmarksQuery = { __typename?: 'Query', bookmarks: { __typename?: 'QueryBookmarksConnection', edges: Array<{ __typename?: 'QueryBookmarksConnectionEdge', cursor: string, node: { __typename?: 'Bookmark', friendlyName: string, id: string, url: string } }> } };
+
 export const namedOperations = {
   Query: {
-    BookmarkGroups: 'BookmarkGroups'
+    BookmarkGroups: 'BookmarkGroups',
+    Bookmarks: 'Bookmarks'
   },
   Mutation: {
     SignIn: 'SignIn',

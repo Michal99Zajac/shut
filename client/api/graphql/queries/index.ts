@@ -11,3 +11,18 @@ export const bookmarkGroups = gql`
     }
   }
 `
+
+export const bookmarks = gql`
+  query Bookmarks($after: String, $before: String, $first: Int, $last: Int) {
+    bookmarks(after: $after, before: $before, first: $first, last: $last) {
+      edges {
+        cursor
+        node {
+          friendlyName
+          id
+          url
+        }
+      }
+    }
+  }
+`
