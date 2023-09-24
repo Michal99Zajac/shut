@@ -1,3 +1,3 @@
 .node {
-  @apply border-l-4 border-primary h-8 rounded flex items-center px-2 w-full bg-primary-200 max-w-md;
+  @apply h-8 rounded flex items-center px-2 w-full bg-primary-200 max-w-md;
 }

@@ -39,7 +39,7 @@ export const Node = ({
 }: NodeProps) => {
   return (
     <div
-      style={{ paddingInlineStart: 24 * depth + 8 }}
+      style={{ paddingInlineStart: 12 * depth }}
       className={clsx(classes.node, selected && classes.active)}
       onClick={() => onSelect?.(selected ? null : id)}
     >

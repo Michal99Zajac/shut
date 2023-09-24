@@ -53,14 +53,13 @@ export function InputNode({
     <form
       className="h-8 flex gap-2 items-center"
       onSubmit={onInnerSubmit}
-      style={{ paddingInlineStart: 24 * depth + 8 }}
+      style={{ paddingInlineStart: 12 * depth }}
     >
       <span className="ml-[34px]">
         <AiOutlineFolder />
       </span>
       <StyledTextField
         {...register('input', { required: true })}
-        variant="filled"
         size="small"
         fullWidth
         placeholder={placeholder}
