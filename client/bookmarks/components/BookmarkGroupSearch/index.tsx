@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import useDebounce from 'react-use/lib/useDebounce'
 import TextField from '@mui/material/TextField'
+import InputAdornment from '@mui/material/InputAdornment'
+import { TbListSearch } from 'react-icons/tb'
 
 import useQuery from '@/hooks/useQuery'
 
@@ -28,6 +30,13 @@ export function BookmarkGroupSearch() {
       placeholder="Search Bookmark Group"
       value={search}
       onChange={(e) => setSearch(e.target.value)}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <TbListSearch />
+          </InputAdornment>
+        ),
+      }}
     />
   )
 }
