@@ -3,9 +3,13 @@ import { DefaultArgs } from '@prisma/client/runtime/library'
 
 import { Query } from '#/common/types/Query'
 import { Parent } from '#/common/types/Parent'
+import { InputShape } from '#/common/types/InputShape'
 import { AuthContext } from '#/graphql/context'
+import { BookmarkGroupFilterInput } from '#/bookmark/graphql/inputs/BookmarkGroupFilterInput'
 
-interface Args {}
+interface Args {
+  filter?: InputShape<typeof BookmarkGroupFilterInput> | null
+}
 
 interface BookmarkGroupsQuery extends Query {
   include?: Prisma.BookmarkGroupInclude<DefaultArgs>
@@ -24,10 +28,34 @@ interface BookmarkGroupsQuery extends Query {
 export const resolveBookmarkGroups = async (
   query: BookmarkGroupsQuery,
   _: Parent,
-  __: Args,
+  args: Args,
   context: AuthContext,
 ) => {
-  return context.prisma.bookmarkGroup.findMany({ ...query, where: { userId: context.user.id } })
+  const where: Prisma.BookmarkGroupWhereInput = {
+    user: {
+      id: context.user.id,
+    },
+  }
+
+  if (args.filter?.query) {
+    where.OR = [
+      { name: { contains: args.filter.query, mode: 'insensitive' } },
+      {
+        parent: {
+          name: { contains: args.filter.query, mode: 'insensitive' },
+        },
+      },
+      {
+        parent: {
+          parent: {
+            name: { contains: args.filter.query, mode: 'insensitive' },
+          },
+        },
+      },
+    ]
+  }
+
+  return context.prisma.bookmarkGroup.findMany({ ...query, where })
 }
 
 export default resolveBookmarkGroups
