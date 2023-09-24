@@ -8,9 +8,25 @@ import {
 } from '@/graphql/generated'
 import { useSuspenseQuery } from '@apollo/client'
 
+import { useQuery } from '@/hooks/useQuery'
+
+interface Query {
+  qGroup: string
+  bookmarkGroupId: string
+}
+
 export function RootPage() {
+  const query = useQuery<Query>()
   const { data } = useSuspenseQuery<GQL_BookmarkGroupsQuery, GQL_BookmarkGroupsQueryVariables>(
     BookmarkGroupsDocument,
+    {
+      variables: {
+        filter: {
+          query: query.query.qGroup,
+        },
+      },
+      fetchPolicy: 'cache-and-network',
+    },
   )
 
   return (

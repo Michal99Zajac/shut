@@ -2,8 +2,10 @@
 
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import Button from '@mui/material/Button'
+import { MdCreateNewFolder } from 'react-icons/md'
+import IconButton from '@mui/material/IconButton'
 
+import { BookmarkGroupSearch } from '@/bookmarks/components/BookmarkGroupSearch'
 import { BookmarkTree } from '@/components/BookmarkTree'
 import { GQL_BookmarkGroupsQuery } from '@/graphql/generated'
 
@@ -18,21 +20,24 @@ export function BookmarkGroupTree({ bookmarkGroups }: BookmarkGroupTreeProps) {
 
   return (
     <>
-      <Button sx={{ mb: '16px' }} onClick={() => toolbox.tree.onInputCreate(0)} variant="contained">
-        Add Bookmark Group
-      </Button>
+      <div className="flex gap-2 items-center mb-2">
+        <BookmarkGroupSearch />
+        <IconButton className="!rounded" onClick={() => toolbox.tree.createInput(0)}>
+          <MdCreateNewFolder />
+        </IconButton>
+      </div>
       <BookmarkTree
         ref={toolbox.tree.ref}
         tree={toolbox.tree.tree}
-        onDrop={toolbox.tree.onDrop}
-        onSelect={toolbox.tree.onSelect}
+        onDrop={toolbox.tree.updateBookmarkGroupParent}
+        onSelect={toolbox.tree.selectBookmarkGroup}
         inputProps={{
-          onSubmit: toolbox.tree.onInputSubmit,
-          onCancel: toolbox.tree.clearInputs,
+          onSubmit: toolbox.tree.submitInput,
+          onCancel: toolbox.tree.resetBookmarkGroupTree,
           placeholder: 'New folder',
         }}
         emptyProps={{
-          onCreate: () => toolbox.tree.onInputCreate(0),
+          onCreate: () => toolbox.tree.createInput(0),
         }}
         moreProps={{
           onClick: toolbox.menu.openMenu,
@@ -43,9 +48,9 @@ export function BookmarkGroupTree({ bookmarkGroups }: BookmarkGroupTreeProps) {
         open={!!toolbox.menu.anchor?.target}
         onClose={toolbox.menu.closeMenu}
       >
-        <MenuItem onClick={toolbox.menu.onAdd}>Add Bookmark Group</MenuItem>
-        <MenuItem onClick={toolbox.menu.onRename}>Rename Bookmark Group</MenuItem>
-        <MenuItem onClick={toolbox.menu.onDelete}>Delete Bookmark Group</MenuItem>
+        <MenuItem onClick={toolbox.menu.addBookmarkGroup}>Add Bookmark Group</MenuItem>
+        <MenuItem onClick={toolbox.menu.renameBookmarkGroup}>Rename Bookmark Group</MenuItem>
+        <MenuItem onClick={toolbox.menu.deleteBookmarkGroup}>Delete Bookmark Group</MenuItem>
       </Menu>
     </>
   )
