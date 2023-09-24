@@ -6,8 +6,8 @@ import IconButton from '@mui/material/IconButton'
 import { BookmarkGroupSearch } from '@/bookmarks/components/BookmarkGroupSearch'
 import { BookmarkTree } from '@/components/BookmarkTree'
 import { GQL_BookmarkGroupsQuery } from '@/graphql/generated'
+import { useBookmarkGroupTreeToolbox } from '@/bookmarks/hooks/useBookmarkGroupTreeToolbox'
 
-import { useBookmarkGroupTreeToolbox } from './hooks/useBookmarkGroupTreeToolbox'
 import { EmptyTree } from './components/EmptyTree'
 
 export interface BookmarkGroupTreeProps {

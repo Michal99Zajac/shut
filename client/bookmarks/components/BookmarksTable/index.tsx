@@ -8,7 +8,7 @@ import Paper from '@mui/material/Paper'
 
 import { GQL_BookmarksQuery } from '@/graphql/generated'
 
-import { BookmarksTableEmpty } from './BookmarksTableEmpty'
+import { BookmarksTableEmpty } from './components/BookmarksTableEmpty'
 
 interface BookmarksTableProps {
   bookmarks: GQL_BookmarksQuery['bookmarks']
