@@ -17,6 +17,9 @@ const config: Config = {
         koulen: 'var(--font-koulen)',
         roboto: 'var(--font-roboto)',
       },
+      gridTemplateColumns: {
+        dashboard: '400px 1fr',
+      },
     },
   },
   plugins: [],
