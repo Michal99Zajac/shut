@@ -8,6 +8,8 @@ builder.queryField('bookmarks', (t) =>
     description: 'Get bookmarks of the current user',
     cursor: 'id',
     maxSize: 100,
+    edgesNullable: false,
+    defaultSize: 20,
     resolve: resolveBookmarks,
   }),
 )
