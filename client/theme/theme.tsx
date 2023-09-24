@@ -38,8 +38,9 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           '.MuiInputBase-root': {
+            background: '#f8fafc',
             fieldset: {
-              borderColor: '#F7F7F7',
+              borderColor: '#f8fafc',
               borderWidth: '2px',
               transition: 'border-color 0.2s ease-in-out',
             },
@@ -48,7 +49,6 @@ export const theme = createTheme({
             },
           },
           '.MuiInputBase-input': {
-            background: '#F7F7F7',
             borderRadius: '4px',
           },
         },
