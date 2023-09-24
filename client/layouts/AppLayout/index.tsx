@@ -8,7 +8,11 @@ import { useRouter } from 'next/navigation'
 import { NavigationTab } from '@/components/NavigationTab'
 import { useSignOutMutation } from '@/graphql/generated'
 
-export function AppLayout({ children }: React.PropsWithChildren) {
+type AppLayoutProps = React.PropsWithChildren<{
+  bookmarkModal: React.ReactNode
+}>
+
+export function AppLayout({ children, bookmarkModal }: AppLayoutProps) {
   const { handleSubmit } = useForm()
   const [signOut, { loading }] = useSignOutMutation()
   const router = useRouter()
@@ -23,6 +27,7 @@ export function AppLayout({ children }: React.PropsWithChildren) {
 
   return (
     <>
+      {bookmarkModal}
       <header className="flex items-center justify-between p-4 mb-6">
         <Image src="/shut-logo.svg" alt="logo" width={32} height={42} />
         <div className="flex gap-2 items-center">
