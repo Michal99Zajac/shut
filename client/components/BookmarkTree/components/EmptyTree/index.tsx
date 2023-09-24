@@ -13,10 +13,11 @@ export function EmptyTree({ onCreate }: EmptyTreeProps) {
     <div className={classes.root}>
       <Image
         alt="A hand with a phone that has an x icon"
-        src="/media/dashboard/hands-phone.png"
+        src="/media/dashboard/empty-bookmark-groups.svg"
         width={300}
-        height={230}
-        className="object-contain mb-4"
+        height={300}
+        style={{ width: '300px', height: '300px' }}
+        className="mb-4 grayscale object-contain"
       />
       <Button
         variant="text"
