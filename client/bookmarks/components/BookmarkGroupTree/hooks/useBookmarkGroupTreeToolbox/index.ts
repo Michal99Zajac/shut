@@ -16,16 +16,20 @@ import useQuery from '@/hooks/useQuery'
 
 const transformBookmarkGroupsToTreeNodes = (
   bookmarkGroups: GQL_BookmarkGroupsQuery['bookmarkGroups'],
-  selectedIds: string[] = [],
+  { selectedIds = [], fetchedIds = [] }: { selectedIds?: string[]; fetchedIds?: string[] } = {},
 ) =>
-  bookmarkGroups.edges.map((edge) => ({
-    id: edge.node.id,
-    parent: edge.node.parent?.id ?? 0,
-    text: edge.node.name,
+  bookmarkGroups.map((bookmarkGroup) => ({
+    id: bookmarkGroup.id,
+    parent: bookmarkGroup.parent?.id
+      ? fetchedIds.includes(bookmarkGroup.parent.id)
+        ? bookmarkGroup.parent.id
+        : 0
+      : 0,
+    text: bookmarkGroup.name,
     droppable: true,
     data: {
       input: false,
-      selected: selectedIds.includes(edge.node.id),
+      selected: selectedIds?.includes(bookmarkGroup.id),
     },
   }))
 
@@ -41,9 +45,12 @@ export const useBookmarkGroupTreeToolbox = (
   const ref = useRef<TreeMethods>(null)
   const [anchor, setAnchor] = useState<Anchor | null>(null)
   const [tree, setTree] = useState<BookmarkTreeNode[]>(
-    transformBookmarkGroupsToTreeNodes(bookmarkGroups),
+    transformBookmarkGroupsToTreeNodes(bookmarkGroups, {
+      selectedIds: query.query.bookmarkGroupId ? [query.query.bookmarkGroupId] : [],
+      fetchedIds: bookmarkGroups.map((bookmarkGroup) => bookmarkGroup.id),
+    }),
   )
-  const onlineBookmarksGroupIds = bookmarkGroups.edges.map(({ node }) => node.id)
+  const onlineBookmarksGroupIds = bookmarkGroups.map((bookmarkGroup) => bookmarkGroup.id)
   const [createBookmarkGroupMutation] = useCreateBookmarkGroupMutation({
     refetchQueries: ['BookmarkGroups'],
   })
@@ -58,7 +65,7 @@ export const useBookmarkGroupTreeToolbox = (
   /*                                Tree Methods                                */
   /* -------------------------------------------------------------------------- */
 
-  const clearInputs = () => {
+  const resetBookmarkGroupTree = () => {
     setTree(
       produce((draft) => {
         draft.forEach((node) => {
@@ -76,15 +83,15 @@ export const useBookmarkGroupTreeToolbox = (
     )
   }
 
-  const onSelect = (id: number | string | null) => {
+  const selectBookmarkGroup = (id: number | string | null) => {
     query.set('bookmarkGroupId', id ? id.toString() : null)
   }
 
-  const onInputSubmit = async (
+  const submitInput = async (
     position: { id: number | string; parent: number | string },
     value: string,
   ) => {
-    const isBookmarkExist = bookmarkGroups.edges.find(({ node }) => node.id === position.id)
+    const isBookmarkExist = bookmarkGroups.find((bookmarkGroup) => bookmarkGroup.id === position.id)
 
     // check if the node exists, if it does, update it
     if (isBookmarkExist) {
@@ -95,6 +102,7 @@ export const useBookmarkGroupTreeToolbox = (
             name: value,
           },
         },
+        refetchQueries: ['BookmarkGroups'],
       })
     }
 
@@ -106,10 +114,11 @@ export const useBookmarkGroupTreeToolbox = (
           parentId: position.parent == 0 ? null : position.parent.toString(),
         },
       },
+      refetchQueries: ['BookmarkGroups'],
     })
   }
 
-  const onDrop = (newTree: BookmarkTreeNode[]) => {
+  const updateBookmarkGroupParent = (newTree: BookmarkTreeNode[]) => {
     const diff = difference(newTree, tree)[0]
 
     if (!diff) return
@@ -121,10 +130,13 @@ export const useBookmarkGroupTreeToolbox = (
           parentId: diff.parent == 0 ? null : diff.parent.toString(),
         },
       },
+      refetchQueries: ['BookmarkGroups'],
     })
   }
 
-  const onInputCreate = (parent: string | number) => {
+  const createInput = (parent: string | number) => {
+    resetBookmarkGroupTree()
+
     const newNode = {
       id: new Date().getTime(),
       parent,
@@ -153,17 +165,16 @@ export const useBookmarkGroupTreeToolbox = (
 
   const closeMenu = () => setAnchor(null)
 
-  const onAdd = () => {
+  const addBookmarkGroup = () => {
     if (!anchor?.id) return
-
-    onInputCreate(anchor.id)
+    createInput(anchor.id)
     closeMenu()
   }
 
-  const onRename = () => {
+  const renameBookmarkGroup = () => {
     if (!anchor?.id) return
 
-    clearInputs()
+    resetBookmarkGroupTree()
     setTree(
       produce((draft) => {
         const node = draft.find((node) => node.id === anchor.id)
@@ -177,13 +188,14 @@ export const useBookmarkGroupTreeToolbox = (
     closeMenu()
   }
 
-  const onDelete = () => {
+  const deleteBookmarkGroup = () => {
     if (!anchor?.id) return
 
     deleteBookmarkGroupMutation({
       variables: {
         deleteBookmarkGroupId: anchor.id.toString(),
       },
+      refetchQueries: ['BookmarkGroups'],
     })
 
     closeMenu()
@@ -196,7 +208,12 @@ export const useBookmarkGroupTreeToolbox = (
   // set tree nodes depending on the bookmark groups
   useEffect(() => {
     const selectedIds = query.query.bookmarkGroupId ? [query.query.bookmarkGroupId] : []
-    setTree(transformBookmarkGroupsToTreeNodes(bookmarkGroups, selectedIds))
+    setTree(
+      transformBookmarkGroupsToTreeNodes(bookmarkGroups, {
+        selectedIds,
+        fetchedIds: bookmarkGroups.map((bookmarkGroup) => bookmarkGroup.id),
+      }),
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookmarkGroups])
 
@@ -217,22 +234,22 @@ export const useBookmarkGroupTreeToolbox = (
   return {
     tree: {
       tree,
-      setTree,
-      onSelect,
-      onInputSubmit,
       ref,
-      onInputCreate,
-      clearInputs,
-      onDrop,
+      setTree,
+      selectBookmarkGroup,
+      submitInput,
+      createInput,
+      resetBookmarkGroupTree,
+      updateBookmarkGroupParent,
     },
     menu: {
       anchor,
       setAnchor,
       openMenu,
       closeMenu,
-      onAdd,
-      onRename,
-      onDelete,
+      addBookmarkGroup,
+      renameBookmarkGroup,
+      deleteBookmarkGroup,
     },
   }
 }

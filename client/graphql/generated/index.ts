@@ -82,6 +82,12 @@ export type GQL_BookmarkGroupChildrenConnectionEdge = {
   node: GQL_BookmarkGroup;
 };
 
+/** Input type for filtering bookmark groups */
+export type GQL_BookmarkGroupFilterInput = {
+  /** Query string to filter bookmark groups */
+  query?: InputMaybe<Scalars['String']['input']>;
+};
+
 /** Input type for creating a bookmark group */
 export type GQL_CreateBookmarkGroupInput = {
   /** Description of the bookmark group */
@@ -181,7 +187,7 @@ export type GQL_Query = {
   bookmark: GQL_Bookmark;
   bookmarkGroup: GQL_BookmarkGroup;
   /** Get bookmark groups of the current user */
-  bookmarkGroups: GQL_QueryBookmarkGroupsConnection;
+  bookmarkGroups: Array<GQL_BookmarkGroup>;
   /** Get bookmarks of the current user */
   bookmarks: GQL_QueryBookmarksConnection;
   /** Get the current user */
@@ -200,10 +206,7 @@ export type GQL_QueryBookmarkGroupArgs = {
 
 
 export type GQL_QueryBookmarkGroupsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
+  filter?: InputMaybe<GQL_BookmarkGroupFilterInput>;
 };
 
 
@@ -212,18 +215,6 @@ export type GQL_QueryBookmarksArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
-};
-
-export type GQL_QueryBookmarkGroupsConnection = {
-  __typename?: 'QueryBookmarkGroupsConnection';
-  edges: Array<GQL_QueryBookmarkGroupsConnectionEdge>;
-  pageInfo: GQL_PageInfo;
-};
-
-export type GQL_QueryBookmarkGroupsConnectionEdge = {
-  __typename?: 'QueryBookmarkGroupsConnectionEdge';
-  cursor: Scalars['String']['output'];
-  node: GQL_BookmarkGroup;
 };
 
 export type GQL_QueryBookmarksConnection = {
@@ -474,23 +465,12 @@ export type DeleteBookmarkGroupMutationHookResult = ReturnType<typeof useDeleteB
 export type DeleteBookmarkGroupMutationResult = Apollo.MutationResult<GQL_DeleteBookmarkGroupMutation>;
 export type DeleteBookmarkGroupMutationOptions = Apollo.BaseMutationOptions<GQL_DeleteBookmarkGroupMutation, GQL_DeleteBookmarkGroupMutationVariables>;
 export const BookmarkGroupsDocument = gql`
-    query BookmarkGroups($after: String, $before: String, $first: Int, $last: Int) {
-  bookmarkGroups(after: $after, before: $before, first: $first, last: $last) {
-    edges {
-      cursor
-      node {
-        id
-        name
-        parent {
-          id
-        }
-      }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPreviousPage
-      startCursor
+    query BookmarkGroups($filter: BookmarkGroupFilterInput) {
+  bookmarkGroups(filter: $filter) {
+    id
+    name
+    parent {
+      id
     }
   }
 }
@@ -508,10 +488,7 @@ export const BookmarkGroupsDocument = gql`
  * @example
  * const { data, loading, error } = useBookmarkGroupsQuery({
  *   variables: {
- *      after: // value for 'after'
- *      before: // value for 'before'
- *      first: // value for 'first'
- *      last: // value for 'last'
+ *      filter: // value for 'filter'
  *   },
  * });
  */
@@ -568,14 +545,11 @@ export type GQL_DeleteBookmarkGroupMutationVariables = Exact<{
 export type GQL_DeleteBookmarkGroupMutation = { __typename?: 'Mutation', deleteBookmarkGroup: string };
 
 export type GQL_BookmarkGroupsQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
+  filter?: InputMaybe<GQL_BookmarkGroupFilterInput>;
 }>;
 
 
-export type GQL_BookmarkGroupsQuery = { __typename?: 'Query', bookmarkGroups: { __typename?: 'QueryBookmarkGroupsConnection', edges: Array<{ __typename?: 'QueryBookmarkGroupsConnectionEdge', cursor: string, node: { __typename?: 'BookmarkGroup', id: string, name: string, parent?: { __typename?: 'BookmarkGroup', id: string } | null } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null } } };
+export type GQL_BookmarkGroupsQuery = { __typename?: 'Query', bookmarkGroups: Array<{ __typename?: 'BookmarkGroup', id: string, name: string, parent?: { __typename?: 'BookmarkGroup', id: string } | null }> };
 
 export const namedOperations = {
   Query: {
@@ -600,6 +574,12 @@ type definedNonNullAny = {};
 export const isDefinedNonNullAny = (v: any): v is definedNonNullAny => v !== undefined && v !== null;
 
 export const definedNonNullAnySchema = z.any().refine((v) => isDefinedNonNullAny(v));
+
+export function GQL_BookmarkGroupFilterInputSchema(): z.ZodObject<Properties<GQL_BookmarkGroupFilterInput>> {
+  return z.object({
+    query: z.string().nullish()
+  })
+}
 
 export function GQL_CreateBookmarkGroupInputSchema(): z.ZodObject<Properties<GQL_CreateBookmarkGroupInput>> {
   return z.object({
