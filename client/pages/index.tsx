@@ -47,9 +47,6 @@ export function RootPage() {
 
   return (
     <>
-      <Link href="/create-bookmark" scroll={false}>
-        Create Bookmark
-      </Link>
       <h1 className="font-koulen text-4xl">Dashboard</h1>
       <p className="text-gray-500">Welcome to your dashboard!</p>
       <div className="grid grid-cols-dashboard gap-4">
