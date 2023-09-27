@@ -1,5 +1,6 @@
 import builder from '#/graphql/builder'
 
+import BookmarkFilterInput from '../../inputs/BookmarkFilterInput'
 import { resolveBookmarks } from '../../resolvers/resolveBookmarks'
 
 builder.queryField('bookmarks', (t) =>
@@ -10,6 +11,9 @@ builder.queryField('bookmarks', (t) =>
     maxSize: 100,
     edgesNullable: false,
     defaultSize: 20,
+    args: {
+      filter: t.arg({ type: BookmarkFilterInput, required: false }),
+    },
     resolve: resolveBookmarks,
   }),
 )
