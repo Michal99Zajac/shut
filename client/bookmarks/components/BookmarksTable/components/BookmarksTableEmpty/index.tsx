@@ -1,6 +1,7 @@
 import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import Image from 'next/image'
+import Link from 'next/link'
 import { MdCreateNewFolder } from 'react-icons/md'
 
 export function BookmarksTableEmpty() {
@@ -14,14 +15,16 @@ export function BookmarksTableEmpty() {
         style={{ width: '300px', height: '300px' }}
         className="mb-4 grayscale object-contain"
       />
-      <Button
-        variant="text"
-        className="!text-gray-400"
-        size="large"
-        startIcon={<MdCreateNewFolder />}
-      >
-        Create Bookmark
-      </Button>
+      <Link href="/create-bookmark?isModal=true">
+        <Button
+          variant="text"
+          className="!text-gray-400"
+          size="large"
+          startIcon={<MdCreateNewFolder />}
+        >
+          Create Bookmark
+        </Button>
+      </Link>
     </Paper>
   )
 }
