@@ -1,7 +1,164 @@
-import { CreateBookmarkModal } from '@/bookmarks/components/CreateBookmarkModal'
+'use client'
 
-export function CreateBookmarkPage() {
-  return <CreateBookmarkModal />
+import React from 'react'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import IconButton from '@mui/material/IconButton'
+import Button from '@mui/material/Button'
+import { AiFillFolderOpen, AiOutlineClose, AiOutlineFolder } from 'react-icons/ai'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import TextField from '@mui/material/TextField'
+import { useSuspenseQuery } from '@apollo/client'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import FormHelperText from '@mui/material/FormHelperText'
+import { usePathname, useRouter } from 'next/navigation'
+
+import {
+  CreateBookmarkInputSchema,
+  createBookmarkInputSchema,
+} from '@/bookmarks/schemas/CreateBookmarkInputSchema'
+import { MegaDialog } from '@/components/MegaDialog'
+import { SlideTransition } from '@/components/SlideTransition'
+import {
+  BookmarkGroupsDocument,
+  GQL_BookmarkGroupsQuery,
+  GQL_BookmarkGroupsQueryVariables,
+  useCreateBookmarkMutation,
+} from '@/graphql/generated'
+import { assignDepth } from '@/utils/assignDepth'
+
+export const CreateBookmarkPage: Client.Route = ({ searchParams }) => {
+  const pathname = usePathname()
+  const router = useRouter()
+  const [createBookmark] = useCreateBookmarkMutation({
+    refetchQueries: ['Bookmarks'],
+  })
+  const {
+    data: { bookmarkGroups },
+  } = useSuspenseQuery<GQL_BookmarkGroupsQuery, GQL_BookmarkGroupsQueryVariables>(
+    BookmarkGroupsDocument,
+    {
+      fetchPolicy: 'cache-and-network',
+    },
+  )
+  const { register, handleSubmit, formState } = useForm<CreateBookmarkInputSchema>({
+    resolver: zodResolver(createBookmarkInputSchema),
+  })
+  const isModal = searchParams.isModal === 'true'
+
+  const onSubmit = handleSubmit((data) => {
+    createBookmark({
+      variables: {
+        input: {
+          bookmarkGroupId: data.bookmarkGroupId,
+          friendlyName: data.friendlyName,
+          url: data.url,
+        },
+      },
+      onCompleted: () => {
+        closeDialog()
+      },
+    })
+  })
+
+  const closeDialog = () => {
+    isModal ? router.back() : router.push('/')
+  }
+
+  return (
+    <MegaDialog
+      sx={{
+        '.MuiPaper-root': {
+          width: '520px',
+        },
+      }}
+      isMega={!isModal}
+      closeAfterTransition={isModal}
+      TransitionComponent={SlideTransition}
+      open={pathname === '/create-bookmark'}
+      onClose={closeDialog}
+    >
+      <form onSubmit={onSubmit}>
+        <DialogTitle className="!font-koulen">Create Bookmark</DialogTitle>
+        <IconButton
+          aria-label="close"
+          size="medium"
+          sx={{
+            position: 'absolute',
+            right: 12,
+            top: 12,
+          }}
+          onClick={closeDialog}
+        >
+          <AiOutlineClose />
+        </IconButton>
+        <DialogContent>
+          <TextField
+            className="!mb-4"
+            {...register('friendlyName')}
+            label="Friendly Name"
+            fullWidth
+            required
+            FormHelperTextProps={{
+              className: '!text-red-500',
+            }}
+            helperText={formState.errors.friendlyName?.message}
+          />
+          <TextField
+            className="!mb-4"
+            {...register('url')}
+            label="URL"
+            required
+            fullWidth
+            FormHelperTextProps={{
+              className: '!text-red-500',
+            }}
+            helperText={formState.errors.url?.message}
+          />
+          <div>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-helper-label">Bookmark Group</InputLabel>
+              <Select
+                labelId="demo-simple-select-helper-label"
+                {...register('bookmarkGroupId')}
+                fullWidth
+                required
+                label="Bookmark Group"
+                renderValue={(selectedValue) => {
+                  const selectedGroup = bookmarkGroups.find((group) => group.id === selectedValue)
+                  return selectedGroup ? selectedGroup.name : ''
+                }}
+              >
+                {assignDepth(bookmarkGroups, 'parent.id').map((bookmarkGroup) => (
+                  <MenuItem
+                    sx={{ paddingInlineStart: `${12 * bookmarkGroup.depth + 16}px` }}
+                    key={bookmarkGroup.id}
+                    value={bookmarkGroup.id}
+                  >
+                    <span className="mr-2">
+                      {!bookmarkGroup.parent?.id ? <AiFillFolderOpen /> : <AiOutlineFolder />}
+                    </span>
+                    {bookmarkGroup.name}
+                  </MenuItem>
+                ))}
+              </Select>
+              {formState.errors.bookmarkGroupId?.message && (
+                <FormHelperText>{formState.errors.bookmarkGroupId?.message}</FormHelperText>
+              )}
+            </FormControl>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button type="submit">Add bookmark</Button>
+        </DialogActions>
+      </form>
+    </MegaDialog>
+  )
 }
 
 export default CreateBookmarkPage
