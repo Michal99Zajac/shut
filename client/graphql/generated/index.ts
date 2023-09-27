@@ -464,6 +464,70 @@ export function useDeleteBookmarkGroupMutation(baseOptions?: Apollo.MutationHook
 export type DeleteBookmarkGroupMutationHookResult = ReturnType<typeof useDeleteBookmarkGroupMutation>;
 export type DeleteBookmarkGroupMutationResult = Apollo.MutationResult<GQL_DeleteBookmarkGroupMutation>;
 export type DeleteBookmarkGroupMutationOptions = Apollo.BaseMutationOptions<GQL_DeleteBookmarkGroupMutation, GQL_DeleteBookmarkGroupMutationVariables>;
+export const CreateBookmarkDocument = gql`
+    mutation CreateBookmark($input: CreateBookmarkInput!) {
+  createBookmark(input: $input) {
+    id
+  }
+}
+    `;
+export type GQL_CreateBookmarkMutationFn = Apollo.MutationFunction<GQL_CreateBookmarkMutation, GQL_CreateBookmarkMutationVariables>;
+
+/**
+ * __useCreateBookmarkMutation__
+ *
+ * To run a mutation, you first call `useCreateBookmarkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateBookmarkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createBookmarkMutation, { data, loading, error }] = useCreateBookmarkMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateBookmarkMutation(baseOptions?: Apollo.MutationHookOptions<GQL_CreateBookmarkMutation, GQL_CreateBookmarkMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GQL_CreateBookmarkMutation, GQL_CreateBookmarkMutationVariables>(CreateBookmarkDocument, options);
+      }
+export type CreateBookmarkMutationHookResult = ReturnType<typeof useCreateBookmarkMutation>;
+export type CreateBookmarkMutationResult = Apollo.MutationResult<GQL_CreateBookmarkMutation>;
+export type CreateBookmarkMutationOptions = Apollo.BaseMutationOptions<GQL_CreateBookmarkMutation, GQL_CreateBookmarkMutationVariables>;
+export const DeleteBookmarkDocument = gql`
+    mutation DeleteBookmark($id: ID!) {
+  deleteBookmark(id: $id)
+}
+    `;
+export type GQL_DeleteBookmarkMutationFn = Apollo.MutationFunction<GQL_DeleteBookmarkMutation, GQL_DeleteBookmarkMutationVariables>;
+
+/**
+ * __useDeleteBookmarkMutation__
+ *
+ * To run a mutation, you first call `useDeleteBookmarkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteBookmarkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteBookmarkMutation, { data, loading, error }] = useDeleteBookmarkMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteBookmarkMutation(baseOptions?: Apollo.MutationHookOptions<GQL_DeleteBookmarkMutation, GQL_DeleteBookmarkMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GQL_DeleteBookmarkMutation, GQL_DeleteBookmarkMutationVariables>(DeleteBookmarkDocument, options);
+      }
+export type DeleteBookmarkMutationHookResult = ReturnType<typeof useDeleteBookmarkMutation>;
+export type DeleteBookmarkMutationResult = Apollo.MutationResult<GQL_DeleteBookmarkMutation>;
+export type DeleteBookmarkMutationOptions = Apollo.BaseMutationOptions<GQL_DeleteBookmarkMutation, GQL_DeleteBookmarkMutationVariables>;
 export const BookmarkGroupsDocument = gql`
     query BookmarkGroups($filter: BookmarkGroupFilterInput) {
   bookmarkGroups(filter: $filter) {
@@ -589,6 +653,20 @@ export type GQL_DeleteBookmarkGroupMutationVariables = Exact<{
 
 export type GQL_DeleteBookmarkGroupMutation = { __typename?: 'Mutation', deleteBookmarkGroup: string };
 
+export type GQL_CreateBookmarkMutationVariables = Exact<{
+  input: GQL_CreateBookmarkInput;
+}>;
+
+
+export type GQL_CreateBookmarkMutation = { __typename?: 'Mutation', createBookmark: { __typename?: 'Bookmark', id: string } };
+
+export type GQL_DeleteBookmarkMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GQL_DeleteBookmarkMutation = { __typename?: 'Mutation', deleteBookmark: string };
+
 export type GQL_BookmarkGroupsQueryVariables = Exact<{
   filter?: InputMaybe<GQL_BookmarkGroupFilterInput>;
 }>;
@@ -617,7 +695,9 @@ export const namedOperations = {
     SignOut: 'SignOut',
     CreateBookmarkGroup: 'CreateBookmarkGroup',
     UpdateBookmarkGroup: 'UpdateBookmarkGroup',
-    DeleteBookmarkGroup: 'DeleteBookmarkGroup'
+    DeleteBookmarkGroup: 'DeleteBookmarkGroup',
+    CreateBookmark: 'CreateBookmark',
+    DeleteBookmark: 'DeleteBookmark'
   }
 }
 

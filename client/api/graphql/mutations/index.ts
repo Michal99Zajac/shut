@@ -42,3 +42,17 @@ export const deleteBookmarkGroup = gql`
     deleteBookmarkGroup(id: $deleteBookmarkGroupId)
   }
 `
+
+export const createBookmark = gql`
+  mutation CreateBookmark($input: CreateBookmarkInput!) {
+    createBookmark(input: $input) {
+      id
+    }
+  }
+`
+
+export const deleteBookmark = gql`
+  mutation DeleteBookmark($id: ID!) {
+    deleteBookmark(id: $id)
+  }
+`
