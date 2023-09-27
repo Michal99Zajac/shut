@@ -28,6 +28,21 @@ export type GQL_Bookmark = {
   user: GQL_User;
 };
 
+/** Input type for filtering bookmarks */
+export type GQL_BookmarkFilterInput = {
+  /** Bookmark group to filter bookmarks */
+  group?: InputMaybe<GQL_BookmarkFilterInputGroupField>;
+  /** Query string to filter bookmarks */
+  query?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type GQL_BookmarkFilterInputGroupField = {
+  /** Depth of the bookmark group to filter bookmarks */
+  depth?: InputMaybe<Scalars['Int']['input']>;
+  /** Id of the bookmark group to filter bookmarks */
+  id: Scalars['ID']['input'];
+};
+
 /** A bookmark group */
 export type GQL_BookmarkGroup = {
   __typename?: 'BookmarkGroup';
@@ -213,6 +228,7 @@ export type GQL_QueryBookmarkGroupsArgs = {
 export type GQL_QueryBookmarksArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<GQL_BookmarkFilterInput>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -568,8 +584,14 @@ export type BookmarkGroupsQueryHookResult = ReturnType<typeof useBookmarkGroupsQ
 export type BookmarkGroupsLazyQueryHookResult = ReturnType<typeof useBookmarkGroupsLazyQuery>;
 export type BookmarkGroupsQueryResult = Apollo.QueryResult<GQL_BookmarkGroupsQuery, GQL_BookmarkGroupsQueryVariables>;
 export const BookmarksDocument = gql`
-    query Bookmarks($after: String, $before: String, $first: Int, $last: Int) {
-  bookmarks(after: $after, before: $before, first: $first, last: $last) {
+    query Bookmarks($after: String, $before: String, $first: Int, $last: Int, $filter: BookmarkFilterInput) {
+  bookmarks(
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+    filter: $filter
+  ) {
     edges {
       cursor
       node {
@@ -598,6 +620,7 @@ export const BookmarksDocument = gql`
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
+ *      filter: // value for 'filter'
  *   },
  * });
  */
@@ -679,6 +702,7 @@ export type GQL_BookmarksQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+  filter?: InputMaybe<GQL_BookmarkFilterInput>;
 }>;
 
 
@@ -710,6 +734,20 @@ type definedNonNullAny = {};
 export const isDefinedNonNullAny = (v: any): v is definedNonNullAny => v !== undefined && v !== null;
 
 export const definedNonNullAnySchema = z.any().refine((v) => isDefinedNonNullAny(v));
+
+export function GQL_BookmarkFilterInputSchema(): z.ZodObject<Properties<GQL_BookmarkFilterInput>> {
+  return z.object({
+    group: z.lazy(() => GQL_BookmarkFilterInputGroupFieldSchema().nullish()),
+    query: z.string().nullish()
+  })
+}
+
+export function GQL_BookmarkFilterInputGroupFieldSchema(): z.ZodObject<Properties<GQL_BookmarkFilterInputGroupField>> {
+  return z.object({
+    depth: z.number().nullish(),
+    id: z.string()
+  })
+}
 
 export function GQL_BookmarkGroupFilterInputSchema(): z.ZodObject<Properties<GQL_BookmarkGroupFilterInput>> {
   return z.object({

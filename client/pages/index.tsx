@@ -23,6 +23,7 @@ import Link from 'next/link'
 interface Query {
   qGroup: string
   bookmarkGroupId: string
+  qBookmark: string
 }
 
 export function RootPage() {
@@ -42,7 +43,19 @@ export function RootPage() {
   )
   const {
     data: { bookmarks },
-  } = useSuspenseQuery<GQL_BookmarksQuery, GQL_BookmarksQueryVariables>(BookmarksDocument)
+  } = useSuspenseQuery<GQL_BookmarksQuery, GQL_BookmarksQueryVariables>(BookmarksDocument, {
+    variables: {
+      filter: {
+        query: query.query.qBookmark,
+        group: query.query.bookmarkGroupId
+          ? {
+              id: query.query.bookmarkGroupId,
+              depth: 3,
+            }
+          : undefined,
+      },
+    },
+  })
   const bookmarkGroupsToolbox = useBookmarkGroupTreeToolbox(bookmarkGroups)
 
   return (
