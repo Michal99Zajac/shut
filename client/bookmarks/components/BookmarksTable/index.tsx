@@ -5,8 +5,10 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
+import A from '@mui/material/Link'
 
 import { GQL_BookmarksQuery } from '@/graphql/generated'
+import DeleteBookmarkIconButton from '@/bookmarks/components/DeleteBookmarkIconButton'
 
 import { BookmarksTableEmpty } from './components/BookmarksTableEmpty'
 
@@ -22,17 +24,23 @@ export function BookmarksTable({ bookmarks }: BookmarksTableProps) {
       <Table aria-label="bookmarks-table">
         <TableHead>
           <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell align="right">URL</TableCell>
+            <TableCell component="th">Name</TableCell>
+            <TableCell component="th">URL</TableCell>
+            <TableCell component="th" />
           </TableRow>
         </TableHead>
         <TableBody>
           {bookmarks.edges.map(({ node }) => (
             <TableRow key={node.id}>
-              <TableCell component="th" scope="row">
-                {node.friendlyName}
+              <TableCell>{node.friendlyName}</TableCell>
+              <TableCell>
+                <A href={node.url} target="_blank">
+                  {node.url}
+                </A>
               </TableCell>
-              <TableCell align="right">{node.url}</TableCell>
+              <TableCell align="right">
+                <DeleteBookmarkIconButton bookmarkId={node.id} />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
