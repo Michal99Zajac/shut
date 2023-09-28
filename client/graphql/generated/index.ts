@@ -38,7 +38,7 @@ export type GQL_BookmarkFilterInput = {
 
 export type GQL_BookmarkFilterInputGroupField = {
   /** Depth of the bookmark group to filter bookmarks */
-  depth?: InputMaybe<Scalars['Int']['input']>;
+  depth?: Scalars['Int']['input'];
   /** Id of the bookmark group to filter bookmarks */
   id: Scalars['ID']['input'];
 };
@@ -744,7 +744,7 @@ export function GQL_BookmarkFilterInputSchema(): z.ZodObject<Properties<GQL_Book
 
 export function GQL_BookmarkFilterInputGroupFieldSchema(): z.ZodObject<Properties<GQL_BookmarkFilterInputGroupField>> {
   return z.object({
-    depth: z.number().nullish(),
+    depth: z.number(),
     id: z.string()
   })
 }

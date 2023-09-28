@@ -17,6 +17,25 @@ interface BookmarksQuery extends Query {
   select?: Prisma.BookmarkSelect<DefaultArgs>
 }
 
+// TODO: add comments
+const generateBookmarkGroupWhere = (
+  id: string | number,
+  depth: number,
+): Prisma.BookmarkWhereInput['bookmarkGroup'] => {
+  if (depth <= 0) {
+    return { id: id.toString() }
+  }
+
+  return {
+    OR: [
+      { id: id.toString() },
+      {
+        parent: generateBookmarkGroupWhere(id, depth - 1),
+      },
+    ],
+  }
+}
+
 /**
  * GraphQL resolver for retrieving the bookmarks associated with the current authenticated user.
  *
@@ -56,15 +75,7 @@ export const resolveBookmarks = async (
   }
 
   if (filter?.group) {
-    where.bookmarkGroup = {
-      OR: [{ id: filter.group.id.toString() }],
-    }
-
-    if (filter.group.depth) {
-      for (let i = 0; i < filter.group.depth; i++) {
-        // TODO: implement recursive query
-      }
-    }
+    where.bookmarkGroup = generateBookmarkGroupWhere(filter.group.id, filter.group.depth)
   }
 
   return context.prisma.bookmark.findMany({ ...query, where })

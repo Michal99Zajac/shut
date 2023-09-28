@@ -10,7 +10,7 @@ export const BookmarkFilterInputGroupField = builder.inputType('BookmarkFilterIn
       },
     }),
     depth: t.int({
-      required: false,
+      required: true,
       description: 'Depth of the bookmark group to filter bookmarks',
       defaultValue: 0,
       validate: {

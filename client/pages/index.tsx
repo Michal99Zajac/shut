@@ -12,13 +12,13 @@ import {
 import { useSuspenseQuery } from '@apollo/client'
 import { MdCreateNewFolder } from 'react-icons/md'
 import IconButton from '@mui/material/IconButton'
+import Link from 'next/link'
 
 import { BookmarkGroupSearch } from '@/bookmarks/components/BookmarkGroupSearch'
 import { useQuery } from '@/hooks/useQuery'
 import BookmarkSearch from '@/bookmarks/components/BookmarkSearch'
 import BookmarksTable from '@/bookmarks/components/BookmarksTable'
 import { useBookmarkGroupTreeToolbox } from '@/bookmarks/hooks/useBookmarkGroupTreeToolbox'
-import Link from 'next/link'
 
 interface Query {
   qGroup: string
@@ -41,6 +41,7 @@ export function RootPage() {
       fetchPolicy: 'cache-and-network',
     },
   )
+  // TODO: add hook for estimating depth
   const {
     data: { bookmarks },
   } = useSuspenseQuery<GQL_BookmarksQuery, GQL_BookmarksQueryVariables>(BookmarksDocument, {
@@ -50,11 +51,12 @@ export function RootPage() {
         group: query.query.bookmarkGroupId
           ? {
               id: query.query.bookmarkGroupId,
-              depth: 3,
+              depth: 2, // TODO: estimate depth
             }
           : undefined,
       },
     },
+    fetchPolicy: 'cache-and-network',
   })
   const bookmarkGroupsToolbox = useBookmarkGroupTreeToolbox(bookmarkGroups)
 
@@ -76,7 +78,14 @@ export function RootPage() {
           <BookmarkGroupTree toolbox={bookmarkGroupsToolbox} />
         </aside>
         <section>
-          <BookmarkSearch className="!mb-2" />
+          <div className="gap-2 flex mb-2">
+            <BookmarkSearch />
+            <Link href="/create-bookmark?isModal=true">
+              <IconButton size="large" className="!rounded">
+                <MdCreateNewFolder />
+              </IconButton>
+            </Link>
+          </div>
           <BookmarksTable bookmarks={bookmarks} />
         </section>
       </div>

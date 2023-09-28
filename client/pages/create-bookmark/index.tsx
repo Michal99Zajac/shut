@@ -7,7 +7,7 @@ import DialogActions from '@mui/material/DialogActions'
 import IconButton from '@mui/material/IconButton'
 import Button from '@mui/material/Button'
 import { AiFillFolderOpen, AiOutlineClose, AiOutlineFolder } from 'react-icons/ai'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import TextField from '@mui/material/TextField'
 import { useSuspenseQuery } from '@apollo/client'
@@ -36,7 +36,7 @@ export const CreateBookmarkPage: Client.Route = ({ searchParams }) => {
   const pathname = usePathname()
   const router = useRouter()
   const [createBookmark] = useCreateBookmarkMutation({
-    refetchQueries: ['Bookmarks'],
+    refetchQueries: ['Bookmarks', 'BookmarkGroups'],
   })
   const {
     data: { bookmarkGroups },
@@ -46,8 +46,11 @@ export const CreateBookmarkPage: Client.Route = ({ searchParams }) => {
       fetchPolicy: 'cache-and-network',
     },
   )
-  const { register, handleSubmit, formState } = useForm<CreateBookmarkInputSchema>({
+  const { register, handleSubmit, formState, control } = useForm<CreateBookmarkInputSchema>({
     resolver: zodResolver(createBookmarkInputSchema),
+    defaultValues: {
+      bookmarkGroupId: bookmarkGroups[0]?.id ?? '',
+    },
   })
   const isModal = searchParams.isModal === 'true'
 
@@ -122,31 +125,35 @@ export const CreateBookmarkPage: Client.Route = ({ searchParams }) => {
           />
           <div>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-helper-label">Bookmark Group</InputLabel>
-              <Select
-                labelId="demo-simple-select-helper-label"
-                {...register('bookmarkGroupId')}
-                fullWidth
-                required
-                label="Bookmark Group"
-                renderValue={(selectedValue) => {
-                  const selectedGroup = bookmarkGroups.find((group) => group.id === selectedValue)
-                  return selectedGroup ? selectedGroup.name : ''
-                }}
-              >
-                {assignDepth(bookmarkGroups, 'parent.id').map((bookmarkGroup) => (
-                  <MenuItem
-                    sx={{ paddingInlineStart: `${12 * bookmarkGroup.depth + 16}px` }}
-                    key={bookmarkGroup.id}
-                    value={bookmarkGroup.id}
+              <InputLabel id="bookmark-group-label">Bookmark Group</InputLabel>
+              <Controller
+                control={control}
+                name="bookmarkGroupId"
+                render={({ field }) => (
+                  <Select
+                    labelId="bookmark-group-label"
+                    fullWidth
+                    required
+                    label="Bookmark Group"
+                    inputProps={field}
                   >
-                    <span className="mr-2">
-                      {!bookmarkGroup.parent?.id ? <AiFillFolderOpen /> : <AiOutlineFolder />}
-                    </span>
-                    {bookmarkGroup.name}
-                  </MenuItem>
-                ))}
-              </Select>
+                    {assignDepth(bookmarkGroups, 'parent.id').map((bookmarkGroup) => (
+                      <MenuItem
+                        sx={{
+                          paddingInlineStart: `${12 * bookmarkGroup.depth + 16}px`,
+                        }}
+                        key={bookmarkGroup.id}
+                        value={bookmarkGroup.id}
+                      >
+                        <div className="flex gap-2 items-center">
+                          {!bookmarkGroup.parent?.id ? <AiFillFolderOpen /> : <AiOutlineFolder />}
+                          <span>{bookmarkGroup.name}</span>
+                        </div>
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
               {formState.errors.bookmarkGroupId?.message && (
                 <FormHelperText>{formState.errors.bookmarkGroupId?.message}</FormHelperText>
               )}
