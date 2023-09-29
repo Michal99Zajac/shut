@@ -79,7 +79,7 @@ export function RootPage() {
         <section>
           <div className="gap-2 flex mb-2">
             <BookmarkSearch />
-            <Link href="/create-bookmark?isModal=true">
+            <Link href="/bookmarks/create?isModal=true">
               <IconButton size="large" className="!rounded">
                 <MdCreateNewFolder />
               </IconButton>

@@ -15,7 +15,7 @@ export function BookmarksTableEmpty() {
         style={{ width: '300px', height: '300px' }}
         className="mb-4 grayscale object-contain"
       />
-      <Link href="/create-bookmark?isModal=true">
+      <Link href="/bookmarks/create?isModal=true">
         <Button
           variant="text"
           className="!text-gray-400"

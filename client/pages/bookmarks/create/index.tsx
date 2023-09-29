@@ -83,7 +83,7 @@ export const CreateBookmarkPage: Client.Route = ({ searchParams }) => {
       isMega={!isModal}
       closeAfterTransition={isModal}
       TransitionComponent={SlideTransition}
-      open={pathname === '/create-bookmark'}
+      open={pathname === '/bookmarks/create'}
       onClose={closeDialog}
     >
       <form onSubmit={onSubmit}>
