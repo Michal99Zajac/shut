@@ -9,5 +9,6 @@ builder.prismaObject('Bookmark', {
     friendlyName: t.exposeString('friendlyName'),
     description: t.exposeString('description', { nullable: true }),
     user: t.relation('user'),
+    bookmarkGroup: t.relation('bookmarkGroup'),
   }),
 })
