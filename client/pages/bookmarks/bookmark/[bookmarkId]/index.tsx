@@ -36,10 +36,11 @@ import {
 import { assignDepth } from '@/utils/assignDepth'
 import DeleteBookmarkIconButton from '@/bookmarks/components/DeleteBookmarkIconButton'
 
-export const UpdateBookmarkPage: Client.Route<{ bookmarkId: string }> = ({
-  searchParams,
-  params,
-}) => {
+export interface UpdateBookmarkPageProps extends Client.PageProps<{ bookmarkId: string }> {
+  isModal?: boolean
+}
+
+export const UpdateBookmarkPage = ({ isModal, params }: UpdateBookmarkPageProps) => {
   const { bookmarkId } = params
   const pathname = usePathname()
   const router = useRouter()
@@ -71,7 +72,6 @@ export const UpdateBookmarkPage: Client.Route<{ bookmarkId: string }> = ({
       friendlyName: bookmark.bookmark.friendlyName,
     },
   })
-  const isModal = searchParams.isModal === 'true'
 
   const onSubmit = handleSubmit((data) => {
     updateBookmark({

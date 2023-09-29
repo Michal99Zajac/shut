@@ -1,1 +1,12 @@
-export { default } from '@/pages/bookmarks/bookmark/[bookmarkId]'
+import {
+  UpdateBookmarkPage,
+  UpdateBookmarkPageProps,
+} from '@/pages/bookmarks/bookmark/[bookmarkId]'
+
+type UpdateBookmarkModalPageProps = Omit<UpdateBookmarkPageProps, 'isModal'>
+
+const UpdateBookmarkModalPage = (props: UpdateBookmarkModalPageProps) => (
+  <UpdateBookmarkPage {...props} isModal />
+)
+
+export default UpdateBookmarkModalPage

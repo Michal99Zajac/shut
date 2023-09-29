@@ -32,7 +32,11 @@ import {
 } from '@/graphql/generated'
 import { assignDepth } from '@/utils/assignDepth'
 
-export const CreateBookmarkPage: Client.Route = ({ searchParams }) => {
+export interface CreateBookmarkPageProps extends Client.PageProps {
+  isModal?: boolean
+}
+
+export const CreateBookmarkPage = ({ isModal }: CreateBookmarkPageProps) => {
   const pathname = usePathname()
   const router = useRouter()
   const [createBookmark] = useCreateBookmarkMutation({
@@ -52,7 +56,6 @@ export const CreateBookmarkPage: Client.Route = ({ searchParams }) => {
       bookmarkGroupId: bookmarkGroups[0]?.id ?? '',
     },
   })
-  const isModal = searchParams.isModal === 'true'
 
   const onSubmit = handleSubmit((data) => {
     createBookmark({

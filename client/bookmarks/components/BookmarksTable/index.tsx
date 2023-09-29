@@ -43,7 +43,7 @@ export function BookmarksTable({ bookmarks }: BookmarksTableProps) {
               </TableCell>
               <TableCell align="right">
                 <div className="inline-flex gap-2">
-                  <Link href={`/bookmarks/bookmark/${node.id}?isModal=true`}>
+                  <Link href={`/bookmarks/bookmark/${node.id}`}>
                     <IconButton size="small" className="!rounded">
                       <BiEdit />
                     </IconButton>
