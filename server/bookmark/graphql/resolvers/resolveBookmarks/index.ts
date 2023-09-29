@@ -7,6 +7,7 @@ import { InputShape } from '#/common/types/InputShape'
 import { AuthContext } from '#/graphql/context'
 
 import { BookmarkFilterInput } from '../../inputs/BookmarkFilterInput'
+import { generateBookmarkGroupWhere } from './utils/generateBookmarkGroupWhere'
 
 interface Args {
   filter?: InputShape<typeof BookmarkFilterInput> | null
@@ -15,25 +16,6 @@ interface Args {
 interface BookmarksQuery extends Query {
   include?: Prisma.BookmarkInclude<DefaultArgs>
   select?: Prisma.BookmarkSelect<DefaultArgs>
-}
-
-// TODO: add comments
-const generateBookmarkGroupWhere = (
-  id: string | number,
-  depth: number,
-): Prisma.BookmarkWhereInput['bookmarkGroup'] => {
-  if (depth <= 0) {
-    return { id: id.toString() }
-  }
-
-  return {
-    OR: [
-      { id: id.toString() },
-      {
-        parent: generateBookmarkGroupWhere(id, depth - 1),
-      },
-    ],
-  }
 }
 
 /**
