@@ -10,7 +10,7 @@ import {
   BookmarkGroupsDocument,
 } from '@/graphql/generated'
 import { useSuspenseQuery } from '@apollo/client'
-import { MdCreateNewFolder } from 'react-icons/md'
+import { BiBookmarkPlus, BiFolderPlus } from 'react-icons/bi'
 import IconButton from '@mui/material/IconButton'
 import Link from 'next/link'
 
@@ -68,10 +68,11 @@ export function RootPage() {
           <div className="flex gap-2 items-center mb-2">
             <BookmarkGroupSearch />
             <IconButton
+              size="large"
               className="!rounded"
               onClick={() => bookmarkGroupsToolbox.tree.createInput(0)}
             >
-              <MdCreateNewFolder />
+              <BiFolderPlus />
             </IconButton>
           </div>
           <BookmarkGroupTree toolbox={bookmarkGroupsToolbox} />
@@ -81,7 +82,7 @@ export function RootPage() {
             <BookmarkSearch />
             <Link href="/bookmarks/create">
               <IconButton size="large" className="!rounded">
-                <MdCreateNewFolder />
+                <BiBookmarkPlus />
               </IconButton>
             </Link>
           </div>

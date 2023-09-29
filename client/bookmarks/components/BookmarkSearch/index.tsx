@@ -2,7 +2,7 @@
 
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
-import { TbWorldSearch } from 'react-icons/tb'
+import { BiSearchAlt2 } from 'react-icons/bi'
 
 import { useQuery } from '@/hooks/useQuery'
 import { useState } from 'react'
@@ -36,7 +36,7 @@ export function BookmarkSearch({ className }: BookmarkSearchProps) {
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
-            <TbWorldSearch />
+            <BiSearchAlt2 />
           </InputAdornment>
         ),
       }}

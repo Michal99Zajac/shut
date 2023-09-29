@@ -6,7 +6,8 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import IconButton from '@mui/material/IconButton'
 import Button from '@mui/material/Button'
-import { AiFillFolderOpen, AiOutlineClose, AiOutlineFolder } from 'react-icons/ai'
+import { AiOutlineClose } from 'react-icons/ai'
+import { BiFolder, BiFolderOpen } from 'react-icons/bi'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import TextField from '@mui/material/TextField'
@@ -149,7 +150,7 @@ export const CreateBookmarkPage = ({ isModal }: CreateBookmarkPageProps) => {
                         value={bookmarkGroup.id}
                       >
                         <div className="flex gap-2 items-center">
-                          {!bookmarkGroup.parent?.id ? <AiFillFolderOpen /> : <AiOutlineFolder />}
+                          {!bookmarkGroup.parent?.id ? <BiFolderOpen /> : <BiFolder />}
                           <span>{bookmarkGroup.name}</span>
                         </div>
                       </MenuItem>

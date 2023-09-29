@@ -4,7 +4,7 @@ import { useState } from 'react'
 import useDebounce from 'react-use/lib/useDebounce'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
-import { TbListSearch } from 'react-icons/tb'
+import { BiFileFind } from 'react-icons/bi'
 
 import useQuery from '@/hooks/useQuery'
 
@@ -26,14 +26,14 @@ export function BookmarkGroupSearch() {
   return (
     <TextField
       fullWidth
-      size="small"
+      size="medium"
       placeholder="Search Bookmark Group"
       value={search}
       onChange={(e) => setSearch(e.target.value)}
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
-            <TbListSearch />
+            <BiFileFind />
           </InputAdornment>
         ),
       }}

@@ -1,12 +1,7 @@
 import clsx from 'clsx'
 import React from 'react'
-import {
-  AiOutlineFolder,
-  AiFillFolder,
-  AiFillFolderOpen,
-  AiOutlineCaretDown,
-  AiOutlineCaretUp,
-} from 'react-icons/ai'
+import { AiOutlineFolder, AiOutlineCaretDown, AiOutlineCaretUp } from 'react-icons/ai'
+import { BiFolder, BiFolderOpen } from 'react-icons/bi'
 import { IconButton } from '@mui/material'
 import { BsThreeDots } from 'react-icons/bs'
 
@@ -57,7 +52,7 @@ export const Node = ({
         )}
       </span>
       <span className="mr-2">
-        {!hasChild ? <AiOutlineFolder /> : isOpen ? <AiFillFolderOpen /> : <AiFillFolder />}
+        {!hasChild ? <AiOutlineFolder /> : isOpen ? <BiFolderOpen /> : <BiFolder />}
       </span>
       <span className="overflow-hidden text-ellipsis whitespace-nowrap">{text}</span>
       <div className="grow" />
