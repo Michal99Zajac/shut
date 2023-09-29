@@ -34,6 +34,7 @@ import {
   useUpdateBookmarkMutation,
 } from '@/graphql/generated'
 import { assignDepth } from '@/utils/assignDepth'
+import DeleteBookmarkIconButton from '@/bookmarks/components/DeleteBookmarkIconButton'
 
 export const UpdateBookmarkPage: Client.Route<{ bookmarkId: string }> = ({
   searchParams,
@@ -179,8 +180,11 @@ export const UpdateBookmarkPage: Client.Route<{ bookmarkId: string }> = ({
             </FormControl>
           </div>
         </DialogContent>
-        <DialogActions>
-          <Button type="submit">Update bookmark</Button>
+        <DialogActions className="!flex !justify-between">
+          <DeleteBookmarkIconButton bookmarkId={bookmarkId} size="medium" onDeleted={closeDialog} />
+          <Button size="large" type="submit">
+            Update bookmark
+          </Button>
         </DialogActions>
       </form>
     </MegaDialog>

@@ -7,6 +7,8 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import A from '@mui/material/Link'
 import Link from 'next/link'
+import { BiEdit } from 'react-icons/bi'
+import IconButton from '@mui/material/IconButton'
 
 import { GQL_BookmarksQuery } from '@/graphql/generated'
 import DeleteBookmarkIconButton from '@/bookmarks/components/DeleteBookmarkIconButton'
@@ -40,8 +42,14 @@ export function BookmarksTable({ bookmarks }: BookmarksTableProps) {
                 </A>
               </TableCell>
               <TableCell align="right">
-                <DeleteBookmarkIconButton bookmarkId={node.id} />
-                <Link href={`/bookmarks/bookmark/${node.id}?isModal=true`}>update</Link>
+                <div className="inline-flex gap-2">
+                  <Link href={`/bookmarks/bookmark/${node.id}?isModal=true`}>
+                    <IconButton size="small" className="!rounded">
+                      <BiEdit />
+                    </IconButton>
+                  </Link>
+                  <DeleteBookmarkIconButton bookmarkId={node.id} />
+                </div>
               </TableCell>
             </TableRow>
           ))}

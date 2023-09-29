@@ -11,6 +11,13 @@ export const theme = createTheme({
     },
   },
   components: {
+    MuiDialogActions: {
+      styleOverrides: {
+        root: {
+          padding: '16px 24px',
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
