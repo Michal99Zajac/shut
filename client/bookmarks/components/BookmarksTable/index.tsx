@@ -6,6 +6,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import A from '@mui/material/Link'
+import Link from 'next/link'
 
 import { GQL_BookmarksQuery } from '@/graphql/generated'
 import DeleteBookmarkIconButton from '@/bookmarks/components/DeleteBookmarkIconButton'
@@ -40,6 +41,7 @@ export function BookmarksTable({ bookmarks }: BookmarksTableProps) {
               </TableCell>
               <TableCell align="right">
                 <DeleteBookmarkIconButton bookmarkId={node.id} />
+                <Link href={`/bookmarks/bookmark/${node.id}?isModal=true`}>update</Link>
               </TableCell>
             </TableRow>
           ))}
