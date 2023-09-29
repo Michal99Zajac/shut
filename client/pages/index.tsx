@@ -19,6 +19,7 @@ import { useQuery } from '@/hooks/useQuery'
 import BookmarkSearch from '@/bookmarks/components/BookmarkSearch'
 import BookmarksTable from '@/bookmarks/components/BookmarksTable'
 import { useBookmarkGroupTreeToolbox } from '@/bookmarks/hooks/useBookmarkGroupTreeToolbox'
+import useBookmarksFilter from '@/bookmarks/hooks/useBookmarksFilter'
 
 interface Query {
   bookmarkGroupQuery: string
@@ -41,20 +42,18 @@ export function RootPage() {
       fetchPolicy: 'cache-and-network',
     },
   )
-  // TODO: add hook for estimating depth
+  const bookmarksFilter = useBookmarksFilter({
+    query: {
+      bookmarkGroupId: query.query.bookmarkGroupId,
+      bookmarkQuery: query.query.bookmarkQuery,
+    },
+    bookmarkGroups: bookmarkGroups,
+  })
   const {
     data: { bookmarks },
   } = useSuspenseQuery<GQL_BookmarksQuery, GQL_BookmarksQueryVariables>(BookmarksDocument, {
     variables: {
-      filter: {
-        query: query.query.bookmarkQuery,
-        group: query.query.bookmarkGroupId
-          ? {
-              id: query.query.bookmarkGroupId,
-              depth: 2, // TODO: estimate depth
-            }
-          : undefined,
-      },
+      filter: bookmarksFilter,
     },
     fetchPolicy: 'cache-and-network',
   })
