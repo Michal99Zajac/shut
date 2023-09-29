@@ -9,15 +9,15 @@ import { TbListSearch } from 'react-icons/tb'
 import useQuery from '@/hooks/useQuery'
 
 export function BookmarkGroupSearch() {
-  const query = useQuery<{ qGroup: string }>()
-  const [search, setSearch] = useState(query.query.qGroup || '')
+  const query = useQuery<{ bookmarkGroupQuery: string }>()
+  const [search, setSearch] = useState(query.query.bookmarkGroupQuery || '')
 
   useDebounce(
     () => {
       // do nothing if search is empty and query is empty
       // It avoids unnecessary re-rendering
-      if (search === '' && !query.query.qGroup) return
-      query.set('qGroup', search)
+      if (search === '' && !query.query.bookmarkGroupQuery) return
+      query.set('bookmarkGroupQuery', search)
     },
     300,
     [search],

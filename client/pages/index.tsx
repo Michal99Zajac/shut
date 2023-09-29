@@ -21,9 +21,9 @@ import BookmarksTable from '@/bookmarks/components/BookmarksTable'
 import { useBookmarkGroupTreeToolbox } from '@/bookmarks/hooks/useBookmarkGroupTreeToolbox'
 
 interface Query {
-  qGroup: string
+  bookmarkGroupQuery: string
   bookmarkGroupId: string
-  qBookmark: string
+  bookmarkQuery: string
 }
 
 export function RootPage() {
@@ -35,7 +35,7 @@ export function RootPage() {
     {
       variables: {
         filter: {
-          query: query.query.qGroup,
+          query: query.query.bookmarkGroupQuery,
         },
       },
       fetchPolicy: 'cache-and-network',
@@ -47,7 +47,7 @@ export function RootPage() {
   } = useSuspenseQuery<GQL_BookmarksQuery, GQL_BookmarksQueryVariables>(BookmarksDocument, {
     variables: {
       filter: {
-        query: query.query.qBookmark,
+        query: query.query.bookmarkQuery,
         group: query.query.bookmarkGroupId
           ? {
               id: query.query.bookmarkGroupId,

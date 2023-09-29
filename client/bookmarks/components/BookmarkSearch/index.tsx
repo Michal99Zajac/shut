@@ -9,7 +9,7 @@ import { useState } from 'react'
 import useDebounce from 'react-use/lib/useDebounce'
 
 interface Query {
-  qBookmark: string
+  bookmarkQuery: string
 }
 
 interface BookmarkSearchProps {
@@ -18,11 +18,11 @@ interface BookmarkSearchProps {
 
 export function BookmarkSearch({ className }: BookmarkSearchProps) {
   const query = useQuery<Query>()
-  const [search, setSearch] = useState(query.query.qBookmark || '')
+  const [search, setSearch] = useState(query.query.bookmarkQuery || '')
 
   useDebounce(
     () => {
-      query.set('qBookmark', search)
+      query.set('bookmarkQuery', search)
     },
     300,
     [search],
