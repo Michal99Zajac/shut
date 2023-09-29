@@ -32,3 +32,17 @@ export const bookmarks = gql`
     }
   }
 `
+
+export const bookmark = gql`
+  query Bookmark($id: ID!) {
+    bookmark(id: $id) {
+      description
+      friendlyName
+      id
+      url
+      bookmarkGroup {
+        id
+      }
+    }
+  }
+`

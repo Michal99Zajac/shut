@@ -21,6 +21,7 @@ export type Scalars = {
 /** A bookmark */
 export type GQL_Bookmark = {
   __typename?: 'Bookmark';
+  bookmarkGroup: GQL_BookmarkGroup;
   description?: Maybe<Scalars['String']['output']>;
   friendlyName: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -544,6 +545,40 @@ export function useDeleteBookmarkMutation(baseOptions?: Apollo.MutationHookOptio
 export type DeleteBookmarkMutationHookResult = ReturnType<typeof useDeleteBookmarkMutation>;
 export type DeleteBookmarkMutationResult = Apollo.MutationResult<GQL_DeleteBookmarkMutation>;
 export type DeleteBookmarkMutationOptions = Apollo.BaseMutationOptions<GQL_DeleteBookmarkMutation, GQL_DeleteBookmarkMutationVariables>;
+export const UpdateBookmarkDocument = gql`
+    mutation UpdateBookmark($id: ID!, $input: UpdateBookmarkInput!) {
+  updateBookmark(id: $id, input: $input) {
+    id
+  }
+}
+    `;
+export type GQL_UpdateBookmarkMutationFn = Apollo.MutationFunction<GQL_UpdateBookmarkMutation, GQL_UpdateBookmarkMutationVariables>;
+
+/**
+ * __useUpdateBookmarkMutation__
+ *
+ * To run a mutation, you first call `useUpdateBookmarkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateBookmarkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateBookmarkMutation, { data, loading, error }] = useUpdateBookmarkMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateBookmarkMutation(baseOptions?: Apollo.MutationHookOptions<GQL_UpdateBookmarkMutation, GQL_UpdateBookmarkMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GQL_UpdateBookmarkMutation, GQL_UpdateBookmarkMutationVariables>(UpdateBookmarkDocument, options);
+      }
+export type UpdateBookmarkMutationHookResult = ReturnType<typeof useUpdateBookmarkMutation>;
+export type UpdateBookmarkMutationResult = Apollo.MutationResult<GQL_UpdateBookmarkMutation>;
+export type UpdateBookmarkMutationOptions = Apollo.BaseMutationOptions<GQL_UpdateBookmarkMutation, GQL_UpdateBookmarkMutationVariables>;
 export const BookmarkGroupsDocument = gql`
     query BookmarkGroups($filter: BookmarkGroupFilterInput) {
   bookmarkGroups(filter: $filter) {
@@ -635,6 +670,47 @@ export function useBookmarksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type BookmarksQueryHookResult = ReturnType<typeof useBookmarksQuery>;
 export type BookmarksLazyQueryHookResult = ReturnType<typeof useBookmarksLazyQuery>;
 export type BookmarksQueryResult = Apollo.QueryResult<GQL_BookmarksQuery, GQL_BookmarksQueryVariables>;
+export const BookmarkDocument = gql`
+    query Bookmark($id: ID!) {
+  bookmark(id: $id) {
+    description
+    friendlyName
+    id
+    url
+    bookmarkGroup {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useBookmarkQuery__
+ *
+ * To run a query within a React component, call `useBookmarkQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBookmarkQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBookmarkQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useBookmarkQuery(baseOptions: Apollo.QueryHookOptions<GQL_BookmarkQuery, GQL_BookmarkQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GQL_BookmarkQuery, GQL_BookmarkQueryVariables>(BookmarkDocument, options);
+      }
+export function useBookmarkLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GQL_BookmarkQuery, GQL_BookmarkQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GQL_BookmarkQuery, GQL_BookmarkQueryVariables>(BookmarkDocument, options);
+        }
+export type BookmarkQueryHookResult = ReturnType<typeof useBookmarkQuery>;
+export type BookmarkLazyQueryHookResult = ReturnType<typeof useBookmarkLazyQuery>;
+export type BookmarkQueryResult = Apollo.QueryResult<GQL_BookmarkQuery, GQL_BookmarkQueryVariables>;
 export type GQL_SignInMutationVariables = Exact<{
   input: GQL_SignInInput;
 }>;
@@ -690,6 +766,14 @@ export type GQL_DeleteBookmarkMutationVariables = Exact<{
 
 export type GQL_DeleteBookmarkMutation = { __typename?: 'Mutation', deleteBookmark: string };
 
+export type GQL_UpdateBookmarkMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  input: GQL_UpdateBookmarkInput;
+}>;
+
+
+export type GQL_UpdateBookmarkMutation = { __typename?: 'Mutation', updateBookmark: { __typename?: 'Bookmark', id: string } };
+
 export type GQL_BookmarkGroupsQueryVariables = Exact<{
   filter?: InputMaybe<GQL_BookmarkGroupFilterInput>;
 }>;
@@ -708,10 +792,18 @@ export type GQL_BookmarksQueryVariables = Exact<{
 
 export type GQL_BookmarksQuery = { __typename?: 'Query', bookmarks: { __typename?: 'QueryBookmarksConnection', edges: Array<{ __typename?: 'QueryBookmarksConnectionEdge', cursor: string, node: { __typename?: 'Bookmark', friendlyName: string, id: string, url: string } }> } };
 
+export type GQL_BookmarkQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GQL_BookmarkQuery = { __typename?: 'Query', bookmark: { __typename?: 'Bookmark', description?: string | null, friendlyName: string, id: string, url: string, bookmarkGroup: { __typename?: 'BookmarkGroup', id: string } } };
+
 export const namedOperations = {
   Query: {
     BookmarkGroups: 'BookmarkGroups',
-    Bookmarks: 'Bookmarks'
+    Bookmarks: 'Bookmarks',
+    Bookmark: 'Bookmark'
   },
   Mutation: {
     SignIn: 'SignIn',
@@ -721,7 +813,8 @@ export const namedOperations = {
     UpdateBookmarkGroup: 'UpdateBookmarkGroup',
     DeleteBookmarkGroup: 'DeleteBookmarkGroup',
     CreateBookmark: 'CreateBookmark',
-    DeleteBookmark: 'DeleteBookmark'
+    DeleteBookmark: 'DeleteBookmark',
+    UpdateBookmark: 'UpdateBookmark'
   }
 }
 

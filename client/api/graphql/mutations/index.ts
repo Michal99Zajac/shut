@@ -56,3 +56,11 @@ export const deleteBookmark = gql`
     deleteBookmark(id: $id)
   }
 `
+
+export const updateBookmark = gql`
+  mutation UpdateBookmark($id: ID!, $input: UpdateBookmarkInput!) {
+    updateBookmark(id: $id, input: $input) {
+      id
+    }
+  }
+`
