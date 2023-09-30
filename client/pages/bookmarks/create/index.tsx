@@ -33,11 +33,12 @@ import {
 } from '@/graphql/generated'
 import { assignDepth } from '@/utils/assignDepth'
 
-export interface CreateBookmarkPageProps extends Client.PageProps {
+export type CreateBookmarkPageProps = Client.PageProps
+export interface RichCreateBookmarkPageProps extends CreateBookmarkPageProps {
   isModal?: boolean
 }
 
-export const CreateBookmarkPage = ({ isModal }: CreateBookmarkPageProps) => {
+export const CreateBookmarkPage = ({ isModal }: RichCreateBookmarkPageProps) => {
   const pathname = usePathname()
   const router = useRouter()
   const [createBookmark] = useCreateBookmarkMutation({

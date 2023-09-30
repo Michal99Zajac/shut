@@ -3,10 +3,5 @@ import {
   UpdateBookmarkPageProps,
 } from '@/pages/bookmarks/bookmark/[bookmarkId]'
 
-type UpdateBookmarkModalPageProps = Omit<UpdateBookmarkPageProps, 'isModal'>
-
-const UpdateBookmarkModalPage = (props: UpdateBookmarkModalPageProps) => (
-  <UpdateBookmarkPage {...props} isModal />
-)
-
-export default UpdateBookmarkModalPage
+// eslint-disable-next-line import/no-anonymous-default-export, react/display-name
+export default (props: UpdateBookmarkPageProps) => <UpdateBookmarkPage {...props} isModal />

@@ -1,9 +1,4 @@
 import { CreateBookmarkPage, CreateBookmarkPageProps } from '@/pages/bookmarks/create'
 
-type CreateBookmarkModalPageProps = Omit<CreateBookmarkPageProps, 'isModal'>
-
-const CreateBookmarkModalPage = (props: CreateBookmarkModalPageProps) => (
-  <CreateBookmarkPage {...props} isModal />
-)
-
-export default CreateBookmarkModalPage
+// eslint-disable-next-line react/display-name, import/no-anonymous-default-export
+export default (props: CreateBookmarkPageProps) => <CreateBookmarkPage {...props} isModal />

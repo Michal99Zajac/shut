@@ -37,11 +37,12 @@ import {
 import { assignDepth } from '@/utils/assignDepth'
 import DeleteBookmarkIconButton from '@/bookmarks/components/DeleteBookmarkIconButton'
 
-export interface UpdateBookmarkPageProps extends Client.PageProps<{ bookmarkId: string }> {
+export type UpdateBookmarkPageProps = Client.PageProps<{ bookmarkId: string }>
+export interface RichUpdateBookmarkPageProps extends UpdateBookmarkPageProps {
   isModal?: boolean
 }
 
-export const UpdateBookmarkPage = ({ isModal, params }: UpdateBookmarkPageProps) => {
+export const UpdateBookmarkPage = ({ isModal, params }: RichUpdateBookmarkPageProps) => {
   const { bookmarkId } = params
   const pathname = usePathname()
   const router = useRouter()
