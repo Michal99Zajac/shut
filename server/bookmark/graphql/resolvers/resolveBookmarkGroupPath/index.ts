@@ -22,7 +22,7 @@ export const resolveBookmarkGroupPath = async (
   context: Context,
 ) => {
   if (!bookmarkGroup.parentId) {
-    return parent.name
+    return bookmarkGroup.name
   }
 
   // Get the nested bookmark group
