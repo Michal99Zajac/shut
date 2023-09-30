@@ -33,7 +33,7 @@ export const resolveCreateBookmarkGroup = async (
 ) => {
   const { input } = args
 
-  const data: Prisma.Args<typeof context.prisma.bookmarkGroup, 'create'>['data'] = {
+  const data: Prisma.BookmarkGroupCreateInput = {
     name: input.name,
     description: input.description,
     user: {
@@ -44,9 +44,16 @@ export const resolveCreateBookmarkGroup = async (
   }
 
   if (input.parentId) {
+    const parent = await context.prisma.bookmarkGroup.findFirstOrThrow({
+      where: {
+        id: input.parentId.toString(),
+      },
+    })
+
+    data.depth = parent.depth + 1
     data.parent = {
       connect: {
-        id: input.parentId.toString(),
+        id: parent.id,
       },
     }
   }

@@ -35,21 +35,29 @@ export const resolveUpdateBookmarkGroup = async (
 ) => {
   const { input, id } = args
 
-  const data: Prisma.Args<typeof context.prisma.bookmarkGroup, 'update'>['data'] = {
+  const data: Prisma.BookmarkGroupUpdateInput = {
     description: input.description === null ? null : input.description,
     name: input.name ? input.name : undefined,
   }
 
   if (input.parentId === null) {
+    data.depth = 0
     data.parent = {
       disconnect: true,
     }
   }
 
   if (input.parentId) {
+    const parent = await context.prisma.bookmarkGroup.findFirstOrThrow({
+      where: {
+        id: input.parentId.toString(),
+      },
+    })
+
+    data.depth = parent.depth + 1
     data.parent = {
       connect: {
-        id: input.parentId.toString(),
+        id: parent.id,
       },
     }
   }
