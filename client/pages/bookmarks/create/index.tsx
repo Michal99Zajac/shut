@@ -31,7 +31,6 @@ import {
   GQL_BookmarkGroupsQueryVariables,
   useCreateBookmarkMutation,
 } from '@/graphql/generated'
-import { assignDepth } from '@/utils/assignDepth'
 
 export type CreateBookmarkPageProps = Client.PageProps
 export interface RichCreateBookmarkPageProps extends CreateBookmarkPageProps {
@@ -142,7 +141,7 @@ export const CreateBookmarkPage = ({ isModal }: RichCreateBookmarkPageProps) => 
                     label="Bookmark Group"
                     inputProps={field}
                   >
-                    {assignDepth(bookmarkGroups, 'parent.id').map((bookmarkGroup) => (
+                    {bookmarkGroups.map((bookmarkGroup) => (
                       <MenuItem
                         sx={{
                           paddingInlineStart: `${12 * bookmarkGroup.depth + 16}px`,

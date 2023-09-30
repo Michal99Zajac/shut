@@ -5,6 +5,7 @@ export const bookmarkGroups = gql`
     bookmarkGroups(filter: $filter) {
       id
       name
+      depth
       parent {
         id
       }
@@ -27,6 +28,11 @@ export const bookmarks = gql`
           friendlyName
           id
           url
+          bookmarkGroup {
+            id
+            name
+            path
+          }
         }
       }
     }

@@ -29,6 +29,7 @@ export function BookmarksTable({ bookmarks }: BookmarksTableProps) {
           <TableRow>
             <TableCell component="th">Name</TableCell>
             <TableCell component="th">URL</TableCell>
+            <TableCell component="th">Group</TableCell>
             <TableCell component="th" />
           </TableRow>
         </TableHead>
@@ -40,6 +41,11 @@ export function BookmarksTable({ bookmarks }: BookmarksTableProps) {
                 <A href={node.url} target="_blank">
                   {node.url}
                 </A>
+              </TableCell>
+              <TableCell>
+                <span className="rounded-full px-2 bg-primary-200 leading-6 text-primary inline-block">
+                  {node.bookmarkGroup.path}
+                </span>
               </TableCell>
               <TableCell align="right">
                 <div className="inline-flex gap-2">

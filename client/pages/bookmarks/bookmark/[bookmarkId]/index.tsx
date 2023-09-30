@@ -34,7 +34,6 @@ import {
   GQL_BookmarkQueryVariables,
   useUpdateBookmarkMutation,
 } from '@/graphql/generated'
-import { assignDepth } from '@/utils/assignDepth'
 import DeleteBookmarkIconButton from '@/bookmarks/components/DeleteBookmarkIconButton'
 
 export type UpdateBookmarkPageProps = Client.PageProps<{ bookmarkId: string }>
@@ -159,7 +158,7 @@ export const UpdateBookmarkPage = ({ isModal, params }: RichUpdateBookmarkPagePr
                     label="Bookmark Group"
                     inputProps={field}
                   >
-                    {assignDepth(bookmarkGroups, 'parent.id').map((bookmarkGroup) => (
+                    {bookmarkGroups.map((bookmarkGroup) => (
                       <MenuItem
                         sx={{
                           paddingInlineStart: `${12 * bookmarkGroup.depth + 16}px`,

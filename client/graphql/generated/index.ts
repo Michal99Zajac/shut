@@ -49,10 +49,13 @@ export type GQL_BookmarkGroup = {
   __typename?: 'BookmarkGroup';
   bookmarks: GQL_BookmarkGroupBookmarksConnection;
   children: GQL_BookmarkGroupChildrenConnection;
+  depth: Scalars['Int']['output'];
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
   parent?: Maybe<GQL_BookmarkGroup>;
+  /** The path of the bookmark group */
+  path: Scalars['String']['output'];
   user: GQL_User;
 };
 
@@ -584,6 +587,7 @@ export const BookmarkGroupsDocument = gql`
   bookmarkGroups(filter: $filter) {
     id
     name
+    depth
     parent {
       id
     }
@@ -633,6 +637,11 @@ export const BookmarksDocument = gql`
         friendlyName
         id
         url
+        bookmarkGroup {
+          id
+          name
+          path
+        }
       }
     }
   }
@@ -779,7 +788,7 @@ export type GQL_BookmarkGroupsQueryVariables = Exact<{
 }>;
 
 
-export type GQL_BookmarkGroupsQuery = { __typename?: 'Query', bookmarkGroups: Array<{ __typename?: 'BookmarkGroup', id: string, name: string, parent?: { __typename?: 'BookmarkGroup', id: string } | null }> };
+export type GQL_BookmarkGroupsQuery = { __typename?: 'Query', bookmarkGroups: Array<{ __typename?: 'BookmarkGroup', id: string, name: string, depth: number, parent?: { __typename?: 'BookmarkGroup', id: string } | null }> };
 
 export type GQL_BookmarksQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']['input']>;
@@ -790,7 +799,7 @@ export type GQL_BookmarksQueryVariables = Exact<{
 }>;
 
 
-export type GQL_BookmarksQuery = { __typename?: 'Query', bookmarks: { __typename?: 'QueryBookmarksConnection', edges: Array<{ __typename?: 'QueryBookmarksConnectionEdge', cursor: string, node: { __typename?: 'Bookmark', friendlyName: string, id: string, url: string } }> } };
+export type GQL_BookmarksQuery = { __typename?: 'Query', bookmarks: { __typename?: 'QueryBookmarksConnection', edges: Array<{ __typename?: 'QueryBookmarksConnectionEdge', cursor: string, node: { __typename?: 'Bookmark', friendlyName: string, id: string, url: string, bookmarkGroup: { __typename?: 'BookmarkGroup', id: string, name: string, path: string } } }> } };
 
 export type GQL_BookmarkQueryVariables = Exact<{
   id: Scalars['ID']['input'];
