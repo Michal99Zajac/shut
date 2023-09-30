@@ -37,7 +37,8 @@ export interface RichCreateBookmarkPageProps extends CreateBookmarkPageProps {
   isModal?: boolean
 }
 
-export const CreateBookmarkPage = ({ isModal }: RichCreateBookmarkPageProps) => {
+export const CreateBookmarkPage = ({ isModal, searchParams }: RichCreateBookmarkPageProps) => {
+  const { bookmarkGroupId = '' } = searchParams
   const pathname = usePathname()
   const router = useRouter()
   const [createBookmark] = useCreateBookmarkMutation({
@@ -54,7 +55,7 @@ export const CreateBookmarkPage = ({ isModal }: RichCreateBookmarkPageProps) => 
   const { register, handleSubmit, formState, control } = useForm<CreateBookmarkInputSchema>({
     resolver: zodResolver(createBookmarkInputSchema),
     defaultValues: {
-      bookmarkGroupId: bookmarkGroups[0]?.id ?? '',
+      bookmarkGroupId: bookmarkGroupId,
     },
   })
 
