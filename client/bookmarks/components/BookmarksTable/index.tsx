@@ -23,13 +23,35 @@ export function BookmarksTable({ bookmarks }: BookmarksTableProps) {
   if (bookmarks.edges.length === 0) return <BookmarksTableEmpty />
 
   return (
-    <TableContainer component={Paper} className="!bg-gray-50 !shadow-none">
+    <TableContainer
+      component={Paper}
+      sx={{
+        background: '#f8fafc',
+        thead: {
+          th: {
+            borderBottom: '2px solid #f8fafc',
+          },
+        },
+        tbody: {
+          td: {
+            borderBottom: 'none',
+          },
+        },
+      }}
+      className="!border-2 !border-gray-50 !shadow-none"
+    >
       <Table aria-label="bookmarks-table">
         <TableHead>
           <TableRow>
-            <TableCell component="th">Name</TableCell>
-            <TableCell component="th">URL</TableCell>
-            <TableCell component="th">Group</TableCell>
+            <TableCell component="th">
+              <span className="font-semibold text-gray-400">Name</span>
+            </TableCell>
+            <TableCell component="th">
+              <span className="font-semibold text-gray-400">URL</span>
+            </TableCell>
+            <TableCell component="th">
+              <span className="font-semibold text-gray-400">Group</span>
+            </TableCell>
             <TableCell component="th" />
           </TableRow>
         </TableHead>
