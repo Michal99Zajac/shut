@@ -49,7 +49,7 @@ export function AppLayout({ children, bookmarkModal }: AppLayoutProps) {
           </form>
         </div>
       </header>
-      <main className="px-4">{children}</main>
+      <main className="px-6">{children}</main>
     </>
   )
 }
