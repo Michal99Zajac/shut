@@ -2,8 +2,9 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import ListItemText from '@mui/material/ListItemText'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import { BiFolderMinus, BiFolderPlus, BiRename } from 'react-icons/bi'
+import { BiBookmarkPlus, BiFolderMinus, BiFolderPlus, BiRename } from 'react-icons/bi'
 import Divider from '@mui/material/Divider'
+import { useRouter } from 'next/navigation'
 
 import { BookmarkTree } from '@/components/BookmarkTree'
 import { BookmarkGroupTreeToolbox } from '@/bookmarks/hooks/useBookmarkGroupTreeToolbox'
@@ -15,6 +16,8 @@ export interface BookmarkGroupTreeProps {
 }
 
 export function BookmarkGroupTree({ toolbox }: BookmarkGroupTreeProps) {
+  const router = useRouter()
+
   if (toolbox.tree.tree.length === 0)
     return <EmptyTree onCreate={() => toolbox.tree.createInput(0)} />
 
@@ -50,6 +53,17 @@ export function BookmarkGroupTree({ toolbox }: BookmarkGroupTreeProps) {
             <BiRename />
           </ListItemIcon>
           <ListItemText>Rename</ListItemText>
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            router.push(`/bookmarks/create?bookmarkGroupId=${toolbox.menu.anchor?.id}`)
+            toolbox.menu.closeMenu()
+          }}
+        >
+          <ListItemIcon>
+            <BiBookmarkPlus />
+          </ListItemIcon>
+          <ListItemText>Add Bookmark</ListItemText>
         </MenuItem>
         <Divider />
         <MenuItem onClick={toolbox.menu.deleteBookmarkGroup}>
