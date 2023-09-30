@@ -1,5 +1,7 @@
 import builder from '#/graphql/builder'
 
+import resolveBookmarkGroupPath from '../../resolvers/resolveBookmarkGroupPath'
+
 builder.prismaObject('BookmarkGroup', {
   name: 'BookmarkGroup',
   description: 'A bookmark group',
@@ -14,6 +16,11 @@ builder.prismaObject('BookmarkGroup', {
       cursor: 'id',
     }),
     parent: t.relation('parent', { nullable: true }),
+    depth: t.exposeInt('depth'),
+    path: t.string({
+      description: 'The path of the bookmark group',
+      resolve: resolveBookmarkGroupPath,
+    }),
     user: t.relation('user'),
   }),
 })
