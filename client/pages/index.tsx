@@ -13,6 +13,7 @@ import { useSuspenseQuery } from '@apollo/client'
 import { BiBookmarkPlus, BiFolderPlus } from 'react-icons/bi'
 import IconButton from '@mui/material/IconButton'
 import Link from 'next/link'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
 
 import { BookmarkGroupSearch } from '@/bookmarks/components/BookmarkGroupSearch'
 import { useQuery } from '@/hooks/useQuery'
@@ -61,9 +62,13 @@ export function RootPage() {
 
   return (
     <>
-      <h1 className="font-koulen text-4xl">Dashboard</h1>
-      <p className="text-gray-500">Welcome to your dashboard!</p>
-      <div className="grid grid-cols-dashboard gap-4">
+      <Breadcrumbs aria-label="breadcrumb">
+        <Link href="/" className="font-koulen hover:underline">
+          SHUT
+        </Link>
+        <p className="font-koulen">Dashboard</p>
+      </Breadcrumbs>
+      <div className="grid grid-cols-dashboard gap-6 mt-4">
         <aside>
           <div className="flex gap-2 items-center mb-2">
             <BookmarkGroupSearch />
