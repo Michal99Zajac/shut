@@ -36,6 +36,7 @@ model BookmarkGroup {
   bookmarks   Bookmark[]
   userId      String
   parentId    String?
+  depth       Int        @default(0)
 
   children BookmarkGroup[] @relation("BookmarkGroupsToBookmarkGroups")
   parent   BookmarkGroup?  @relation("BookmarkGroupsToBookmarkGroups", fields: [parentId], references: [id], onDelete: Cascade)
