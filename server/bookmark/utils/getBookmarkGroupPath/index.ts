@@ -13,7 +13,7 @@ export const getBookmarkGroupPath = (
     return [bookmarkGroup.name]
   }
 
-  return [bookmarkGroup.name, ...getBookmarkGroupPath(bookmarkGroup.parent)]
+  return [...getBookmarkGroupPath(bookmarkGroup.parent), bookmarkGroup.name]
 }
 
 export default getBookmarkGroupPath
