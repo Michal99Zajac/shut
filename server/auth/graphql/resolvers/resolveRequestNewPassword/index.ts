@@ -42,7 +42,7 @@ export const resolveRequestNewPassword = async (__: Parent, args: Args, context:
     Template: 'shut-reset-password',
     TemplateData: JSON.stringify({
       email: user.email,
-      resetLink: `http://localhost:3000/auth/forgot-password/reset-password?token=${token}`,
+      resetLink: `${config.server.url}/auth/forgot-password/reset-password?token=${token}`,
     }),
   })
 

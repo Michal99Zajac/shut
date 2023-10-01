@@ -1,6 +1,13 @@
 import { env } from './env'
 
 export const config = {
+  vercel: {
+    url: env.VERCEL_URL,
+  },
+  server: {
+    https: env.HTTPS,
+    url: `${env.HTTPS ? 'https' : 'http'}://${env.VERCEL_URL}`,
+  },
   node: {
     env: env.NODE_ENV,
   },
