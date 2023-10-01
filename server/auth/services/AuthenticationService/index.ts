@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 
 import { config } from '#/config'
 import { decodedAccessToken } from '#/auth/models/DecodedAccessToken'
-import { resetTokenSchema } from '#/auth/schemas/ResetToken'
+import { shortTokenSchema } from '#/auth/schemas/ShortToken'
 import { CommonService } from '#/common/service/CommonService'
 
 /**
@@ -91,35 +91,33 @@ export class AuthenticationService extends CommonService {
    *
    * @param user User object
    */
-  async encodeReset(user: User) {
+  async encodeShort(user: User, type: 'RESET' | 'VERIFY') {
     // preapre variables
-    const jwtReset = config.jwt.reset
+    const jwtReset = config.jwt.short
 
-    // encode reset token
-    const resetToken = jwt.sign(
-      { userId: user.id, type: 'RESET' },
-      jwtReset.secret,
-      jwtReset.options,
-    )
+    // encode short token
+    const shortToken = jwt.sign({ userId: user.id, type: type }, jwtReset.secret, jwtReset.options)
 
-    return resetToken
+    return shortToken
   }
 
   /**
    * Decodes a JWT reset token to fetch the user.
    *
-   * @param resetToken JWT reset token
+   * @param resetToken JWT short token
    * @returns User associated with the token or throws an error if invalid token
    */
-  async decodeReset(resetToken: string) {
+  async decodeShort(resetToken: string, type: 'RESET' | 'VERIFY') {
     // prepare variables
-    const { secret } = config.jwt.reset
+    const { secret } = config.jwt.short
     let userId: string
 
     // verify access token and its structure
     try {
-      const decoded = resetTokenSchema.parse(jwt.verify(resetToken, secret))
+      const decoded = shortTokenSchema.parse(jwt.verify(resetToken, secret))
       userId = decoded.userId
+
+      if (decoded.type !== type) throw new Error('Invalid token type')
     } catch (error) {
       throw new Error('Access token is expired or invalid')
     }

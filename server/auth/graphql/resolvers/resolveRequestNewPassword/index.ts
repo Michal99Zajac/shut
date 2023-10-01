@@ -32,7 +32,7 @@ export const resolveRequestNewPassword = async (__: Parent, args: Args, context:
   if (!user) throw new GraphQLError("User with given email doesn't exist")
 
   // generate reset token
-  const token = await authenticator.encodeReset(user)
+  const token = await authenticator.encodeShort(user, 'RESET')
 
   const command = new SendTemplatedEmailCommand({
     Source: `SHUT <${config.aws.sender}>`,
