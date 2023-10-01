@@ -3,10 +3,14 @@ import { env } from './env'
 export const config = {
   vercel: {
     url: env.VERCEL_URL,
+    env: env.VERCEL_ENV,
   },
   server: {
     https: env.HTTPS,
-    url: `${env.HTTPS ? 'https' : 'http'}://${env.VERCEL_URL}`,
+    host: env.HOST,
+    url: `${env.HTTPS ? 'https' : 'http'}://${
+      env.VERCEL_ENV === 'production' ? env.HOST : env.VERCEL_URL
+    }`,
   },
   node: {
     env: env.NODE_ENV,

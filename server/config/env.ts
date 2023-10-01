@@ -3,8 +3,10 @@ import { cleanEnv, str, bool } from 'envalid'
 export const env = cleanEnv(process.env, {
   // VERCEL
   VERCEL_URL: str({ desc: 'Vercel URL' }),
+  VERCEL_ENV: str({ desc: 'Vercel environment' }),
   // SERVER
   HTTPS: bool({ desc: 'HTTPS', default: true }),
+  HOST: str({ desc: 'Host' }),
   // NODE
   NODE_ENV: str({ choices: ['development', 'production', 'test'] }),
   // JWT

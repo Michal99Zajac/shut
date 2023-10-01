@@ -55,11 +55,7 @@ export const resolveSignUp = async (_: Parent, args: Args, context: Context) => 
       }),
     })
 
-    console.log(`${config.server.url}/api/auth/confirm-email?token=${token}`)
-
-    ses.send(command, (err, data) => {
-      if (err) throw new GraphQLError(err.message)
-    })
+    ses.send(command)
   } catch (error) {
     throw new GraphQLError('Email send went wrong')
   }
