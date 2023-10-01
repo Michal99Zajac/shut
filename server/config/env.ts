@@ -7,10 +7,10 @@ export const env = cleanEnv(process.env, {
   JWT_SECRET: str({ desc: 'JWT secret' }),
   JWT_RESET_SECRET: str({ desc: 'JWT reset secret' }),
   // AWS SES
-  AWS_SES_SENDER: str({ desc: 'AWS SES email' }),
-  AWS_ACCESS_KEY: str({ desc: 'AWS access key' }),
-  AWS_SECRET_ACCESS_KEY: str({ desc: 'AWS secret access key' }),
-  AWS_REGION: str({ desc: 'AWS region' }),
+  SERVER_AWS_SES_SENDER: str({ desc: 'AWS SES email' }),
+  SERVER_AWS_ACCESS_KEY: str({ desc: 'AWS access key' }),
+  SERVER_AWS_SECRET_ACCESS_KEY: str({ desc: 'AWS secret access key' }),
+  SERVER_AWS_REGION: str({ desc: 'AWS region' }),
 })
 
 export default env

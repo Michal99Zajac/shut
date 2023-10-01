@@ -22,12 +22,12 @@ export const config = {
     saltRounds: 10,
   },
   aws: {
-    sender: env.AWS_SES_SENDER,
+    sender: env.SERVER_AWS_SES_SENDER,
     access: {
-      key: env.AWS_ACCESS_KEY,
-      secret: env.AWS_SECRET_ACCESS_KEY,
+      key: env.SERVER_AWS_ACCESS_KEY,
+      secret: env.SERVER_AWS_SECRET_ACCESS_KEY,
     },
-    region: env.AWS_REGION,
+    region: env.SERVER_AWS_REGION,
   },
 }
 
