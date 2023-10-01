@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Koulen&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p {
+        margin: 0;
+      }
+      body {
+        font-family: Roboto, sans-serif;
+        background-color: transparent;
+        margin: 0;
+        padding: 0;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      footer {
+        background-color: #4f9d69;
+        padding: 20px;
+        width: 100%;
+      }
+      .container {
+        background-color: #fff;
+        padding: 40px 20px;
+        border: 2px solid #4f9d69;
+        width: 100%;
+      }
+      .font-koulen {
+        font-family: Koulen, sans-serif;
+      }
+      .text-primary {
+        color: #4f9d69;
+      }
+      .text-center {
+        text-align: center;
+      }
+      .text-left {
+        text-align: left;
+      }
+      .text-40 {
+        font-size: 40px;
+        line-height: 40px;
+      }
+      .text-white {
+        color: #fff;
+      }
+      .mb-24 {
+        margin-bottom: 24px;
+      }
+      .my-40 {
+        margin-top: 40px;
+        margin-bottom: 40px;
+      }
+      .buttonLink {
+        display: inline-block;
+        font-size: 16px;
+        font-family: Koulen, sans-serif;
+        text-decoration: none;
+        color: #fff;
+        background: #4f9d69;
+        padding: 12px 24px;
+        border-radius: 4px;
+      }
+      .buttonLink.buttonLink {
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="font-koulen text-center text-40 mb-24">SHUT</header>
+    <div class="container">
+      <h1 class="font-koulen text-center text-40 mb-24">Reset your password</h1>
+      <hr class="my-40" />
+      <p class="mb-24">
+        You're receiving this e-mail because you (<a href="mailto:{{email}}">{{email}}</a>)
+        requested a password reset for your <span class="font-koulen">SHUT</span> account.
+      </p>
+      <p class="mb-24">Please tap the button below to choose a new password.</p>
+      <a class="buttonLink" href="{{resetLink}}">Reset Password </a>
+    </div>
+    <footer class="text-white font-koulen">SHUT</footer>
+  </body>
+</html>
