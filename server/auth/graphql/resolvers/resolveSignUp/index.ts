@@ -55,7 +55,9 @@ export const resolveSignUp = async (_: Parent, args: Args, context: Context) => 
       }),
     })
 
-    ses.send(command)
+    ses.send(command, (err, data) => {
+      if (err) throw new GraphQLError(err.message)
+    })
   } catch (error) {
     throw new GraphQLError('Email send went wrong')
   }
