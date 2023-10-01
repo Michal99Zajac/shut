@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Koulen&family=Roboto&display=swap');
+      * {
+        box-sizing: border-box;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p {
+        margin: 0;
+      }
+      body {
+        margin: 0;
+      }
+      .body {
+        font-family: Roboto, sans-serif;
+        background-color: transparent;
+        padding: 40px 20px;
+        background-color: #4f9d69;
+      }
+      footer {
+        background-color: #4f9d69;
+        padding: 20px;
+        width: 100%;
+      }
+      .container {
+        background-color: #fff;
+        padding: 40px 20px;
+        border: 2px solid #4f9d69;
+        width: 100%;
+      }
+      .font-koulen {
+        font-family: Impact, sans-serif;
+        text-transform: uppercase;
+      }
+      .text-primary {
+        color: #4f9d69;
+      }
+      .text-center {
+        text-align: center;
+      }
+      .text-left {
+        text-align: left;
+      }
+      .text-40 {
+        font-size: 40px;
+        line-height: 40px;
+      }
+      .text-white {
+        color: #fff;
+      }
+      .mb-24 {
+        margin-bottom: 24px;
+      }
+      .my-40 {
+        margin-top: 40px;
+        margin-bottom: 40px;
+      }
+      .buttonLink {
+        display: inline-block;
+        font-size: 16px;
+        font-family: Impact, sans-serif;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: #fff;
+        background: #4f9d69;
+        padding: 12px 24px;
+        border-radius: 4px;
+      }
+      .buttonLink.buttonLink {
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="body">
+      <header class="font-koulen text-center text-40 mb-24 text-white">SHUT</header>
+      <div class="container">
+        <h1 class="font-koulen text-center text-40 mb-24">Welcome aboard!</h1>
+        <hr class="my-40" />
+        <p class="mb-24">
+          Hey (<a href="mailto:{{email}}">{{email}}</a>)! You're almost ready to start using
+          <span class="font-koulen">SHUT</span>.
+        </p>
+        <p class="mb-24">Please click the button below to verify your email address</p>
+        <a class="buttonLink" href="{{confirmLink}}">Confirm email</a>
+      </div>
+      <footer class="text-white font-koulen"></footer>
+    </div>
+  </body>
+</html>
