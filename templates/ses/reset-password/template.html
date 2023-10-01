@@ -3,13 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Koulen&family=Roboto&display=swap"
-      rel="stylesheet"
-    />
     <style>
+      @import url('https://fonts.googleapis.com/css2?family=Koulen&family=Roboto&display=swap');
       * {
         box-sizing: border-box;
       }
@@ -23,14 +18,13 @@
         margin: 0;
       }
       body {
+        margin: 0;
+      }
+      .body {
         font-family: Roboto, sans-serif;
         background-color: transparent;
-        margin: 0;
-        padding: 0;
-        padding: 40px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        padding: 40px 20px;
+        background-color: #4f9d69;
       }
       footer {
         background-color: #4f9d69;
@@ -44,7 +38,8 @@
         width: 100%;
       }
       .font-koulen {
-        font-family: Koulen, sans-serif;
+        font-family: Impact, sans-serif;
+        text-transform: uppercase;
       }
       .text-primary {
         color: #4f9d69;
@@ -72,7 +67,8 @@
       .buttonLink {
         display: inline-block;
         font-size: 16px;
-        font-family: Koulen, sans-serif;
+        font-family: Impact, sans-serif;
+        text-transform: uppercase;
         text-decoration: none;
         color: #fff;
         background: #4f9d69;
@@ -85,17 +81,19 @@
     </style>
   </head>
   <body>
-    <header class="font-koulen text-center text-40 mb-24">SHUT</header>
-    <div class="container">
-      <h1 class="font-koulen text-center text-40 mb-24">Reset your password</h1>
-      <hr class="my-40" />
-      <p class="mb-24">
-        You're receiving this e-mail because you (<a href="mailto:{{email}}">{{email}}</a>)
-        requested a password reset for your <span class="font-koulen">SHUT</span> account.
-      </p>
-      <p class="mb-24">Please tap the button below to choose a new password.</p>
-      <a class="buttonLink" href="{{resetLink}}">Reset Password </a>
+    <div class="body">
+      <header class="font-koulen text-center text-40 mb-24 text-white">SHUT</header>
+      <div class="container">
+        <h1 class="font-koulen text-center text-40 mb-24">Reset your password</h1>
+        <hr class="my-40" />
+        <p class="mb-24">
+          You're receiving this e-mail because you (<a href="mailto:{{email}}">{{email}}</a>)
+          requested a password reset for your <span class="font-koulen">SHUT</span> account.
+        </p>
+        <p class="mb-24">Please tap the button below to choose a new password.</p>
+        <a class="buttonLink" href="{{resetLink}}">Reset Password </a>
+      </div>
+      <footer class="text-white font-koulen"></footer>
     </div>
-    <footer class="text-white font-koulen">SHUT</footer>
   </body>
 </html>
