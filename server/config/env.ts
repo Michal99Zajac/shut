@@ -5,6 +5,7 @@ export const env = cleanEnv(process.env, {
   NODE_ENV: str({ choices: ['development', 'production', 'test'] }),
   // JWT
   JWT_SECRET: str({ desc: 'JWT secret' }),
+  JWT_RESET_SECRET: str({ desc: 'JWT reset secret' }),
   // AWS SES
   AWS_SES_SENDER: str({ desc: 'AWS SES email' }),
   AWS_ACCESS_KEY: str({ desc: 'AWS access key' }),

@@ -11,6 +11,12 @@ export const config = {
         expiresIn: 60 * 60 * 24 * 30, // 30 days
       },
     },
+    reset: {
+      secret: env.JWT_RESET_SECRET,
+      options: {
+        expiresIn: 60 * 10, // 10 min
+      },
+    },
   },
   secure: {
     saltRounds: 10,
