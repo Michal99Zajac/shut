@@ -37,6 +37,8 @@ export class AuthenticationService extends CommonService {
       throw new Error('Incorrect password')
     }
 
+    if (!user.confirmed) throw new Error('User is not confirmed')
+
     return user
   }
 
@@ -104,17 +106,17 @@ export class AuthenticationService extends CommonService {
   /**
    * Decodes a JWT reset token to fetch the user.
    *
-   * @param resetToken JWT short token
+   * @param shortToken JWT short token
    * @returns User associated with the token or throws an error if invalid token
    */
-  async decodeShort(resetToken: string, type: 'RESET' | 'VERIFY') {
+  async decodeShort(shortToken: string, type: 'RESET' | 'VERIFY') {
     // prepare variables
     const { secret } = config.jwt.short
     let userId: string
 
     // verify access token and its structure
     try {
-      const decoded = shortTokenSchema.parse(jwt.verify(resetToken, secret))
+      const decoded = shortTokenSchema.parse(jwt.verify(shortToken, secret))
       userId = decoded.userId
 
       if (decoded.type !== type) throw new Error('Invalid token type')
