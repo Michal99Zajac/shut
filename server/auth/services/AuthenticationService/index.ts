@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 
 import { config } from '#/config'
 import { decodedAccessToken } from '#/auth/models/DecodedAccessToken'
+import { resetTokenSchema } from '#/auth/schemas/ResetToken'
 import { CommonService } from '#/common/service/CommonService'
 
 /**
@@ -83,6 +84,55 @@ export class AuthenticationService extends CommonService {
     const accessToken = jwt.sign({ userId: user.id }, jwtAccess.secret, jwtAccess.options)
 
     return accessToken
+  }
+
+  /**
+   * Generates a JWT short token for a user.
+   *
+   * @param user User object
+   */
+  async encodeReset(user: User) {
+    // preapre variables
+    const jwtReset = config.jwt.reset
+
+    // encode reset token
+    const resetToken = jwt.sign(
+      { userId: user.id, type: 'RESET' },
+      jwtReset.secret,
+      jwtReset.options,
+    )
+
+    return resetToken
+  }
+
+  /**
+   * Decodes a JWT reset token to fetch the user.
+   *
+   * @param resetToken JWT reset token
+   * @returns User associated with the token or throws an error if invalid token
+   */
+  async decodeReset(resetToken: string) {
+    // prepare variables
+    const { secret } = config.jwt.reset
+    let userId: string
+
+    // verify access token and its structure
+    try {
+      const decoded = resetTokenSchema.parse(jwt.verify(resetToken, secret))
+      userId = decoded.userId
+    } catch (error) {
+      throw new Error('Access token is expired or invalid')
+    }
+
+    // get user from database
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    })
+
+    // check if user exists
+    if (!user) throw new Error('User does not exist')
+
+    return user
   }
 }
 
