@@ -1,5 +1,6 @@
 import IconButton, { IconButtonProps } from '@mui/material/IconButton'
 import { BiTrash } from 'react-icons/bi'
+import Tooltip from '@mui/material/Tooltip'
 
 import { useDeleteBookmarkMutation } from '@/graphql/generated'
 
@@ -28,9 +29,11 @@ export function DeleteBookmarkIconButton({
   }
 
   return (
-    <IconButton size={size} className="!rounded" onClick={handleDelete}>
-      <BiTrash />
-    </IconButton>
+    <Tooltip title="Delete bookmark">
+      <IconButton size={size} className="!rounded" onClick={handleDelete}>
+        <BiTrash />
+      </IconButton>
+    </Tooltip>
   )
 }
 

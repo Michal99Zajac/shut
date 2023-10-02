@@ -14,6 +14,7 @@ import { BiBookmarkPlus, BiFolderPlus } from 'react-icons/bi'
 import IconButton from '@mui/material/IconButton'
 import Link from 'next/link'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
+import Tooltip from '@mui/material/Tooltip'
 
 import { BookmarkGroupSearch } from '@/bookmarks/components/BookmarkGroupSearch'
 import { useQuery } from '@/hooks/useQuery'
@@ -72,24 +73,28 @@ export function RootPage() {
         <aside>
           <div className="flex gap-2 items-center mb-2">
             <BookmarkGroupSearch />
-            <IconButton
-              size="large"
-              className="!rounded"
-              onClick={() => bookmarkGroupsToolbox.tree.createInput(0)}
-            >
-              <BiFolderPlus />
-            </IconButton>
+            <Tooltip title="Add group">
+              <IconButton
+                size="large"
+                className="!rounded"
+                onClick={() => bookmarkGroupsToolbox.tree.createInput(0)}
+              >
+                <BiFolderPlus />
+              </IconButton>
+            </Tooltip>
           </div>
           <BookmarkGroupTree toolbox={bookmarkGroupsToolbox} />
         </aside>
         <section>
           <div className="gap-2 flex mb-2">
             <BookmarkSearch />
-            <Link href="/bookmarks/create">
-              <IconButton size="large" className="!rounded">
-                <BiBookmarkPlus />
-              </IconButton>
-            </Link>
+            <Tooltip title="Add bookmark">
+              <Link href="/bookmarks/create">
+                <IconButton size="large" className="!rounded">
+                  <BiBookmarkPlus />
+                </IconButton>
+              </Link>
+            </Tooltip>
           </div>
           <BookmarksTable bookmarks={bookmarks} />
         </section>

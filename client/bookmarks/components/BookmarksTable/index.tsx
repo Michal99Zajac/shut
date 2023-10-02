@@ -9,6 +9,7 @@ import A from '@mui/material/Link'
 import Link from 'next/link'
 import { BiEdit } from 'react-icons/bi'
 import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
 
 import { GQL_BookmarksQuery } from '@/graphql/generated'
 import DeleteBookmarkIconButton from '@/bookmarks/components/DeleteBookmarkIconButton'
@@ -71,11 +72,13 @@ export function BookmarksTable({ bookmarks }: BookmarksTableProps) {
               </TableCell>
               <TableCell align="right">
                 <div className="inline-flex gap-2">
-                  <Link href={`/bookmarks/bookmark/${node.id}`}>
-                    <IconButton size="small" className="!rounded">
-                      <BiEdit />
-                    </IconButton>
-                  </Link>
+                  <Tooltip title="Update bookmark">
+                    <Link href={`/bookmarks/bookmark/${node.id}`}>
+                      <IconButton size="small" className="!rounded">
+                        <BiEdit />
+                      </IconButton>
+                    </Link>
+                  </Tooltip>
                   <DeleteBookmarkIconButton bookmarkId={node.id} />
                 </div>
               </TableCell>
