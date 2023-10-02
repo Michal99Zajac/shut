@@ -66,7 +66,18 @@ export function RootPage() {
 
   return (
     <>
-      <h1 className="font-koulen text-4xl">Dashboard</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="font-koulen text-4xl">Dashboard</h1>
+        <Tooltip title="Open bookmark group menu">
+          <IconButton
+            size="medium"
+            onClick={() => setIsDrawer(true)}
+            className="!rounded md:!hidden"
+          >
+            <BiMenuAltLeft />
+          </IconButton>
+        </Tooltip>
+      </div>
       <Breadcrumbs aria-label="breadcrumb">
         <Link href="/" className="font-koulen hover:underline">
           SHUT
@@ -91,15 +102,6 @@ export function RootPage() {
         </aside>
         <section>
           <div className="gap-2 flex mb-2">
-            <Tooltip title="Open bookmark group menu">
-              <IconButton
-                size="large"
-                onClick={() => setIsDrawer(true)}
-                className="!rounded md:!hidden"
-              >
-                <BiMenuAltLeft />
-              </IconButton>
-            </Tooltip>
             <BookmarkSearch />
             <Tooltip title="Add bookmark">
               <Link href="/bookmarks/create">
