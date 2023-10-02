@@ -63,6 +63,7 @@ export function RootPage() {
 
   return (
     <>
+      <h1 className="font-koulen text-4xl">Dashboard</h1>
       <Breadcrumbs aria-label="breadcrumb">
         <Link href="/" className="font-koulen hover:underline">
           SHUT
