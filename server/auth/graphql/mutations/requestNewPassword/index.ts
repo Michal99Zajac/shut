@@ -5,7 +5,7 @@ import { resolveRequestNewPassword } from '../../resolvers/resolveRequestNewPass
 
 builder.mutationField('requestNewPassword', (t) =>
   t.boolean({
-    description: 'Sign in',
+    description: 'Request new password',
     args: {
       input: t.arg({ type: RequestNewPasswordInput, required: true }),
     },
