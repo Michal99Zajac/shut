@@ -18,7 +18,8 @@ export const koulen = Koulen({ subsets: ['latin'], weight: ['400'], variable: '-
 export const metadata: Metadata = {
   title: 'Shut',
   description: 'Shut is a universal safe for your bookmarks. Save once and have everywhere.',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
+  viewport:
+    'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover',
 }
 
 interface RootLayoutProps {
