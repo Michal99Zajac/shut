@@ -7,7 +7,7 @@ const megaDialogStyles = css`
     width: 100vw;
     height: 100vh;
     max-width: 100vw;
-    max-height: 100vh;
+    max-height: 100%;
     margin: 0;
     border-radius: 0;
   }
