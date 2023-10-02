@@ -140,6 +140,10 @@ export type GQL_Mutation = {
   deleteBookmarkGroup: Scalars['ID']['output'];
   /** Refresh the access token for the current user. */
   refreshAccess: GQL_User;
+  /** Request new password */
+  requestNewPassword: Scalars['Boolean']['output'];
+  /** Reset forgotten password */
+  resetForgottenPassword: Scalars['Boolean']['output'];
   /** Sign in */
   signIn: GQL_User;
   /** Sign out the current user. */
@@ -168,6 +172,16 @@ export type GQL_MutationDeleteBookmarkArgs = {
 
 export type GQL_MutationDeleteBookmarkGroupArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type GQL_MutationRequestNewPasswordArgs = {
+  input: GQL_RequestNewPasswordInput;
+};
+
+
+export type GQL_MutationResetForgottenPasswordArgs = {
+  input: GQL_ResetForgottenPasswordInput;
 };
 
 
@@ -247,6 +261,17 @@ export type GQL_QueryBookmarksConnectionEdge = {
   __typename?: 'QueryBookmarksConnectionEdge';
   cursor: Scalars['String']['output'];
   node: GQL_Bookmark;
+};
+
+/** Input for requesting new password */
+export type GQL_RequestNewPasswordInput = {
+  email: Scalars['String']['input'];
+};
+
+/** Input for resetting forgotten password */
+export type GQL_ResetForgottenPasswordInput = {
+  password: Scalars['String']['input'];
+  token: Scalars['String']['input'];
 };
 
 /** Input for signing in */
@@ -582,6 +607,68 @@ export function useUpdateBookmarkMutation(baseOptions?: Apollo.MutationHookOptio
 export type UpdateBookmarkMutationHookResult = ReturnType<typeof useUpdateBookmarkMutation>;
 export type UpdateBookmarkMutationResult = Apollo.MutationResult<GQL_UpdateBookmarkMutation>;
 export type UpdateBookmarkMutationOptions = Apollo.BaseMutationOptions<GQL_UpdateBookmarkMutation, GQL_UpdateBookmarkMutationVariables>;
+export const RequestNewPasswordDocument = gql`
+    mutation RequestNewPassword($input: RequestNewPasswordInput!) {
+  requestNewPassword(input: $input)
+}
+    `;
+export type GQL_RequestNewPasswordMutationFn = Apollo.MutationFunction<GQL_RequestNewPasswordMutation, GQL_RequestNewPasswordMutationVariables>;
+
+/**
+ * __useRequestNewPasswordMutation__
+ *
+ * To run a mutation, you first call `useRequestNewPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRequestNewPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [requestNewPasswordMutation, { data, loading, error }] = useRequestNewPasswordMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRequestNewPasswordMutation(baseOptions?: Apollo.MutationHookOptions<GQL_RequestNewPasswordMutation, GQL_RequestNewPasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GQL_RequestNewPasswordMutation, GQL_RequestNewPasswordMutationVariables>(RequestNewPasswordDocument, options);
+      }
+export type RequestNewPasswordMutationHookResult = ReturnType<typeof useRequestNewPasswordMutation>;
+export type RequestNewPasswordMutationResult = Apollo.MutationResult<GQL_RequestNewPasswordMutation>;
+export type RequestNewPasswordMutationOptions = Apollo.BaseMutationOptions<GQL_RequestNewPasswordMutation, GQL_RequestNewPasswordMutationVariables>;
+export const ResetForgottenPasswordDocument = gql`
+    mutation ResetForgottenPassword($input: ResetForgottenPasswordInput!) {
+  resetForgottenPassword(input: $input)
+}
+    `;
+export type GQL_ResetForgottenPasswordMutationFn = Apollo.MutationFunction<GQL_ResetForgottenPasswordMutation, GQL_ResetForgottenPasswordMutationVariables>;
+
+/**
+ * __useResetForgottenPasswordMutation__
+ *
+ * To run a mutation, you first call `useResetForgottenPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useResetForgottenPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [resetForgottenPasswordMutation, { data, loading, error }] = useResetForgottenPasswordMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useResetForgottenPasswordMutation(baseOptions?: Apollo.MutationHookOptions<GQL_ResetForgottenPasswordMutation, GQL_ResetForgottenPasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GQL_ResetForgottenPasswordMutation, GQL_ResetForgottenPasswordMutationVariables>(ResetForgottenPasswordDocument, options);
+      }
+export type ResetForgottenPasswordMutationHookResult = ReturnType<typeof useResetForgottenPasswordMutation>;
+export type ResetForgottenPasswordMutationResult = Apollo.MutationResult<GQL_ResetForgottenPasswordMutation>;
+export type ResetForgottenPasswordMutationOptions = Apollo.BaseMutationOptions<GQL_ResetForgottenPasswordMutation, GQL_ResetForgottenPasswordMutationVariables>;
 export const BookmarkGroupsDocument = gql`
     query BookmarkGroups($filter: BookmarkGroupFilterInput) {
   bookmarkGroups(filter: $filter) {
@@ -783,6 +870,20 @@ export type GQL_UpdateBookmarkMutationVariables = Exact<{
 
 export type GQL_UpdateBookmarkMutation = { __typename?: 'Mutation', updateBookmark: { __typename?: 'Bookmark', id: string } };
 
+export type GQL_RequestNewPasswordMutationVariables = Exact<{
+  input: GQL_RequestNewPasswordInput;
+}>;
+
+
+export type GQL_RequestNewPasswordMutation = { __typename?: 'Mutation', requestNewPassword: boolean };
+
+export type GQL_ResetForgottenPasswordMutationVariables = Exact<{
+  input: GQL_ResetForgottenPasswordInput;
+}>;
+
+
+export type GQL_ResetForgottenPasswordMutation = { __typename?: 'Mutation', resetForgottenPassword: boolean };
+
 export type GQL_BookmarkGroupsQueryVariables = Exact<{
   filter?: InputMaybe<GQL_BookmarkGroupFilterInput>;
 }>;
@@ -823,7 +924,9 @@ export const namedOperations = {
     DeleteBookmarkGroup: 'DeleteBookmarkGroup',
     CreateBookmark: 'CreateBookmark',
     DeleteBookmark: 'DeleteBookmark',
-    UpdateBookmark: 'UpdateBookmark'
+    UpdateBookmark: 'UpdateBookmark',
+    RequestNewPassword: 'RequestNewPassword',
+    ResetForgottenPassword: 'ResetForgottenPassword'
   }
 }
 
@@ -871,6 +974,19 @@ export function GQL_CreateBookmarkInputSchema(): z.ZodObject<Properties<GQL_Crea
     description: z.string().nullish(),
     friendlyName: z.string(),
     url: z.string()
+  })
+}
+
+export function GQL_RequestNewPasswordInputSchema(): z.ZodObject<Properties<GQL_RequestNewPasswordInput>> {
+  return z.object({
+    email: z.string()
+  })
+}
+
+export function GQL_ResetForgottenPasswordInputSchema(): z.ZodObject<Properties<GQL_ResetForgottenPasswordInput>> {
+  return z.object({
+    password: z.string(),
+    token: z.string()
   })
 }
 

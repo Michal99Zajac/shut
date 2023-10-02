@@ -64,3 +64,15 @@ export const updateBookmark = gql`
     }
   }
 `
+
+export const requestNewPassword = gql`
+  mutation RequestNewPassword($input: RequestNewPasswordInput!) {
+    requestNewPassword(input: $input)
+  }
+`
+
+export const resetForgottenPassword = gql`
+  mutation ResetForgottenPassword($input: ResetForgottenPasswordInput!) {
+    resetForgottenPassword(input: $input)
+  }
+`
