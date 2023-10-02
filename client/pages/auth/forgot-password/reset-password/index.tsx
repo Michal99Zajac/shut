@@ -1,21 +1,28 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { TextField, Button } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
 
-import { resetPasswordSchema, ResetPasswordSchema } from '@/auth/schemas/resetPasswordSchema'
-import { sleep } from '@/utils/sleep'
+import {
+  resetForgottenPasswordInputSchema,
+  ResetForgottenPasswordInputSchema,
+} from '@/auth/schemas/ResetForgottenPasswordInputSchema'
+import { useResetForgottenPasswordMutation } from '@/graphql/generated'
 
-export function ResetPasswordPage() {
+export const ResetPasswordPage: Client.Page = ({ searchParams }) => {
+  const { token } = searchParams
   const router = useRouter()
-  const [loading, setLoading] = useState(false)
-  const { register, handleSubmit, setError, formState } = useForm<ResetPasswordSchema>({
-    resolver: zodResolver(resetPasswordSchema),
-  })
+  const { register, handleSubmit, setError, formState } =
+    useForm<ResetForgottenPasswordInputSchema>({
+      resolver: zodResolver(resetForgottenPasswordInputSchema),
+      defaultValues: {
+        token: token,
+      },
+    })
+  const [resetForgottenPassword, { loading }] = useResetForgottenPasswordMutation()
 
   const onSubmit = handleSubmit(async (data) => {
     if (data.password !== data.repeatedPassword) {
@@ -26,10 +33,17 @@ export function ResetPasswordPage() {
       return
     }
 
-    setLoading(true)
-    await sleep(2000)
-    router.push('/auth/signin')
-    setLoading(false)
+    resetForgottenPassword({
+      variables: {
+        input: {
+          password: data.password,
+          token: data.token,
+        },
+      },
+      onCompleted: () => {
+        router.push('/auth/signin')
+      },
+    })
   })
 
   return (
