@@ -18,7 +18,7 @@ const config: Config = {
         roboto: 'var(--font-roboto)',
       },
       gridTemplateColumns: {
-        dashboard: '400px 1fr',
+        dashboard: 'minmax(200px, 400px) 1fr',
       },
     },
   },
