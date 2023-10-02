@@ -10,11 +10,13 @@ import {
   BookmarkGroupsDocument,
 } from '@/graphql/generated'
 import { useSuspenseQuery } from '@apollo/client'
-import { BiBookmarkPlus, BiFolderPlus } from 'react-icons/bi'
+import { BiBookmarkPlus, BiChevronLeft, BiFolderPlus, BiMenuAltLeft } from 'react-icons/bi'
 import IconButton from '@mui/material/IconButton'
 import Link from 'next/link'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Tooltip from '@mui/material/Tooltip'
+import SwipeableDrawer from '@mui/material/SwipeableDrawer'
+import { useState } from 'react'
 
 import { BookmarkGroupSearch } from '@/bookmarks/components/BookmarkGroupSearch'
 import { useQuery } from '@/hooks/useQuery'
@@ -31,6 +33,7 @@ interface Query {
 
 export function RootPage() {
   const query = useQuery<Query>()
+  const [isDrawer, setIsDrawer] = useState(false)
   const {
     data: { bookmarkGroups },
   } = useSuspenseQuery<GQL_BookmarkGroupsQuery, GQL_BookmarkGroupsQueryVariables>(
@@ -70,8 +73,8 @@ export function RootPage() {
         </Link>
         <p className="font-koulen">Dashboard</p>
       </Breadcrumbs>
-      <div className="grid grid-cols-dashboard gap-6 mt-4">
-        <aside>
+      <div className="grid md:grid-cols-dashboard gap-6 mt-4">
+        <aside className="hidden md:block">
           <div className="flex gap-2 items-center mb-2">
             <BookmarkGroupSearch />
             <Tooltip title="Add group">
@@ -88,6 +91,15 @@ export function RootPage() {
         </aside>
         <section>
           <div className="gap-2 flex mb-2">
+            <Tooltip title="Open bookmark group menu">
+              <IconButton
+                size="large"
+                onClick={() => setIsDrawer(true)}
+                className="!rounded md:!hidden"
+              >
+                <BiMenuAltLeft />
+              </IconButton>
+            </Tooltip>
             <BookmarkSearch />
             <Tooltip title="Add bookmark">
               <Link href="/bookmarks/create">
@@ -100,6 +112,44 @@ export function RootPage() {
           <BookmarksTable bookmarks={bookmarks} />
         </section>
       </div>
+      <SwipeableDrawer
+        onOpen={() => setIsDrawer(true)}
+        anchor="left"
+        open={isDrawer}
+        onClose={() => setIsDrawer(false)}
+        ModalProps={{
+          keepMounted: false,
+        }}
+      >
+        <div className="w-screen max-w-lg relative flex flex-col p-6 h-screen">
+          <h1 className="font-koulen text-xl mb-9">Bookmark Group</h1>
+          <IconButton
+            aria-label="close"
+            size="medium"
+            sx={{
+              position: 'absolute',
+              right: 12,
+              top: 12,
+            }}
+            onClick={() => setIsDrawer(false)}
+          >
+            <BiChevronLeft />
+          </IconButton>
+          <div className="flex gap-2 items-center mb-2">
+            <BookmarkGroupSearch />
+            <Tooltip title="Add group">
+              <IconButton
+                size="large"
+                className="!rounded"
+                onClick={() => bookmarkGroupsToolbox.tree.createInput(0)}
+              >
+                <BiFolderPlus />
+              </IconButton>
+            </Tooltip>
+          </div>
+          <BookmarkGroupTree toolbox={bookmarkGroupsToolbox} />
+        </div>
+      </SwipeableDrawer>
     </>
   )
 }
