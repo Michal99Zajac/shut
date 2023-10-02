@@ -4,10 +4,8 @@ import Dialog, { DialogProps } from '@mui/material/Dialog'
 
 const megaDialogStyles = css`
   .MuiPaper-root {
-    width: 100vw;
-    height: 100vh;
-    max-width: 100vw;
-    max-height: 100%;
+    min-height: 100%;
+    min-width: 100%;
     margin: 0;
     border-radius: 0;
   }
