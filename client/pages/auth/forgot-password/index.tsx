@@ -5,23 +5,31 @@ import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 
-import { sleep } from '@/utils/sleep'
-import { passwordRequestSchema, PasswordRequestSchema } from '@/auth/schemas/passwordRequestSchema'
+import {
+  requestNewPasswordInputSchema,
+  RequestNewPasswordInputSchema,
+} from '@/auth/schemas/RequestNewPasswordInputSchema'
+import { useRequestNewPasswordMutation } from '@/graphql/generated'
 
 export function ForgotPasswordPage() {
   const router = useRouter()
-  const [loading, setLoading] = useState(false)
-  const { register, handleSubmit } = useForm<PasswordRequestSchema>({
-    resolver: zodResolver(passwordRequestSchema),
+  const { register, handleSubmit } = useForm<RequestNewPasswordInputSchema>({
+    resolver: zodResolver(requestNewPasswordInputSchema),
   })
+  const [requestNewPassword, { loading: isLoading }] = useRequestNewPasswordMutation()
 
   const onSubmit = handleSubmit(async (data) => {
-    setLoading(true)
-    await sleep(2000)
-    router.push('/auth/forgot-password/wait-for-email')
-    setLoading(false)
+    requestNewPassword({
+      variables: {
+        input: {
+          email: data.email,
+        },
+      },
+      onCompleted: () => {
+        router.push('/auth/forgot-password/wait-for-email')
+      },
+    })
   })
 
   return (
@@ -40,12 +48,12 @@ export function ForgotPasswordPage() {
         type="email"
         variant="outlined"
         required
-        disabled={loading}
+        disabled={isLoading}
       />
       <Button
         fullWidth
         type="submit"
-        disabled={loading}
+        disabled={isLoading}
         sx={{ mt: '16px' }}
         size="large"
         variant="contained"
