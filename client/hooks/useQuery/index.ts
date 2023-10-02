@@ -17,7 +17,7 @@ export const useQuery = <T = any>() => {
       temp.set(key, value)
     }
 
-    router.replace(`${pathname}?${temp.toString()}`)
+    router.replace(`${pathname}?${temp.toString()}`, { scroll: false })
   }
 
   return { query: Object.fromEntries(params.entries()) as Partial<T>, set }

@@ -11,6 +11,8 @@ import { BiEdit, BiMenu } from 'react-icons/bi'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import { useState } from 'react'
+import TableFooter from '@mui/material/TableFooter'
+import Button from '@mui/material/Button'
 
 import { GQL_BookmarksQuery } from '@/graphql/generated'
 import DeleteBookmarkIconButton from '@/bookmarks/components/DeleteBookmarkIconButton'
@@ -20,9 +22,12 @@ import { BookmarksTableEmpty } from './components/BookmarksTableEmpty'
 
 interface BookmarksTableProps {
   bookmarks: GQL_BookmarksQuery['bookmarks']
+  loading?: boolean
+  hasMore?: boolean
+  onLoadMore?: () => void
 }
 
-export function BookmarksTable({ bookmarks }: BookmarksTableProps) {
+export function BookmarksTable({ bookmarks, hasMore, loading, onLoadMore }: BookmarksTableProps) {
   const [anchorEl, setAnchorEl] = useState<AnchorEl | null>(null)
 
   if (bookmarks.edges.length === 0) return <BookmarksTableEmpty />
@@ -104,6 +109,17 @@ export function BookmarksTable({ bookmarks }: BookmarksTableProps) {
               </TableRow>
             ))}
           </TableBody>
+          {hasMore && (
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={3}>
+                  <Button disabled={loading} variant="outlined" onClick={onLoadMore}>
+                    load more
+                  </Button>
+                </TableCell>
+              </TableRow>
+            </TableFooter>
+          )}
         </Table>
       </TableContainer>
       <BookmarkMenu anchorEl={anchorEl} onClose={() => setAnchorEl(null)} />

@@ -4,20 +4,20 @@ import maxBookmarkGroupDepth from '@/bookmarks/utils/maxBookmarkGroupDepth'
 
 export interface UseBookmarksFilterProps {
   /**
-   *
+   * Current query
    */
   query: {
     /**
-     *
+     * Search query
      */
     bookmarkQuery?: string
     /**
-     *
+     * Bookmark group id
      */
     bookmarkGroupId?: string
   }
   /**
-   *
+   * Bookmark groups
    */
   bookmarkGroups: GQL_BookmarkGroupsQuery['bookmarkGroups']
 }

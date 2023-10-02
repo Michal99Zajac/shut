@@ -731,6 +731,12 @@ export const BookmarksDocument = gql`
         }
       }
     }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
   }
 }
     `;
@@ -900,7 +906,7 @@ export type GQL_BookmarksQueryVariables = Exact<{
 }>;
 
 
-export type GQL_BookmarksQuery = { __typename?: 'Query', bookmarks: { __typename?: 'QueryBookmarksConnection', edges: Array<{ __typename?: 'QueryBookmarksConnectionEdge', cursor: string, node: { __typename?: 'Bookmark', friendlyName: string, id: string, url: string, bookmarkGroup: { __typename?: 'BookmarkGroup', id: string, name: string, path: string } } }> } };
+export type GQL_BookmarksQuery = { __typename?: 'Query', bookmarks: { __typename?: 'QueryBookmarksConnection', edges: Array<{ __typename?: 'QueryBookmarksConnectionEdge', cursor: string, node: { __typename?: 'Bookmark', friendlyName: string, id: string, url: string, bookmarkGroup: { __typename?: 'BookmarkGroup', id: string, name: string, path: string } } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null } } };
 
 export type GQL_BookmarkQueryVariables = Exact<{
   id: Scalars['ID']['input'];

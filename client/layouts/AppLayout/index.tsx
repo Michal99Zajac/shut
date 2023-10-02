@@ -28,7 +28,7 @@ export function AppLayout({ children, bookmarkModal }: AppLayoutProps) {
   return (
     <>
       {bookmarkModal}
-      <header className="flex items-center justify-between p-4 mb-6">
+      <header className="flex items-center justify-between p-4 mb-2">
         <Image src="/shut-logo.svg" alt="logo" width={32} height={42} />
         <div className="flex gap-2 items-center">
           <div className="inline-block mr-4">
@@ -49,7 +49,7 @@ export function AppLayout({ children, bookmarkModal }: AppLayoutProps) {
           </form>
         </div>
       </header>
-      <main className="px-3 md:px-6">{children}</main>
+      <main className="p-4">{children}</main>
     </>
   )
 }

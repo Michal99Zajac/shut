@@ -31,7 +31,7 @@ interface Query {
   bookmarkQuery: string
 }
 
-export function RootPage() {
+export const RootPage: Client.Page = ({ searchParams }) => {
   const query = useQuery<Query>()
   const [isDrawer, setIsDrawer] = useState(false)
   const {
@@ -56,9 +56,12 @@ export function RootPage() {
   })
   const {
     data: { bookmarks },
+    networkStatus,
+    fetchMore: fetchMoreBookmarks,
   } = useSuspenseQuery<GQL_BookmarksQuery, GQL_BookmarksQueryVariables>(BookmarksDocument, {
     variables: {
       filter: bookmarksFilter,
+      first: 20,
     },
     fetchPolicy: 'cache-and-network',
   })
@@ -111,7 +114,18 @@ export function RootPage() {
               </Link>
             </Tooltip>
           </div>
-          <BookmarksTable bookmarks={bookmarks} />
+          <BookmarksTable
+            bookmarks={bookmarks}
+            hasMore={bookmarks.pageInfo.hasNextPage}
+            loading={networkStatus === 3}
+            onLoadMore={() => {
+              fetchMoreBookmarks({
+                variables: {
+                  after: bookmarks.pageInfo.endCursor,
+                },
+              })
+            }}
+          />
         </section>
       </div>
       <SwipeableDrawer
