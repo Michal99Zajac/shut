@@ -19,6 +19,20 @@ export const prisma = new CorePrismaClient().$extends({
 
         return user
       },
+      changePassword: async (id: string, password: string) => {
+        const hashedPassword = await bcrypt.hash(password, config.secure.saltRounds)
+
+        const user = await prisma.user.update({
+          where: {
+            id,
+          },
+          data: {
+            password: hashedPassword,
+          },
+        })
+
+        return user
+      },
     },
   },
 })
