@@ -27,7 +27,7 @@ export function BookmarkGroupSearch() {
     <TextField
       fullWidth
       size="medium"
-      placeholder="Search Bookmark Group"
+      placeholder="Search Groups"
       value={search}
       onChange={(e) => setSearch(e.target.value)}
       InputProps={{
