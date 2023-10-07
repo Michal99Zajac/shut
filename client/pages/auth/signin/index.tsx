@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 
 import { signInInputSchema, SignInInputSchema } from '@/auth/schemas/SignInInputSchema'
 import { useSignInMutation } from '@/graphql/generated'
+import { GoogleLoginButton } from '@/auth/components/GoogleLoginButton'
 
 export const SignInPage = () => {
   const router = useRouter()
@@ -74,6 +75,8 @@ export const SignInPage = () => {
           Sign Up!
         </Link>
       </p>
+      <hr className="my-4" />
+      <GoogleLoginButton />
     </form>
   )
 }
