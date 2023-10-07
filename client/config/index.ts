@@ -1,8 +1,8 @@
-import { publicEnv } from './env'
-
 export const config = {
-  node: {
-    env: publicEnv.NEXT_PUBLIC_VERCEL_ENV,
+  oauth: {
+    google: {
+      clientId: process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID,
+    },
   },
 }
 

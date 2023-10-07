@@ -30,7 +30,14 @@ export const config = {
     },
   },
   secure: {
-    saltRounds: 10,
+    password: {
+      salt: env.SECURE_PASSWORD_SALT,
+    },
+    data: {
+      algorithm: 'aes-256-cbc',
+      salt: env.SECURE_SALT,
+      secret: env.SECURE_SECRET,
+    },
   },
   aws: {
     sender: env.SERVER_AWS_SES_SENDER,
@@ -39,6 +46,15 @@ export const config = {
       secret: env.SERVER_AWS_SECRET_ACCESS_KEY,
     },
     region: env.SERVER_AWS_REGION,
+  },
+  oauth: {
+    google: {
+      clientId: env.GOOGLE_OAUTH_CLIENT_ID,
+      clientSecret: env.GOOGLE_OAUTH_CLIENT_SECRET,
+      redirectUri: `${env.HTTPS ? 'https' : 'http'}://${
+        env.VERCEL_ENV === 'production' ? env.HOST : env.VERCEL_URL
+      }`,
+    },
   },
 }
 
