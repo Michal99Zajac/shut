@@ -7,14 +7,14 @@ import { CookieService } from '#/common/service/CookieService'
 import AuthenticationService from '../auth/services/AuthenticationService'
 
 export interface Context {
-  user: User | null
+  user: (User & { googleUser: GoogleUser | null }) | null
   prisma: PrismaClient
   req: NextApiRequest
   res: NextApiResponse
 }
 
 export interface AuthContext extends Context {
-  user: User
+  user: User & { googleUser: GoogleUser | null }
 }
 
 export interface GoogleAuthContext extends Context {
