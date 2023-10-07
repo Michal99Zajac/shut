@@ -63,6 +63,9 @@ export class AuthenticationService extends CommonService {
 
     // get user from database
     const user = await this.prisma.user.findUnique({
+      include: {
+        googleUser: true,
+      },
       where: { id: userId },
     })
 

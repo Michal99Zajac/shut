@@ -1,4 +1,4 @@
-import { User } from '@prisma/client'
+import { GoogleUser, User } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { prisma, PrismaClient } from '#/db'
@@ -15,6 +15,10 @@ export interface Context {
 
 export interface AuthContext extends Context {
   user: User
+}
+
+export interface GoogleAuthContext extends Context {
+  user: User & { googleUser: GoogleUser }
 }
 
 export const buildContext = async (req: NextApiRequest, res: NextApiResponse) => {

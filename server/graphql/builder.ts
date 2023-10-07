@@ -7,15 +7,17 @@ import RelayPlugin from '@pothos/plugin-relay'
 
 import { prisma } from '#/db'
 
-import { Context, AuthContext } from './context'
+import { Context, AuthContext, GoogleAuthContext } from './context'
 
 interface SchemaTypes {
   Context: Context
   AuthScopes: {
     logged: boolean
+    googleLogged: boolean
   }
   AuthContexts: {
     logged: AuthContext
+    googleLogged: GoogleAuthContext
   }
   PrismaTypes: PrismaTypes
 }
@@ -24,6 +26,19 @@ const builder = new SchemaBuilder<SchemaTypes>({
   plugins: [ScopeAuthPlugin, PrismaPlugin, ValidationPlugin, RelayPlugin],
   authScopes: (context) => ({
     logged: !!context.user,
+    googleLogged: async () => {
+      if (!context.user) return false
+
+      const isGoogleUser = await context.prisma.googleUser.findFirst({
+        where: {
+          user: {
+            id: context.user.id,
+          },
+        },
+      })
+
+      return !!isGoogleUser
+    },
   }),
   prisma: {
     client: prisma,
