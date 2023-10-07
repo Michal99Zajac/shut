@@ -83,3 +83,9 @@ export const signInWithGoogle = gql`
     }
   }
 `
+
+export const deleteAccountWithGoogle = gql`
+  mutation DeleteAccountWithGoogle($input: OAuthCodeInput!) {
+    deleteAccountWithGoogle(input: $input)
+  }
+`

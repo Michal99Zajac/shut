@@ -152,6 +152,7 @@ export type GQL_Mutation = {
   createBookmarkGroup: GQL_BookmarkGroup;
   /** Delete account */
   deleteAccount: Scalars['ID']['output'];
+  deleteAccountWithGoogle: Scalars['ID']['output'];
   /** Delete a bookmark */
   deleteBookmark: Scalars['ID']['output'];
   /** Delete a bookmark group */
@@ -192,6 +193,11 @@ export type GQL_MutationCreateBookmarkGroupArgs = {
 
 export type GQL_MutationDeleteAccountArgs = {
   input: GQL_DeleteAccountInput;
+};
+
+
+export type GQL_MutationDeleteAccountWithGoogleArgs = {
+  input: GQL_OAuthCodeInput;
 };
 
 
@@ -743,6 +749,37 @@ export function useSignInWithGoogleMutation(baseOptions?: Apollo.MutationHookOpt
 export type SignInWithGoogleMutationHookResult = ReturnType<typeof useSignInWithGoogleMutation>;
 export type SignInWithGoogleMutationResult = Apollo.MutationResult<GQL_SignInWithGoogleMutation>;
 export type SignInWithGoogleMutationOptions = Apollo.BaseMutationOptions<GQL_SignInWithGoogleMutation, GQL_SignInWithGoogleMutationVariables>;
+export const DeleteAccountWithGoogleDocument = gql`
+    mutation DeleteAccountWithGoogle($input: OAuthCodeInput!) {
+  deleteAccountWithGoogle(input: $input)
+}
+    `;
+export type GQL_DeleteAccountWithGoogleMutationFn = Apollo.MutationFunction<GQL_DeleteAccountWithGoogleMutation, GQL_DeleteAccountWithGoogleMutationVariables>;
+
+/**
+ * __useDeleteAccountWithGoogleMutation__
+ *
+ * To run a mutation, you first call `useDeleteAccountWithGoogleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteAccountWithGoogleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteAccountWithGoogleMutation, { data, loading, error }] = useDeleteAccountWithGoogleMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteAccountWithGoogleMutation(baseOptions?: Apollo.MutationHookOptions<GQL_DeleteAccountWithGoogleMutation, GQL_DeleteAccountWithGoogleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GQL_DeleteAccountWithGoogleMutation, GQL_DeleteAccountWithGoogleMutationVariables>(DeleteAccountWithGoogleDocument, options);
+      }
+export type DeleteAccountWithGoogleMutationHookResult = ReturnType<typeof useDeleteAccountWithGoogleMutation>;
+export type DeleteAccountWithGoogleMutationResult = Apollo.MutationResult<GQL_DeleteAccountWithGoogleMutation>;
+export type DeleteAccountWithGoogleMutationOptions = Apollo.BaseMutationOptions<GQL_DeleteAccountWithGoogleMutation, GQL_DeleteAccountWithGoogleMutationVariables>;
 export const BookmarkGroupsDocument = gql`
     query BookmarkGroups($filter: BookmarkGroupFilterInput) {
   bookmarkGroups(filter: $filter) {
@@ -971,6 +1008,13 @@ export type GQL_SignInWithGoogleMutationVariables = Exact<{
 
 export type GQL_SignInWithGoogleMutation = { __typename?: 'Mutation', signInWithGoogle?: { __typename?: 'User', id: string } | null };
 
+export type GQL_DeleteAccountWithGoogleMutationVariables = Exact<{
+  input: GQL_OAuthCodeInput;
+}>;
+
+
+export type GQL_DeleteAccountWithGoogleMutation = { __typename?: 'Mutation', deleteAccountWithGoogle: string };
+
 export type GQL_BookmarkGroupsQueryVariables = Exact<{
   filter?: InputMaybe<GQL_BookmarkGroupFilterInput>;
 }>;
@@ -1014,7 +1058,8 @@ export const namedOperations = {
     UpdateBookmark: 'UpdateBookmark',
     RequestNewPassword: 'RequestNewPassword',
     ResetForgottenPassword: 'ResetForgottenPassword',
-    SignInWithGoogle: 'SignInWithGoogle'
+    SignInWithGoogle: 'SignInWithGoogle',
+    DeleteAccountWithGoogle: 'DeleteAccountWithGoogle'
   }
 }
 
