@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Shut - Authentication',
+  title: 'Shut | Authentication',
 }
 
 export { default } from '@/layouts/AuthLayout'
