@@ -46,10 +46,35 @@ model BookmarkGroup {
 model User {
   id             String          @id @default(uuid())
   email          String          @unique
-  password       String
+  password       String?
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
   confirmed      Boolean         @default(false)
   bookmarkGroups BookmarkGroup[]
   bookmarks      Bookmark[]
+  googleUser     GoogleUser?
+}
+
+model GoogleUser {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  name          String?
+  picture       String
+  givenName     String?
+  familyName    String?
+  locale        String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  userId        String   @unique
+  googleTokenId String   @unique
+
+  googleToken GoogleToken @relation(fields: [googleTokenId], references: [id], onDelete: Cascade)
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model GoogleToken {
+  id         String      @id @default(uuid())
+  data       String
+  iv         String
+  googleUser GoogleUser?
 }
