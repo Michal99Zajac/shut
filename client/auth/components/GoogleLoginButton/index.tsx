@@ -45,6 +45,7 @@ export function GoogleLoginButton() {
         disabled={loading}
         className="!font-roboto !text-black !border-blue-100 hover:!bg-blue-50"
         fullWidth
+        size="large"
         variant="outlined"
         onClick={login}
       >
