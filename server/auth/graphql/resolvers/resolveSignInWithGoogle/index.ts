@@ -9,6 +9,8 @@ import Parent from '#/common/types/Parent'
 import Query from '#/common/types/Query'
 import { Context } from '#/graphql/context'
 import InputShape from '#/common/types/InputShape'
+import CookieService from '#/common/service/CookieService'
+import AuthenticationService from '#/auth/services/AuthenticationService'
 
 import { OAuthCodeInput } from '../../inputs/OAuthCodeInput'
 
@@ -33,6 +35,8 @@ export const resolveSignInWithGoogle = async (
 ) => {
   // prepare the crypto service
   const cryptoService = new CryptoService()
+  const cookizer = new CookieService()
+  const authenticator = new AuthenticationService(context.prisma)
 
   const oauth = new OAuth2Client({
     clientId: config.oauth.google.clientId,
@@ -69,7 +73,7 @@ export const resolveSignInWithGoogle = async (
 
     // mark the user as confirmed because they have signed in with Google
 
-    return context.prisma.user.upsert({
+    const user = await context.prisma.user.upsert({
       ...query,
       where: {
         email: parsedTokenPayload.email,
@@ -138,6 +142,14 @@ export const resolveSignInWithGoogle = async (
         },
       },
     })
+
+    // get session token
+    const session = await authenticator.encode(user)
+
+    // grant access
+    cookizer.access(session)
+
+    return user
   } catch (error) {
     throw new GraphQLError('Google OAuth failed')
   }
