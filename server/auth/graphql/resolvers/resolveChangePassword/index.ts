@@ -23,6 +23,8 @@ export const resolveChangePassword = async (parent: Parent, args: Args, context:
   const { input } = args
   const { user } = context
 
+  if (!context.user.password) throw new GraphQLError('User does not have a password')
+
   // check if old password is correct
   const isCorrect = bcrypt.compare(input.oldPassword, context.user.password)
   if (!isCorrect) throw new GraphQLError('Old password is incorrect')
