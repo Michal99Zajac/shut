@@ -26,6 +26,8 @@ export const resolveDeleteAccount = async (parent: Parent, args: Args, context: 
   // prepare service
   const cookizer = new CookieService()
 
+  if (!context.user.password) throw new GraphQLError('User does not have a password')
+
   // check if old password is correct
   const isCorrect = bcrypt.compare(input.password, context.user.password)
   if (!isCorrect) throw new GraphQLError('Password is incorrect')
