@@ -76,3 +76,10 @@ export const resetForgottenPassword = gql`
     resetForgottenPassword(input: $input)
   }
 `
+export const signInWithGoogle = gql`
+  mutation SignInWithGoogle($input: OAuthCodeInput!) {
+    signInWithGoogle(input: $input) {
+      id
+    }
+  }
+`

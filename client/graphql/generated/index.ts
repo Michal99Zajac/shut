@@ -107,6 +107,14 @@ export type GQL_BookmarkGroupFilterInput = {
   query?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Input type for changing password */
+export type GQL_ChangePasswordInput = {
+  /** New password */
+  newPassword: Scalars['String']['input'];
+  /** Old password */
+  oldPassword: Scalars['String']['input'];
+};
+
 /** Input type for creating a bookmark group */
 export type GQL_CreateBookmarkGroupInput = {
   /** Description of the bookmark group */
@@ -129,11 +137,21 @@ export type GQL_CreateBookmarkInput = {
   url: Scalars['String']['input'];
 };
 
+/** Input for deleting account */
+export type GQL_DeleteAccountInput = {
+  /** User password */
+  password: Scalars['String']['input'];
+};
+
 export type GQL_Mutation = {
   __typename?: 'Mutation';
+  /** Change password */
+  changePassword: Scalars['ID']['output'];
   createBookmark: GQL_Bookmark;
   /** Create bookmark group */
   createBookmarkGroup: GQL_BookmarkGroup;
+  /** Delete account */
+  deleteAccount: Scalars['ID']['output'];
   /** Delete a bookmark */
   deleteBookmark: Scalars['ID']['output'];
   /** Delete a bookmark group */
@@ -146,12 +164,19 @@ export type GQL_Mutation = {
   resetForgottenPassword: Scalars['Boolean']['output'];
   /** Sign in */
   signIn: GQL_User;
+  /** Sign in with Google */
+  signInWithGoogle?: Maybe<GQL_User>;
   /** Sign out the current user. */
   signOut: Scalars['ID']['output'];
   /** Sign up */
   signUp: Scalars['ID']['output'];
   updateBookmark: GQL_Bookmark;
   updateBookmarkGroup: GQL_BookmarkGroup;
+};
+
+
+export type GQL_MutationChangePasswordArgs = {
+  input: GQL_ChangePasswordInput;
 };
 
 
@@ -162,6 +187,11 @@ export type GQL_MutationCreateBookmarkArgs = {
 
 export type GQL_MutationCreateBookmarkGroupArgs = {
   input: GQL_CreateBookmarkGroupInput;
+};
+
+
+export type GQL_MutationDeleteAccountArgs = {
+  input: GQL_DeleteAccountInput;
 };
 
 
@@ -190,6 +220,11 @@ export type GQL_MutationSignInArgs = {
 };
 
 
+export type GQL_MutationSignInWithGoogleArgs = {
+  input: GQL_OAuthCodeInput;
+};
+
+
 export type GQL_MutationSignUpArgs = {
   input: GQL_SignUpInput;
 };
@@ -204,6 +239,12 @@ export type GQL_MutationUpdateBookmarkArgs = {
 export type GQL_MutationUpdateBookmarkGroupArgs = {
   id: Scalars['ID']['input'];
   input: GQL_UpdateBookmarkGroupInput;
+};
+
+/** Input for OAuth code */
+export type GQL_OAuthCodeInput = {
+  /** OAuth code */
+  code: Scalars['String']['input'];
 };
 
 export type GQL_PageInfo = {
@@ -669,6 +710,39 @@ export function useResetForgottenPasswordMutation(baseOptions?: Apollo.MutationH
 export type ResetForgottenPasswordMutationHookResult = ReturnType<typeof useResetForgottenPasswordMutation>;
 export type ResetForgottenPasswordMutationResult = Apollo.MutationResult<GQL_ResetForgottenPasswordMutation>;
 export type ResetForgottenPasswordMutationOptions = Apollo.BaseMutationOptions<GQL_ResetForgottenPasswordMutation, GQL_ResetForgottenPasswordMutationVariables>;
+export const SignInWithGoogleDocument = gql`
+    mutation SignInWithGoogle($input: OAuthCodeInput!) {
+  signInWithGoogle(input: $input) {
+    id
+  }
+}
+    `;
+export type GQL_SignInWithGoogleMutationFn = Apollo.MutationFunction<GQL_SignInWithGoogleMutation, GQL_SignInWithGoogleMutationVariables>;
+
+/**
+ * __useSignInWithGoogleMutation__
+ *
+ * To run a mutation, you first call `useSignInWithGoogleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignInWithGoogleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [signInWithGoogleMutation, { data, loading, error }] = useSignInWithGoogleMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSignInWithGoogleMutation(baseOptions?: Apollo.MutationHookOptions<GQL_SignInWithGoogleMutation, GQL_SignInWithGoogleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GQL_SignInWithGoogleMutation, GQL_SignInWithGoogleMutationVariables>(SignInWithGoogleDocument, options);
+      }
+export type SignInWithGoogleMutationHookResult = ReturnType<typeof useSignInWithGoogleMutation>;
+export type SignInWithGoogleMutationResult = Apollo.MutationResult<GQL_SignInWithGoogleMutation>;
+export type SignInWithGoogleMutationOptions = Apollo.BaseMutationOptions<GQL_SignInWithGoogleMutation, GQL_SignInWithGoogleMutationVariables>;
 export const BookmarkGroupsDocument = gql`
     query BookmarkGroups($filter: BookmarkGroupFilterInput) {
   bookmarkGroups(filter: $filter) {
@@ -890,6 +964,13 @@ export type GQL_ResetForgottenPasswordMutationVariables = Exact<{
 
 export type GQL_ResetForgottenPasswordMutation = { __typename?: 'Mutation', resetForgottenPassword: boolean };
 
+export type GQL_SignInWithGoogleMutationVariables = Exact<{
+  input: GQL_OAuthCodeInput;
+}>;
+
+
+export type GQL_SignInWithGoogleMutation = { __typename?: 'Mutation', signInWithGoogle?: { __typename?: 'User', id: string } | null };
+
 export type GQL_BookmarkGroupsQueryVariables = Exact<{
   filter?: InputMaybe<GQL_BookmarkGroupFilterInput>;
 }>;
@@ -932,7 +1013,8 @@ export const namedOperations = {
     DeleteBookmark: 'DeleteBookmark',
     UpdateBookmark: 'UpdateBookmark',
     RequestNewPassword: 'RequestNewPassword',
-    ResetForgottenPassword: 'ResetForgottenPassword'
+    ResetForgottenPassword: 'ResetForgottenPassword',
+    SignInWithGoogle: 'SignInWithGoogle'
   }
 }
 
@@ -966,6 +1048,13 @@ export function GQL_BookmarkGroupFilterInputSchema(): z.ZodObject<Properties<GQL
   })
 }
 
+export function GQL_ChangePasswordInputSchema(): z.ZodObject<Properties<GQL_ChangePasswordInput>> {
+  return z.object({
+    newPassword: z.string(),
+    oldPassword: z.string()
+  })
+}
+
 export function GQL_CreateBookmarkGroupInputSchema(): z.ZodObject<Properties<GQL_CreateBookmarkGroupInput>> {
   return z.object({
     description: z.string().nullish(),
@@ -980,6 +1069,18 @@ export function GQL_CreateBookmarkInputSchema(): z.ZodObject<Properties<GQL_Crea
     description: z.string().nullish(),
     friendlyName: z.string(),
     url: z.string()
+  })
+}
+
+export function GQL_DeleteAccountInputSchema(): z.ZodObject<Properties<GQL_DeleteAccountInput>> {
+  return z.object({
+    password: z.string()
+  })
+}
+
+export function GQL_OAuthCodeInputSchema(): z.ZodObject<Properties<GQL_OAuthCodeInput>> {
+  return z.object({
+    code: z.string()
   })
 }
 
