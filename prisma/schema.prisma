@@ -56,25 +56,26 @@ model User {
 }
 
 model GoogleUser {
-  id            String   @id @default(uuid())
-  email         String   @unique
-  name          String?
-  picture       String
-  givenName     String?
-  familyName    String?
-  locale        String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  userId        String   @unique
-  googleTokenId String   @unique
+  id          String       @id @default(uuid())
+  email       String       @unique
+  name        String?
+  picture     String
+  givenName   String?
+  familyName  String?
+  locale      String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  userId      String       @unique
+  googleToken GoogleToken?
 
-  googleToken GoogleToken @relation(fields: [googleTokenId], references: [id], onDelete: Cascade)
-  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model GoogleToken {
-  id         String      @id @default(uuid())
-  data       String
-  iv         String
-  googleUser GoogleUser?
+  id           String @id @default(uuid())
+  data         String
+  iv           String
+  googleUserId String @unique
+
+  googleUser GoogleUser @relation(fields: [googleUserId], references: [id], onDelete: Cascade)
 }
