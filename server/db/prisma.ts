@@ -8,7 +8,7 @@ export const prisma = new CorePrismaClient().$extends({
   model: {
     user: {
       signUp: async (email: string, password: string) => {
-        const hashedPassword = await bcrypt.hash(password, config.secure.saltRounds)
+        const hashedPassword = await bcrypt.hash(password, config.secure.password.salt)
 
         const user = await prisma.user.create({
           data: {
@@ -20,7 +20,7 @@ export const prisma = new CorePrismaClient().$extends({
         return user
       },
       changePassword: async (id: string, password: string) => {
-        const hashedPassword = await bcrypt.hash(password, config.secure.saltRounds)
+        const hashedPassword = await bcrypt.hash(password, config.secure.password.salt)
 
         const user = await prisma.user.update({
           where: {
