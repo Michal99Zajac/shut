@@ -4,4 +4,4 @@ export const metadata: Metadata = {
   title: 'Shut | Reset Password',
 }
 
-export { default } from '@/pages/auth/forgot-password/reset-password'
+export { default } from './_page'

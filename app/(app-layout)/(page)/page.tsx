@@ -4,4 +4,4 @@ export const metadata: Metadata = {
   title: 'Shut | Dashboard',
 }
 
-export { default } from '@/pages'
+export { default } from './_page'

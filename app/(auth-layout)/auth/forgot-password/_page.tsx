@@ -12,7 +12,7 @@ import {
 } from '@/auth/schemas/RequestNewPasswordInputSchema'
 import { useRequestNewPasswordMutation } from '@/graphql/generated'
 
-export function ForgotPasswordPage() {
+export function Page() {
   const router = useRouter()
   const { register, handleSubmit } = useForm<RequestNewPasswordInputSchema>({
     resolver: zodResolver(requestNewPasswordInputSchema),
@@ -70,4 +70,4 @@ export function ForgotPasswordPage() {
   )
 }
 
-export default ForgotPasswordPage
+export default Page

@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation'
 import { useSignUpMutation } from '@/graphql/generated'
 import { signUpInputSchema, SignUpInputSchema } from '@/auth/schemas/SignUpInputSchema'
 
-export const SignUpPage = () => {
+export const Page = () => {
   const router = useRouter()
   const [signUp, { loading }] = useSignUpMutation()
   const { register, handleSubmit, setError, formState } = useForm<SignUpInputSchema>({
@@ -101,4 +101,4 @@ export const SignUpPage = () => {
   )
 }
 
-export default SignUpPage
+export default Page

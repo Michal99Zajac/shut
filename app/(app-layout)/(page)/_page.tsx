@@ -1,14 +1,5 @@
 'use client'
 
-import { BookmarkGroupTree } from '@/bookmarks/components/BookmarkGroupTree'
-import {
-  GQL_BookmarkGroupsQuery,
-  GQL_BookmarkGroupsQueryVariables,
-  GQL_BookmarksQuery,
-  GQL_BookmarksQueryVariables,
-  BookmarksDocument,
-  BookmarkGroupsDocument,
-} from '@/graphql/generated'
 import { useSuspenseQuery } from '@apollo/client'
 import { BiBookmarkPlus, BiChevronLeft, BiFolderPlus, BiMenuAltLeft } from 'react-icons/bi'
 import IconButton from '@mui/material/IconButton'
@@ -24,6 +15,15 @@ import BookmarkSearch from '@/bookmarks/components/BookmarkSearch'
 import BookmarksTable from '@/bookmarks/components/BookmarksTable'
 import { useBookmarkGroupTreeToolbox } from '@/bookmarks/hooks/useBookmarkGroupTreeToolbox'
 import useBookmarksFilter from '@/bookmarks/hooks/useBookmarksFilter'
+import { BookmarkGroupTree } from '@/bookmarks/components/BookmarkGroupTree'
+import {
+  GQL_BookmarkGroupsQuery,
+  GQL_BookmarkGroupsQueryVariables,
+  GQL_BookmarksQuery,
+  GQL_BookmarksQueryVariables,
+  BookmarksDocument,
+  BookmarkGroupsDocument,
+} from '@/graphql/generated'
 
 interface Query {
   bookmarkGroupQuery: string
@@ -31,7 +31,7 @@ interface Query {
   bookmarkQuery: string
 }
 
-export const RootPage: Client.Page = () => {
+export const Page: Client.Page = () => {
   const query = useQuery<Query>()
   const [isDrawer, setIsDrawer] = useState(false)
   const {
@@ -170,4 +170,4 @@ export const RootPage: Client.Page = () => {
   )
 }
 
-export default RootPage
+export default Page

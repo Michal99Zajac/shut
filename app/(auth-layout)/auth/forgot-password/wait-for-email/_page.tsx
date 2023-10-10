@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
-export function WaitForEmailPage() {
+export function Page() {
   return (
     <div className="w-[400px] max-w-full">
       <div className="flex justify-center mb-4">
@@ -27,4 +27,4 @@ export function WaitForEmailPage() {
   )
 }
 
-export default WaitForEmailPage
+export default Page

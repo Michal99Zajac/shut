@@ -32,12 +32,7 @@ import {
   useCreateBookmarkMutation,
 } from '@/graphql/generated'
 
-export type CreateBookmarkPageProps = Client.PageProps
-export interface RichCreateBookmarkPageProps extends CreateBookmarkPageProps {
-  isModal?: boolean
-}
-
-export const CreateBookmarkPage = ({ isModal, searchParams }: RichCreateBookmarkPageProps) => {
+export const Page: Client.Page = ({ searchParams }) => {
   const { bookmarkGroupId = '' } = searchParams
   const pathname = usePathname()
   const router = useRouter()
@@ -75,7 +70,7 @@ export const CreateBookmarkPage = ({ isModal, searchParams }: RichCreateBookmark
   })
 
   const closeDialog = () => {
-    isModal ? router.back() : router.push('/')
+    router.back()
   }
 
   return (
@@ -85,8 +80,8 @@ export const CreateBookmarkPage = ({ isModal, searchParams }: RichCreateBookmark
           width: '520px',
         },
       }}
-      isMega={!isModal}
-      closeAfterTransition={isModal}
+      isMega={false}
+      closeAfterTransition={true}
       TransitionComponent={SlideTransition}
       open={pathname === '/bookmarks/create'}
       onClose={closeDialog}
@@ -173,4 +168,4 @@ export const CreateBookmarkPage = ({ isModal, searchParams }: RichCreateBookmark
   )
 }
 
-export default CreateBookmarkPage
+export default Page

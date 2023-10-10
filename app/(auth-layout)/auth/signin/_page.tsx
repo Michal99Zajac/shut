@@ -13,7 +13,7 @@ import { signInInputSchema, SignInInputSchema } from '@/auth/schemas/SignInInput
 import { useSignInMutation } from '@/graphql/generated'
 import { GoogleLoginButton } from '@/auth/components/GoogleLoginButton'
 
-export const SignInPage = () => {
+export const Page = () => {
   const router = useRouter()
   const [signIn, { loading, error, reset }] = useSignInMutation()
   const { register, handleSubmit } = useForm<SignInInputSchema>({
@@ -102,4 +102,4 @@ export const SignInPage = () => {
   )
 }
 
-export default SignInPage
+export default Page

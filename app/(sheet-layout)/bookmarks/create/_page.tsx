@@ -26,37 +26,19 @@ import {
 import { MegaDialog } from '@/components/MegaDialog'
 import { SlideTransition } from '@/components/SlideTransition'
 import {
-  BookmarkDocument,
   BookmarkGroupsDocument,
   GQL_BookmarkGroupsQuery,
   GQL_BookmarkGroupsQueryVariables,
-  GQL_BookmarkQuery,
-  GQL_BookmarkQueryVariables,
-  useUpdateBookmarkMutation,
+  useCreateBookmarkMutation,
 } from '@/graphql/generated'
-import DeleteBookmarkIconButton from '@/bookmarks/components/DeleteBookmarkIconButton'
 
-export type UpdateBookmarkPageProps = Client.PageProps<{ bookmarkId: string }>
-export interface RichUpdateBookmarkPageProps extends UpdateBookmarkPageProps {
-  isModal?: boolean
-}
-
-export const UpdateBookmarkPage = ({ isModal, params }: RichUpdateBookmarkPageProps) => {
-  const { bookmarkId } = params
+export const Page: Client.Page = ({ searchParams }) => {
+  const { bookmarkGroupId = '' } = searchParams
   const pathname = usePathname()
   const router = useRouter()
-  const [updateBookmark] = useUpdateBookmarkMutation({
-    refetchQueries: ['Bookmarks', 'Bookmark', 'BookmarkGroups'],
+  const [createBookmark] = useCreateBookmarkMutation({
+    refetchQueries: ['Bookmarks', 'BookmarkGroups'],
   })
-  const { data: bookmark } = useSuspenseQuery<GQL_BookmarkQuery, GQL_BookmarkQueryVariables>(
-    BookmarkDocument,
-    {
-      variables: {
-        id: bookmarkId,
-      },
-      fetchPolicy: 'cache-and-network',
-    },
-  )
   const {
     data: { bookmarkGroups },
   } = useSuspenseQuery<GQL_BookmarkGroupsQuery, GQL_BookmarkGroupsQueryVariables>(
@@ -68,16 +50,13 @@ export const UpdateBookmarkPage = ({ isModal, params }: RichUpdateBookmarkPagePr
   const { register, handleSubmit, formState, control } = useForm<CreateBookmarkInputSchema>({
     resolver: zodResolver(createBookmarkInputSchema),
     defaultValues: {
-      bookmarkGroupId: bookmark.bookmark.bookmarkGroup.id,
-      url: bookmark.bookmark.url,
-      friendlyName: bookmark.bookmark.friendlyName,
+      bookmarkGroupId: bookmarkGroupId,
     },
   })
 
   const onSubmit = handleSubmit((data) => {
-    updateBookmark({
+    createBookmark({
       variables: {
-        id: bookmarkId,
         input: {
           bookmarkGroupId: data.bookmarkGroupId,
           friendlyName: data.friendlyName,
@@ -91,7 +70,7 @@ export const UpdateBookmarkPage = ({ isModal, params }: RichUpdateBookmarkPagePr
   })
 
   const closeDialog = () => {
-    isModal ? router.back() : router.push('/')
+    router.push('/')
   }
 
   return (
@@ -101,14 +80,14 @@ export const UpdateBookmarkPage = ({ isModal, params }: RichUpdateBookmarkPagePr
           width: '520px',
         },
       }}
-      isMega={!isModal}
-      closeAfterTransition={isModal}
+      isMega
+      closeAfterTransition={false}
       TransitionComponent={SlideTransition}
-      open={pathname === `/bookmarks/bookmark/${bookmarkId}`}
+      open={pathname === '/bookmarks/create'}
       onClose={closeDialog}
     >
       <form onSubmit={onSubmit}>
-        <DialogTitle className="!font-koulen">Update Bookmark</DialogTitle>
+        <DialogTitle className="!font-koulen">Create Bookmark</DialogTitle>
         <IconButton
           aria-label="close"
           size="medium"
@@ -181,15 +160,12 @@ export const UpdateBookmarkPage = ({ isModal, params }: RichUpdateBookmarkPagePr
             </FormControl>
           </div>
         </DialogContent>
-        <DialogActions className="!flex !justify-between">
-          <DeleteBookmarkIconButton bookmarkId={bookmarkId} size="medium" onDeleted={closeDialog} />
-          <Button size="large" type="submit">
-            Update bookmark
-          </Button>
+        <DialogActions>
+          <Button type="submit">Add bookmark</Button>
         </DialogActions>
       </form>
     </MegaDialog>
   )
 }
 
-export default UpdateBookmarkPage
+export default Page

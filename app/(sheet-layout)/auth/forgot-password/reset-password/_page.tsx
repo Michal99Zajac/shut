@@ -12,7 +12,7 @@ import {
 } from '@/auth/schemas/ResetForgottenPasswordInputSchema'
 import { useResetForgottenPasswordMutation } from '@/graphql/generated'
 
-export const ResetPasswordPage: Client.Page = ({ searchParams }) => {
+export const Page: Client.Page = ({ searchParams }) => {
   const { token } = searchParams
   const router = useRouter()
   const { register, handleSubmit, setError, formState } =
@@ -96,4 +96,4 @@ export const ResetPasswordPage: Client.Page = ({ searchParams }) => {
   )
 }
 
-export default ResetPasswordPage
+export default Page
