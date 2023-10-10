@@ -46,7 +46,7 @@ export const resolveSignUp = async (_: Parent, args: Args, context: Context) => 
     const command = new SendTemplatedEmailCommand({
       Source: `SHUT <${config.aws.sender}>`,
       Destination: {
-        ToAddresses: [config.aws.sender], // FIXME: change to correct addesss
+        ToAddresses: [user.email],
       },
       Template: 'shut-confirm-email',
       TemplateData: JSON.stringify({

@@ -37,7 +37,7 @@ export const resolveRequestNewPassword = async (__: Parent, args: Args, context:
   const command = new SendTemplatedEmailCommand({
     Source: `SHUT <${config.aws.sender}>`,
     Destination: {
-      ToAddresses: [config.aws.sender], // FIXME: change to addesss
+      ToAddresses: [user.email],
     },
     Template: 'shut-reset-password',
     TemplateData: JSON.stringify({
