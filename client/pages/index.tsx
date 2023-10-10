@@ -31,7 +31,7 @@ interface Query {
   bookmarkQuery: string
 }
 
-export const RootPage: Client.Page = ({ searchParams }) => {
+export const RootPage: Client.Page = () => {
   const query = useQuery<Query>()
   const [isDrawer, setIsDrawer] = useState(false)
   const {
