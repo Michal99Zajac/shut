@@ -1,30 +1,13 @@
-'use client'
-
 import Image from 'next/image'
-import { useForm } from 'react-hook-form'
-import { Button } from '@mui/material'
-import { useRouter } from 'next/navigation'
 
 import { NavigationTab } from '@/components/NavigationTab'
-import { useSignOutMutation } from '@/graphql/generated'
+import SignOutButton from '@/auth/components/SignOutButton'
 
 type AppLayoutProps = React.PropsWithChildren<{
   bookmarkModal: React.ReactNode
 }>
 
 export function AppLayout({ children, bookmarkModal }: AppLayoutProps) {
-  const { handleSubmit } = useForm()
-  const [signOut, { loading }] = useSignOutMutation()
-  const router = useRouter()
-
-  const onSubmit = handleSubmit(() => {
-    signOut({
-      onCompleted: () => {
-        router.push('/auth/signin')
-      },
-    })
-  })
-
   return (
     <>
       {bookmarkModal}
@@ -42,11 +25,7 @@ export function AppLayout({ children, bookmarkModal }: AppLayoutProps) {
             height={36}
             className="rounded"
           />
-          <form onSubmit={onSubmit}>
-            <Button variant="text" type="submit" disabled={loading}>
-              Sign Out
-            </Button>
-          </form>
+          <SignOutButton />
         </div>
       </header>
       <main className="p-4">{children}</main>
