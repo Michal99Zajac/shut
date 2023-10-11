@@ -21,8 +21,8 @@
     "gql:generate": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.0-rc.2",
-    "@apollo/experimental-nextjs-app-support": "^0.4.1",
+    "@apollo/client": "^3.8.5",
+    "@apollo/experimental-nextjs-app-support": "^0.4.3",
     "@apollo/server": "^4.9.1",
     "@as-integrations/next": "^2.0.1",
     "@aws-sdk/client-ses": "^3.421.0",
