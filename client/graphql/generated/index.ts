@@ -780,6 +780,37 @@ export function useDeleteAccountWithGoogleMutation(baseOptions?: Apollo.Mutation
 export type DeleteAccountWithGoogleMutationHookResult = ReturnType<typeof useDeleteAccountWithGoogleMutation>;
 export type DeleteAccountWithGoogleMutationResult = Apollo.MutationResult<GQL_DeleteAccountWithGoogleMutation>;
 export type DeleteAccountWithGoogleMutationOptions = Apollo.BaseMutationOptions<GQL_DeleteAccountWithGoogleMutation, GQL_DeleteAccountWithGoogleMutationVariables>;
+export const ChangePasswordDocument = gql`
+    mutation ChangePassword($input: ChangePasswordInput!) {
+  changePassword(input: $input)
+}
+    `;
+export type GQL_ChangePasswordMutationFn = Apollo.MutationFunction<GQL_ChangePasswordMutation, GQL_ChangePasswordMutationVariables>;
+
+/**
+ * __useChangePasswordMutation__
+ *
+ * To run a mutation, you first call `useChangePasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangePasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changePasswordMutation, { data, loading, error }] = useChangePasswordMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useChangePasswordMutation(baseOptions?: Apollo.MutationHookOptions<GQL_ChangePasswordMutation, GQL_ChangePasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GQL_ChangePasswordMutation, GQL_ChangePasswordMutationVariables>(ChangePasswordDocument, options);
+      }
+export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
+export type ChangePasswordMutationResult = Apollo.MutationResult<GQL_ChangePasswordMutation>;
+export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<GQL_ChangePasswordMutation, GQL_ChangePasswordMutationVariables>;
 export const BookmarkGroupsDocument = gql`
     query BookmarkGroups($filter: BookmarkGroupFilterInput) {
   bookmarkGroups(filter: $filter) {
@@ -1015,6 +1046,13 @@ export type GQL_DeleteAccountWithGoogleMutationVariables = Exact<{
 
 export type GQL_DeleteAccountWithGoogleMutation = { __typename?: 'Mutation', deleteAccountWithGoogle: string };
 
+export type GQL_ChangePasswordMutationVariables = Exact<{
+  input: GQL_ChangePasswordInput;
+}>;
+
+
+export type GQL_ChangePasswordMutation = { __typename?: 'Mutation', changePassword: string };
+
 export type GQL_BookmarkGroupsQueryVariables = Exact<{
   filter?: InputMaybe<GQL_BookmarkGroupFilterInput>;
 }>;
@@ -1059,7 +1097,8 @@ export const namedOperations = {
     RequestNewPassword: 'RequestNewPassword',
     ResetForgottenPassword: 'ResetForgottenPassword',
     SignInWithGoogle: 'SignInWithGoogle',
-    DeleteAccountWithGoogle: 'DeleteAccountWithGoogle'
+    DeleteAccountWithGoogle: 'DeleteAccountWithGoogle',
+    ChangePassword: 'ChangePassword'
   }
 }
 

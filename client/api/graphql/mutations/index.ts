@@ -89,3 +89,9 @@ export const deleteAccountWithGoogle = gql`
     deleteAccountWithGoogle(input: $input)
   }
 `
+
+export const changePassword = gql`
+  mutation ChangePassword($input: ChangePasswordInput!) {
+    changePassword(input: $input)
+  }
+`
