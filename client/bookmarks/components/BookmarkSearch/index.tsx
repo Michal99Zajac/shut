@@ -22,6 +22,9 @@ export function BookmarkSearch({ className }: BookmarkSearchProps) {
 
   useDebounce(
     () => {
+      // do nothing if search is empty and query is empty
+      // It avoids unnecessary re-rendering
+      if (search === '' && !query.query.bookmarkQuery) return
       query.set('bookmarkQuery', search)
     },
     300,
