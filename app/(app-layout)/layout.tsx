@@ -14,8 +14,18 @@ export function Layout({ children }: LayoutProps) {
         <Image src="/shut-logo.svg" alt="logo" width={32} height={42} />
         <div className="flex gap-2 items-center">
           <div className="inline-block mr-4">
-            <Link href="/">Dashboard</Link>
-            <Link href="/settings">Settings</Link>
+            <Link
+              className="font-koulen px-2 py-1 rounded-md hover:bg-primary hover:bg-opacity-5"
+              href="/"
+            >
+              Dashboard
+            </Link>
+            <Link
+              href="/settings"
+              className="font-koulen px-2 py-1 rounded-md hover:bg-primary hover:bg-opacity-5"
+            >
+              Settings
+            </Link>
           </div>
           <Image
             src="/develop/avatar.jpeg"
