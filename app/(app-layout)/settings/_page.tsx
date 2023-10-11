@@ -1,9 +1,12 @@
+'use client'
+
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Link from 'next/link'
 
 import GoogleDeleteAccountButton from '@/settings/components/GoogleDeleteAccountButton'
+import SecureForm from '@/settings/components/SecureForm'
 
 const Page: Client.Page = () => {
   return (
@@ -31,34 +34,7 @@ const Page: Client.Page = () => {
           <h2 className="font-koulen text-3xl border-b-2 border-gray-200 border-solid mb-4">
             Secure
           </h2>
-          <form>
-            <TextField
-              label="Password"
-              type="password"
-              className="!mb-4"
-              fullWidth
-              placeholder="password"
-            />
-            <TextField
-              label="New password"
-              type="password"
-              className="!mb-4"
-              fullWidth
-              placeholder="new password"
-            />
-            <TextField
-              label="Repeated new password"
-              type="password"
-              className="!mb-4"
-              fullWidth
-              placeholder="password"
-            />
-            <div className="text-right">
-              <Button size="large" disabled variant="contained">
-                Update
-              </Button>
-            </div>
-          </form>
+          <SecureForm />
           <h2 className="font-koulen text-3xl border-b-2 border-gray-200 border-solid mb-4">
             Account
           </h2>
