@@ -81,13 +81,13 @@ export const Page: Client.Page = () => {
           </IconButton>
         </Tooltip>
       </div>
-      <Breadcrumbs aria-label="breadcrumb">
+      <Breadcrumbs aria-label="breadcrumb" className="!mb-6">
         <Link href="/" className="font-koulen hover:underline">
           SHUT
         </Link>
         <p className="font-koulen">Dashboard</p>
       </Breadcrumbs>
-      <div className="grid md:grid-cols-dashboard gap-6 mt-4">
+      <div className="grid md:grid-cols-dashboard gap-6">
         <aside className="hidden md:block">
           <div className="flex gap-2 items-center mb-2">
             <BookmarkGroupSearch />
