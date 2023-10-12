@@ -84,7 +84,7 @@ export function SecureForm() {
       />
       <div className="text-right">
         <Button
-          size="large"
+          size="medium"
           type="submit"
           disabled={!formState.isDirty || isChangePasswordLoading}
           variant="contained"
