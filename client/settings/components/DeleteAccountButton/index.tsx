@@ -66,9 +66,8 @@ export function DeleteAccountButton() {
       </Button>
       <Dialog
         PaperProps={{
-          sx: {
-            width: '520px',
-          },
+          className:
+            '!max-h-full !max-w-full w-full h-full !m-0 md:h-auto md:!max-w-[540px] md:!m-8 md:!max-h-[calc(100%-64px)]',
         }}
         open={isOpen}
         onClose={onClose}
