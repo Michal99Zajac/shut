@@ -95,3 +95,9 @@ export const changePassword = gql`
     changePassword(input: $input)
   }
 `
+
+export const deleteAccount = gql`
+  mutation DeleteAccount($input: DeleteAccountInput!) {
+    deleteAccount(input: $input)
+  }
+`
