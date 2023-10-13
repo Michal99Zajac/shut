@@ -49,7 +49,7 @@ export function GoogleDeleteAccountButton() {
         size="large"
         onClick={login}
       >
-        Confirm deletion thanks to Google
+        Delete account
       </Button>
       <Snackbar open={isError} autoHideDuration={6000} onClose={() => setIsError(false)}>
         <Alert onClose={() => setIsError(false)} severity="error" sx={{ width: '100%' }}>
