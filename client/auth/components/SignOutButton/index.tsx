@@ -24,7 +24,7 @@ export function SignOutButton() {
 
   return (
     <form onSubmit={onSubmit}>
-      <Button variant="text" type="submit" disabled={loading}>
+      <Button variant="outlined" type="submit" disabled={loading}>
         Sign Out
       </Button>
     </form>
