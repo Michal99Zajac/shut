@@ -66,6 +66,7 @@ export const me = gql`
         isClassic
         isGoogle
       }
+      profileUrl
       email
       id
     }

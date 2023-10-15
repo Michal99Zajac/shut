@@ -368,6 +368,8 @@ export type GQL_User = {
   accountType: GQL_AccountType;
   email: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  /** The user profile url */
+  profileUrl?: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -1001,6 +1003,7 @@ export const MeDocument = gql`
       isClassic
       isGoogle
     }
+    profileUrl
     email
     id
   }
@@ -1166,7 +1169,7 @@ export type GQL_BookmarkQuery = { __typename?: 'Query', bookmark: { __typename?:
 export type GQL_MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GQL_MeQuery = { __typename?: 'Query', me: { __typename?: 'User', email: string, id: string, accountType: { __typename?: 'AccountType', isClassic: boolean, isGoogle: boolean } } };
+export type GQL_MeQuery = { __typename?: 'Query', me: { __typename?: 'User', profileUrl?: string | null, email: string, id: string, accountType: { __typename?: 'AccountType', isClassic: boolean, isGoogle: boolean } } };
 
 export const namedOperations = {
   Query: {
