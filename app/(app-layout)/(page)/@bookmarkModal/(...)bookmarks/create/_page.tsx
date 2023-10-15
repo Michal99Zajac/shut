@@ -11,7 +11,6 @@ import { BiFolder, BiFolderOpen } from 'react-icons/bi'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import TextField from '@mui/material/TextField'
-import { useSuspenseQuery } from '@apollo/client'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
@@ -25,12 +24,8 @@ import {
 } from '@/bookmarks/schemas/CreateBookmarkInputSchema'
 import { MegaDialog } from '@/components/MegaDialog'
 import { SlideTransition } from '@/components/SlideTransition'
-import {
-  BookmarkGroupsDocument,
-  GQL_BookmarkGroupsQuery,
-  GQL_BookmarkGroupsQueryVariables,
-  useCreateBookmarkMutation,
-} from '@/graphql/generated'
+import { useCreateBookmarkMutation } from '@/graphql/generated'
+import { useBookmarkGroupsSuspenseQuery } from '@/api/graphql/ssr'
 
 export const Page: Client.Page = ({ searchParams }) => {
   const { bookmarkGroupId = '' } = searchParams
@@ -41,12 +36,9 @@ export const Page: Client.Page = ({ searchParams }) => {
   })
   const {
     data: { bookmarkGroups },
-  } = useSuspenseQuery<GQL_BookmarkGroupsQuery, GQL_BookmarkGroupsQueryVariables>(
-    BookmarkGroupsDocument,
-    {
-      fetchPolicy: 'cache-and-network',
-    },
-  )
+  } = useBookmarkGroupsSuspenseQuery({
+    fetchPolicy: 'cache-and-network',
+  })
   const { register, handleSubmit, formState, control } = useForm<CreateBookmarkInputSchema>({
     resolver: zodResolver(createBookmarkInputSchema),
     defaultValues: {

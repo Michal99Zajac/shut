@@ -1,6 +1,5 @@
 'use client'
 
-import { useSuspenseQuery } from '@apollo/client'
 import { BiBookmarkPlus, BiChevronLeft, BiFolderPlus, BiMenuAltLeft } from 'react-icons/bi'
 import IconButton from '@mui/material/IconButton'
 import Link from 'next/link'
@@ -16,14 +15,7 @@ import BookmarksTable from '@/bookmarks/components/BookmarksTable'
 import { useBookmarkGroupTreeToolbox } from '@/bookmarks/hooks/useBookmarkGroupTreeToolbox'
 import useBookmarksFilter from '@/bookmarks/hooks/useBookmarksFilter'
 import { BookmarkGroupTree } from '@/bookmarks/components/BookmarkGroupTree'
-import {
-  GQL_BookmarkGroupsQuery,
-  GQL_BookmarkGroupsQueryVariables,
-  GQL_BookmarksQuery,
-  GQL_BookmarksQueryVariables,
-  BookmarksDocument,
-  BookmarkGroupsDocument,
-} from '@/graphql/generated'
+import { useBookmarkGroupsSuspenseQuery, useBookmarksSuspenseQuery } from '@/api/graphql/ssr'
 
 interface Query {
   bookmarkGroupQuery: string
@@ -36,17 +28,14 @@ export const Page: Client.Page = () => {
   const [isDrawer, setIsDrawer] = useState(false)
   const {
     data: { bookmarkGroups },
-  } = useSuspenseQuery<GQL_BookmarkGroupsQuery, GQL_BookmarkGroupsQueryVariables>(
-    BookmarkGroupsDocument,
-    {
-      variables: {
-        filter: {
-          query: query.query.bookmarkGroupQuery,
-        },
+  } = useBookmarkGroupsSuspenseQuery({
+    variables: {
+      filter: {
+        query: query.query.bookmarkGroupQuery,
       },
-      fetchPolicy: 'cache-and-network',
     },
-  )
+    fetchPolicy: 'cache-and-network',
+  })
   const bookmarksFilter = useBookmarksFilter({
     query: {
       bookmarkGroupId: query.query.bookmarkGroupId,
@@ -58,7 +47,7 @@ export const Page: Client.Page = () => {
     data: { bookmarks },
     networkStatus,
     fetchMore: fetchMoreBookmarks,
-  } = useSuspenseQuery<GQL_BookmarksQuery, GQL_BookmarksQueryVariables>(BookmarksDocument, {
+  } = useBookmarksSuspenseQuery({
     variables: {
       filter: bookmarksFilter,
       first: 20,
