@@ -16,7 +16,7 @@ import {
 } from '@/graphql/generated'
 
 export const useBookmarkGroupsSuspenseQuery = (
-  options: SuspenseQueryHookOptions<
+  options?: SuspenseQueryHookOptions<
     NoInfer<GQL_BookmarkGroupsQuery>,
     NoInfer<GQL_BookmarkGroupsQueryVariables>
   >,
@@ -27,19 +27,19 @@ export const useBookmarkGroupsSuspenseQuery = (
   )
 
 export const useBookmarksSuspenseQuery = (
-  options: SuspenseQueryHookOptions<
+  options?: SuspenseQueryHookOptions<
     NoInfer<GQL_BookmarksQuery>,
     NoInfer<GQL_BookmarksQueryVariables>
   >,
 ) => useSuspenseQuery<GQL_BookmarksQuery, GQL_BookmarksQueryVariables>(BookmarksDocument, options)
 
 export const useBookmarkSuspenseQuery = (
-  options: SuspenseQueryHookOptions<
+  options?: SuspenseQueryHookOptions<
     NoInfer<GQL_BookmarkQuery>,
     NoInfer<GQL_BookmarkQueryVariables>
   >,
 ) => useSuspenseQuery<GQL_BookmarkQuery, GQL_BookmarkQueryVariables>(BookmarkDocument, options)
 
 export const useMeSuspenseQuery = (
-  options: SuspenseQueryHookOptions<NoInfer<GQL_MeQuery>, NoInfer<GQL_MeQueryVariables>>,
+  options?: SuspenseQueryHookOptions<NoInfer<GQL_MeQuery>, NoInfer<GQL_MeQueryVariables>>,
 ) => useSuspenseQuery<GQL_MeQuery, GQL_MeQueryVariables>(MeDocument, options)
