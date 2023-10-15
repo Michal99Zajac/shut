@@ -12,18 +12,18 @@ import { onError } from '@apollo/client/link/error'
 
 import { config } from '@/config'
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors)
-    graphQLErrors.forEach(({ message, locations, path }) =>
-      console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),
-    )
-  if (networkError) console.log(`[Network error]: ${networkError}`)
-})
-
 function makeClient() {
   const httpLink = new HttpLink({
     uri: `${config.client.url}/graphql`,
-    fetchOptions: { cache: 'no-store' },
+    credentials: 'include',
+  })
+
+  const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors)
+      graphQLErrors.forEach(({ message, locations, path }) =>
+        console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),
+      )
+    if (networkError) console.log(`[Network error]: ${networkError}`)
   })
 
   return new NextSSRApolloClient({
@@ -39,10 +39,10 @@ function makeClient() {
     link:
       typeof window === 'undefined'
         ? ApolloLink.from([
-            errorLink,
             new SSRMultipartLink({
               stripDefer: true,
             }),
+            errorLink,
             httpLink,
           ])
         : from([errorLink, httpLink]),
