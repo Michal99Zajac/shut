@@ -58,3 +58,16 @@ export const bookmark = gql`
     }
   }
 `
+
+export const me = gql`
+  query Me {
+    me {
+      accountType {
+        isClassic
+        isGoogle
+      }
+      email
+      id
+    }
+  }
+`

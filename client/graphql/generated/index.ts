@@ -18,6 +18,13 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+/** The type of account */
+export type GQL_AccountType = {
+  __typename?: 'AccountType';
+  isClassic: Scalars['Boolean']['output'];
+  isGoogle: Scalars['Boolean']['output'];
+};
+
 /** A bookmark */
 export type GQL_Bookmark = {
   __typename?: 'Bookmark';
@@ -358,6 +365,7 @@ export type GQL_UpdateBookmarkInput = {
 /** A user */
 export type GQL_User = {
   __typename?: 'User';
+  accountType: GQL_AccountType;
   email: Scalars['String']['output'];
   id: Scalars['ID']['output'];
 };
@@ -986,6 +994,45 @@ export function useBookmarkLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type BookmarkQueryHookResult = ReturnType<typeof useBookmarkQuery>;
 export type BookmarkLazyQueryHookResult = ReturnType<typeof useBookmarkLazyQuery>;
 export type BookmarkQueryResult = Apollo.QueryResult<GQL_BookmarkQuery, GQL_BookmarkQueryVariables>;
+export const MeDocument = gql`
+    query Me {
+  me {
+    accountType {
+      isClassic
+      isGoogle
+    }
+    email
+    id
+  }
+}
+    `;
+
+/**
+ * __useMeQuery__
+ *
+ * To run a query within a React component, call `useMeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMeQuery(baseOptions?: Apollo.QueryHookOptions<GQL_MeQuery, GQL_MeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GQL_MeQuery, GQL_MeQueryVariables>(MeDocument, options);
+      }
+export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GQL_MeQuery, GQL_MeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GQL_MeQuery, GQL_MeQueryVariables>(MeDocument, options);
+        }
+export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
+export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
+export type MeQueryResult = Apollo.QueryResult<GQL_MeQuery, GQL_MeQueryVariables>;
 export type GQL_SignInMutationVariables = Exact<{
   input: GQL_SignInInput;
 }>;
@@ -1116,11 +1163,17 @@ export type GQL_BookmarkQueryVariables = Exact<{
 
 export type GQL_BookmarkQuery = { __typename?: 'Query', bookmark: { __typename?: 'Bookmark', description?: string | null, friendlyName: string, id: string, url: string, bookmarkGroup: { __typename?: 'BookmarkGroup', id: string } } };
 
+export type GQL_MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GQL_MeQuery = { __typename?: 'Query', me: { __typename?: 'User', email: string, id: string, accountType: { __typename?: 'AccountType', isClassic: boolean, isGoogle: boolean } } };
+
 export const namedOperations = {
   Query: {
     BookmarkGroups: 'BookmarkGroups',
     Bookmarks: 'Bookmarks',
-    Bookmark: 'Bookmark'
+    Bookmark: 'Bookmark',
+    Me: 'Me'
   },
   Mutation: {
     SignIn: 'SignIn',
