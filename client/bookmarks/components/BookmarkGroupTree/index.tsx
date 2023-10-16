@@ -56,7 +56,7 @@ export function BookmarkGroupTree({ toolbox }: BookmarkGroupTreeProps) {
         </MenuItem>
         <MenuItem
           onClick={() => {
-            router.push(`/bookmarks/create?bookmarkGroupId=${toolbox.menu.anchor?.id}`)
+            router.push(`/app/bookmarks/create?bookmarkGroupId=${toolbox.menu.anchor?.id}`)
             toolbox.menu.closeMenu()
           }}
         >

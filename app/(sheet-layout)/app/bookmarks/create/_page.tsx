@@ -62,7 +62,7 @@ export const Page: Client.Page = ({ searchParams }) => {
   })
 
   const closeDialog = () => {
-    router.back()
+    router.push('/app')
   }
 
   return (
@@ -72,10 +72,10 @@ export const Page: Client.Page = ({ searchParams }) => {
           width: '520px',
         },
       }}
-      isMega={false}
-      closeAfterTransition={true}
+      isMega
+      closeAfterTransition={false}
       TransitionComponent={SlideTransition}
-      open={pathname === '/bookmarks/create'}
+      open={pathname === '/app/bookmarks/create'}
       onClose={closeDialog}
     >
       <form onSubmit={onSubmit}>

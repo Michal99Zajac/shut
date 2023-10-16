@@ -24,22 +24,15 @@ import {
 } from '@/bookmarks/schemas/CreateBookmarkInputSchema'
 import { MegaDialog } from '@/components/MegaDialog'
 import { SlideTransition } from '@/components/SlideTransition'
-import { useUpdateBookmarkMutation } from '@/graphql/generated'
-import DeleteBookmarkIconButton from '@/bookmarks/components/DeleteBookmarkIconButton'
-import { useBookmarkGroupsSuspenseQuery, useBookmarkSuspenseQuery } from '@/api/graphql/ssr'
+import { useCreateBookmarkMutation } from '@/graphql/generated'
+import { useBookmarkGroupsSuspenseQuery } from '@/api/graphql/ssr'
 
-export const Page: Client.Page<{ bookmarkId: string }> = ({ params }) => {
-  const { bookmarkId } = params
+export const Page: Client.Page = ({ searchParams }) => {
+  const { bookmarkGroupId = '' } = searchParams
   const pathname = usePathname()
   const router = useRouter()
-  const [updateBookmark] = useUpdateBookmarkMutation({
-    refetchQueries: ['Bookmarks', 'Bookmark', 'BookmarkGroups'],
-  })
-  const { data: bookmark } = useBookmarkSuspenseQuery({
-    variables: {
-      id: bookmarkId,
-    },
-    fetchPolicy: 'cache-and-network',
+  const [createBookmark] = useCreateBookmarkMutation({
+    refetchQueries: ['Bookmarks', 'BookmarkGroups'],
   })
   const {
     data: { bookmarkGroups },
@@ -49,16 +42,13 @@ export const Page: Client.Page<{ bookmarkId: string }> = ({ params }) => {
   const { register, handleSubmit, formState, control } = useForm<CreateBookmarkInputSchema>({
     resolver: zodResolver(createBookmarkInputSchema),
     defaultValues: {
-      bookmarkGroupId: bookmark.bookmark.bookmarkGroup.id,
-      url: bookmark.bookmark.url,
-      friendlyName: bookmark.bookmark.friendlyName,
+      bookmarkGroupId: bookmarkGroupId,
     },
   })
 
   const onSubmit = handleSubmit((data) => {
-    updateBookmark({
+    createBookmark({
       variables: {
-        id: bookmarkId,
         input: {
           bookmarkGroupId: data.bookmarkGroupId,
           friendlyName: data.friendlyName,
@@ -85,11 +75,11 @@ export const Page: Client.Page<{ bookmarkId: string }> = ({ params }) => {
       isMega={false}
       closeAfterTransition={true}
       TransitionComponent={SlideTransition}
-      open={pathname === `/bookmarks/bookmark/${bookmarkId}`}
+      open={pathname === '/app/bookmarks/create'}
       onClose={closeDialog}
     >
       <form onSubmit={onSubmit}>
-        <DialogTitle className="!font-koulen">Update Bookmark</DialogTitle>
+        <DialogTitle className="!font-koulen">Create Bookmark</DialogTitle>
         <IconButton
           aria-label="close"
           size="medium"
@@ -162,11 +152,8 @@ export const Page: Client.Page<{ bookmarkId: string }> = ({ params }) => {
             </FormControl>
           </div>
         </DialogContent>
-        <DialogActions className="!flex !justify-between">
-          <DeleteBookmarkIconButton bookmarkId={bookmarkId} size="medium" onDeleted={closeDialog} />
-          <Button size="large" type="submit">
-            Update bookmark
-          </Button>
+        <DialogActions>
+          <Button type="submit">Add bookmark</Button>
         </DialogActions>
       </form>
     </MegaDialog>

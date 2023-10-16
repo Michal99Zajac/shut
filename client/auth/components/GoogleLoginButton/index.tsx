@@ -18,7 +18,7 @@ export function GoogleLoginButton() {
       setIsError(true)
     },
     onCompleted: () => {
-      router.push('/')
+      router.push('/app')
     },
   })
   const login = useGoogleLogin({

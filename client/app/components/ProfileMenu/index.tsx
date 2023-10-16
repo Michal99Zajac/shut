@@ -51,13 +51,13 @@ export function ProfileMenu({ className }: ProfileMenuProps) {
         onClick={() => setAnchorEl(null)}
         anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
       >
-        <MenuItem onClick={() => router.push('/')}>
+        <MenuItem onClick={() => router.push('/app')}>
           <ListItemIcon>
             <BiSolidDashboard />
           </ListItemIcon>
           Dashboard
         </MenuItem>
-        <MenuItem onClick={() => router.push('/settings')}>
+        <MenuItem onClick={() => router.push('/app/settings')}>
           <ListItemIcon>
             <BiCog />
           </ListItemIcon>

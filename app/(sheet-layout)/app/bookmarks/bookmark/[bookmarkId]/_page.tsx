@@ -71,7 +71,7 @@ export const Page: Client.Page<{ bookmarkId: string }> = ({ params }) => {
   })
 
   const closeDialog = () => {
-    router.push('/')
+    router.push('/app')
   }
 
   return (
@@ -84,7 +84,7 @@ export const Page: Client.Page<{ bookmarkId: string }> = ({ params }) => {
       isMega
       closeAfterTransition={false}
       TransitionComponent={SlideTransition}
-      open={pathname === `/bookmarks/bookmark/${bookmarkId}`}
+      open={pathname === `/app/bookmarks/bookmark/${bookmarkId}`}
       onClose={closeDialog}
     >
       <form onSubmit={onSubmit}>

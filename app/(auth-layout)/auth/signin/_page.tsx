@@ -26,7 +26,7 @@ export const Page = () => {
         input: data,
       },
       onCompleted: () => {
-        router.push('/')
+        router.push('/app')
       },
     })
   })

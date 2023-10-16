@@ -83,7 +83,7 @@ export function BookmarksTable({ bookmarks, hasMore, loading, onLoadMore }: Book
                 <TableCell align="right">
                   <div className="gap-2 hidden md:inline-flex">
                     <Tooltip title="Update bookmark">
-                      <Link href={`/bookmarks/bookmark/${node.id}`}>
+                      <Link href={`/app/bookmarks/bookmark/${node.id}`}>
                         <IconButton size="small" className="!rounded">
                           <BiEdit />
                         </IconButton>

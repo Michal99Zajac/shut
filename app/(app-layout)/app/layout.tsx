@@ -27,12 +27,12 @@ export function Layout({ children }: LayoutProps) {
           <div className="inline-block">
             <Link
               className="font-koulen px-2 py-1 rounded-md hover:bg-primary hover:bg-opacity-5"
-              href="/"
+              href="/app"
             >
               Dashboard
             </Link>
             <Link
-              href="/settings"
+              href="/app/settings"
               className="font-koulen px-2 py-1 rounded-md hover:bg-primary hover:bg-opacity-5"
             >
               Settings

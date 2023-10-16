@@ -71,7 +71,7 @@ export const Page: Client.Page = () => {
         </Tooltip>
       </div>
       <Breadcrumbs aria-label="breadcrumb" className="!mb-6">
-        <Link href="/" className="font-koulen hover:underline">
+        <Link href="/app" className="font-koulen hover:underline">
           SHUT
         </Link>
         <p className="font-koulen">Dashboard</p>
@@ -96,7 +96,7 @@ export const Page: Client.Page = () => {
           <div className="gap-2 flex mb-2">
             <BookmarkSearch />
             <Tooltip title="Add bookmark">
-              <Link href="/bookmarks/create">
+              <Link href="/app/bookmarks/create">
                 <IconButton size="large" className="!rounded">
                   <BiBookmarkPlus />
                 </IconButton>

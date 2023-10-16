@@ -11,7 +11,7 @@ const Page: Client.Page = () => {
     <>
       <h1 className="font-koulen text-4xl">Settings</h1>
       <Breadcrumbs aria-label="breadcrumb" className="!mb-6">
-        <Link href="/" className="font-koulen hover:underline">
+        <Link href="/app" className="font-koulen hover:underline">
           SHUT
         </Link>
         <p className="font-koulen">Settings</p>

@@ -39,7 +39,7 @@ export function BookmarkMenu({ anchorEl, onClose }: BookmarkMenuProps) {
       <MenuItem
         sx={{ width: '200px' }}
         onClick={() => {
-          router.push(`/bookmarks/bookmark/${anchorEl?.id}`)
+          router.push(`/app/bookmarks/bookmark/${anchorEl?.id}`)
           onClose()
         }}
       >

@@ -11,7 +11,7 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/((?!auth/).)*',
+        source: '/app/:path*',
         destination: '/auth/signin',
         permanent: false,
         missing: [
@@ -23,7 +23,7 @@ const nextConfig = {
       },
       {
         source: '/auth/:path*',
-        destination: '/',
+        destination: '/app',
         permanent: false,
         has: [
           {
