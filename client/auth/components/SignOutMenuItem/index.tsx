@@ -9,12 +9,13 @@ import { useSignOutMutation } from '@/graphql/generated'
  * Menu item to sign out the user. It will redirect to the sign in page.
  */
 export function SignOutMenuItem() {
-  const [signOut, { loading }] = useSignOutMutation()
+  const [signOut, { loading, client }] = useSignOutMutation()
   const router = useRouter()
 
   const onSubmit = () => {
     signOut({
-      onCompleted: () => {
+      onCompleted: async () => {
+        await client.clearStore()
         router.push('/auth/signin')
       },
     })

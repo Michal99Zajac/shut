@@ -13,11 +13,12 @@ import { useDeleteAccountWithGoogleMutation } from '@/graphql/generated'
 export function GoogleDeleteAccountButton() {
   const router = useRouter()
   const [isError, setIsError] = useState(false)
-  const [deleteAccount, { loading }] = useDeleteAccountWithGoogleMutation({
+  const [deleteAccount, { loading, client }] = useDeleteAccountWithGoogleMutation({
     onError: () => {
       setIsError(true)
     },
-    onCompleted: () => {
+    onCompleted: async () => {
+      await client.clearStore()
       router.push('/auth/signin')
     },
   })

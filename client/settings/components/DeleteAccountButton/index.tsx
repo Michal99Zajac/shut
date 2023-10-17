@@ -34,10 +34,11 @@ export function DeleteAccountButton() {
     resolver: zodResolver(deleteAccountInputSchema),
   })
   const [isOpen, setIsOpen] = useState(false)
-  const [deleteAccount, { loading: isDeleting }] = useDeleteAccountMutation({
-    onCompleted: () => {
+  const [deleteAccount, { loading: isDeleting, client }] = useDeleteAccountMutation({
+    onCompleted: async () => {
       reset()
       setIsOpen(false)
+      await client.clearStore()
       router.push('/auth/signin')
     },
     onError: (error) => {

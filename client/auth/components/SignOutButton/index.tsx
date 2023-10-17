@@ -11,12 +11,13 @@ import { useSignOutMutation } from '@/graphql/generated'
  */
 export function SignOutButton() {
   const { handleSubmit } = useForm()
-  const [signOut, { loading }] = useSignOutMutation()
+  const [signOut, { loading, client }] = useSignOutMutation()
   const router = useRouter()
 
   const onSubmit = handleSubmit(() => {
     signOut({
-      onCompleted: () => {
+      onCompleted: async () => {
+        await client.clearStore()
         router.push('/auth/signin')
       },
     })

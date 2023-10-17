@@ -9,6 +9,7 @@ import {
 } from '@apollo/experimental-nextjs-app-support/ssr'
 import { relayStylePagination } from '@apollo/client/utilities'
 import { onError } from '@apollo/client/link/error'
+import { cookies } from 'next/headers'
 
 import { config } from '@/config'
 
@@ -18,12 +19,12 @@ function makeClient() {
     credentials: 'include',
   })
 
-  const errorLink = onError(({ graphQLErrors, networkError }) => {
-    if (graphQLErrors)
-      graphQLErrors.forEach(({ message, locations, path }) =>
-        console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),
-      )
+  const errorLink = onError(({ networkError, forward, operation, graphQLErrors }) => {
     if (networkError) console.log(`[Network error]: ${networkError}`)
+
+    if (graphQLErrors) {
+      return forward(operation)
+    }
   })
 
   return new NextSSRApolloClient({

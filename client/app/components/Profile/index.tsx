@@ -9,8 +9,6 @@ interface ProfileProps {
   className?: string
 }
 
-// TODO: clear cache with every logout
-
 export function Profile({ className }: ProfileProps) {
   const {
     data: { me },
