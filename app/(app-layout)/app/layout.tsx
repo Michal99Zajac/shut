@@ -17,7 +17,7 @@ interface LayoutProps {
 }
 
 export function Layout({ children }: LayoutProps) {
-  const isSmallScreen = useMedia('(max-width: 768px)')
+  const isSmallScreen = useMedia('(max-width: 768px)', false)
 
   return (
     <>
