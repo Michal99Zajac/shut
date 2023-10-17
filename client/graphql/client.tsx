@@ -9,7 +9,6 @@ import {
 } from '@apollo/experimental-nextjs-app-support/ssr'
 import { relayStylePagination } from '@apollo/client/utilities'
 import { onError } from '@apollo/client/link/error'
-import { cookies } from 'next/headers'
 
 import { config } from '@/config'
 
