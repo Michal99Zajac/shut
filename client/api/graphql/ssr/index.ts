@@ -1,4 +1,5 @@
-import { NoInfer, SuspenseQueryHookOptions, useSuspenseQuery } from '@apollo/client'
+import { NoInfer, SuspenseQueryHookOptions } from '@apollo/client'
+import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 
 import {
   BookmarkDocument,
