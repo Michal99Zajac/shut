@@ -12,6 +12,7 @@ export function BookmarksTableEmpty() {
         src="/media/dashboard/empty-bookmarks.svg"
         width={300}
         height={300}
+        priority
         style={{ width: '300px', height: '300px' }}
         className="mb-4 grayscale object-contain"
       />
