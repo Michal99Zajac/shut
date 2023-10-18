@@ -34,7 +34,6 @@ export const Page: Client.Page = () => {
         query: query.query.bookmarkGroupQuery,
       },
     },
-    fetchPolicy: 'cache-and-network',
   })
   const bookmarksFilter = useBookmarksFilter({
     query: {
@@ -52,7 +51,6 @@ export const Page: Client.Page = () => {
       filter: bookmarksFilter,
       first: 20,
     },
-    fetchPolicy: 'cache-and-network',
   })
   const bookmarkGroupsToolbox = useBookmarkGroupTreeToolbox(bookmarkGroups)
 

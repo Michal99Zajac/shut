@@ -16,6 +16,7 @@ function makeClient() {
   const httpLink = new HttpLink({
     uri: `${config.client.url}/graphql`,
     credentials: 'include',
+    fetch: (url, options) => fetch(url, options),
   })
 
   const errorLink = onError(({ networkError, forward, operation, graphQLErrors }) => {
@@ -49,6 +50,14 @@ function makeClient() {
             httpLink,
           ])
         : from([errorLink, httpLink]),
+    defaultOptions: {
+      watchQuery: {
+        fetchPolicy: 'cache-and-network',
+      },
+      query: {
+        fetchPolicy: 'network-only',
+      },
+    },
   })
 }
 

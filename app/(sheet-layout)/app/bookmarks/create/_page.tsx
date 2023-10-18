@@ -36,9 +36,7 @@ export const Page: Client.Page = ({ searchParams }) => {
   })
   const {
     data: { bookmarkGroups },
-  } = useBookmarkGroupsSuspenseQuery({
-    fetchPolicy: 'cache-and-network',
-  })
+  } = useBookmarkGroupsSuspenseQuery()
   const { register, handleSubmit, formState, control } = useForm<CreateBookmarkInputSchema>({
     resolver: zodResolver(createBookmarkInputSchema),
     defaultValues: {

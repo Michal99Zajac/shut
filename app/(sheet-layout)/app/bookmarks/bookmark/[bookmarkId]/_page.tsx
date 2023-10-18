@@ -38,13 +38,10 @@ export const Page: Client.Page<{ bookmarkId: string }> = ({ params }) => {
     variables: {
       id: bookmarkId,
     },
-    fetchPolicy: 'cache-and-network',
   })
   const {
     data: { bookmarkGroups },
-  } = useBookmarkGroupsSuspenseQuery({
-    fetchPolicy: 'cache-and-network',
-  })
+  } = useBookmarkGroupsSuspenseQuery()
   const { register, handleSubmit, formState, control } = useForm<CreateBookmarkInputSchema>({
     resolver: zodResolver(createBookmarkInputSchema),
     defaultValues: {
