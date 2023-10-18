@@ -19,11 +19,15 @@ function makeClient() {
   })
 
   const errorLink = onError(({ networkError, forward, operation, graphQLErrors }) => {
-    if (networkError) console.log(`[Network error]: ${networkError}`)
+    if (networkError) console.error(`[Network error]: ${networkError}`)
 
     if (graphQLErrors) {
-      return forward(operation)
+      for (const err of graphQLErrors) {
+        console.error(`[GraphQL error]: ${err.message}`)
+      }
     }
+
+    return forward(operation)
   })
 
   return new NextSSRApolloClient({
@@ -42,7 +46,6 @@ function makeClient() {
             new SSRMultipartLink({
               stripDefer: true,
             }),
-            errorLink,
             httpLink,
           ])
         : from([errorLink, httpLink]),
