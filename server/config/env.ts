@@ -3,10 +3,6 @@ import { cleanEnv, str, bool, num } from 'envalid'
 export const env = cleanEnv(process.env, {
   // VERCEL
   VERCEL_URL: str({ desc: 'Vercel URL' }),
-  VERCEL_ENV: str({ desc: 'Vercel environment' }),
-  // SERVER
-  HTTPS: bool({ desc: 'HTTPS', default: true }),
-  HOST: str({ desc: 'Host' }),
   // NODE
   NODE_ENV: str({ choices: ['development', 'production', 'test'] }),
   // JWT
@@ -21,8 +17,6 @@ export const env = cleanEnv(process.env, {
   GOOGLE_OAUTH_CLIENT_ID: str({ desc: 'Google OAuth client ID' }),
   GOOGLE_OAUTH_CLIENT_SECRET: str({ desc: 'Google OAuth client secret' }),
   // ENCRYPTION
-  SECURE_SECRET: str({ desc: 'Encryption secret' }),
-  SECURE_SALT: str({ desc: 'Encryption salt' }),
   SECURE_PASSWORD_SALT: num({ desc: 'Password salt' }),
 })
 

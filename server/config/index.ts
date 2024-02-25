@@ -1,16 +1,8 @@
 import { env } from './env'
 
 export const config = {
-  vercel: {
-    url: env.VERCEL_URL,
-    env: env.VERCEL_ENV,
-  },
   server: {
-    https: env.HTTPS,
-    host: env.HOST,
-    url: `${env.HTTPS ? 'https' : 'http'}://${
-      env.VERCEL_ENV === 'production' ? env.HOST : env.VERCEL_URL
-    }`,
+    url: `${env.NODE_ENV === 'production' ? 'https' : 'http'}://${env.VERCEL_URL}`,
   },
   node: {
     env: env.NODE_ENV,
@@ -33,11 +25,6 @@ export const config = {
     password: {
       salt: env.SECURE_PASSWORD_SALT,
     },
-    data: {
-      algorithm: 'aes-256-cbc',
-      salt: env.SECURE_SALT,
-      secret: env.SECURE_SECRET,
-    },
   },
   aws: {
     sender: env.SERVER_AWS_SES_SENDER,
@@ -51,9 +38,7 @@ export const config = {
     google: {
       clientId: env.GOOGLE_OAUTH_CLIENT_ID,
       clientSecret: env.GOOGLE_OAUTH_CLIENT_SECRET,
-      redirectUri: `${env.HTTPS ? 'https' : 'http'}://${
-        env.VERCEL_ENV === 'production' ? env.HOST : env.VERCEL_URL
-      }`,
+      redirectUri: `${env.NODE_ENV === 'production' ? 'https' : 'http'}://${env.VERCEL_URL}`,
     },
   },
 }
