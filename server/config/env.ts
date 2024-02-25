@@ -18,6 +18,8 @@ export const env = cleanEnv(process.env, {
   GOOGLE_OAUTH_CLIENT_SECRET: str({ desc: 'Google OAuth client secret' }),
   // ENCRYPTION
   SECURE_PASSWORD_SALT: num({ desc: 'Password salt' }),
+  SECURE_SECRET: str({ desc: 'Encryption secret' }),
+  SECURE_SALT: str({ desc: 'Encryption salt' }),
 })
 
 export default env

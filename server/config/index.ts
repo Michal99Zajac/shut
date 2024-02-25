@@ -25,6 +25,11 @@ export const config = {
     password: {
       salt: env.SECURE_PASSWORD_SALT,
     },
+    data: {
+      algorithm: 'aes-256-cbc',
+      salt: env.SECURE_SALT,
+      secret: env.SECURE_SECRET,
+    },
   },
   aws: {
     sender: env.SERVER_AWS_SES_SENDER,
