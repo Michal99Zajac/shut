@@ -29,12 +29,13 @@ export const resolveDeleteAccountWithGoogle = async (
 ) => {
   // prepare service
   const cookizer = new CookieService()
+  const url = new URL('/', context.req.url)
 
   // prepare google oauth
   const oauth = new OAuth2Client({
     clientId: config.oauth.google.clientId,
     clientSecret: config.oauth.google.clientSecret,
-    redirectUri: config.oauth.google.redirectUri,
+    redirectUri: url.origin,
   })
 
   try {

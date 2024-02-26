@@ -38,10 +38,11 @@ export const resolveSignInWithGoogle = async (
   const cookizer = new CookieService()
   const authenticator = new AuthenticationService(context.prisma)
 
+  const url = new URL('/', context.req.url)
   const oauth = new OAuth2Client({
     clientId: config.oauth.google.clientId,
     clientSecret: config.oauth.google.clientSecret,
-    redirectUri: config.oauth.google.redirectUri,
+    redirectUri: url.origin,
   })
 
   try {

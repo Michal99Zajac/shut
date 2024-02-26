@@ -25,7 +25,7 @@ export const GET = async (req: NextRequest) => {
     })
 
     // redirect to login page
-    return NextResponse.redirect(`${config.server.url}/auth/signin`)
+    return NextResponse.redirect(new URL('/auth/signin', req.url))
   } catch (error) {
     return new Response('Token or user is invalid', { status: 400 })
   }

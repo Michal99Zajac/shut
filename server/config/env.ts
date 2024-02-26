@@ -1,8 +1,6 @@
 import { cleanEnv, str, bool, num } from 'envalid'
 
 export const env = cleanEnv(process.env, {
-  // VERCEL
-  VERCEL_URL: str({ desc: 'Vercel URL' }),
   // NODE
   NODE_ENV: str({ choices: ['development', 'production', 'test'] }),
   // JWT

@@ -51,7 +51,7 @@ export const resolveSignUp = async (_: Parent, args: Args, context: Context) => 
       Template: 'shut-confirm-email',
       TemplateData: JSON.stringify({
         email: user.email,
-        confirmLink: `${config.server.url}/api/auth/confirm-email?token=${token}`,
+        confirmLink: new URL(`/api/auth/confirm-email?token=${token}`, context.req.url).toString(),
       }),
     })
 

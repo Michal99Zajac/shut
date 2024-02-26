@@ -1,9 +1,6 @@
 import { env } from './env'
 
 export const config = {
-  server: {
-    url: `${env.NODE_ENV === 'production' ? 'https' : 'http'}://${env.VERCEL_URL}`,
-  },
   node: {
     env: env.NODE_ENV,
   },
@@ -43,7 +40,6 @@ export const config = {
     google: {
       clientId: env.GOOGLE_OAUTH_CLIENT_ID,
       clientSecret: env.GOOGLE_OAUTH_CLIENT_SECRET,
-      redirectUri: `${env.NODE_ENV === 'production' ? 'https' : 'http'}://${env.VERCEL_URL}`,
     },
   },
 }

@@ -10,11 +10,9 @@ import {
 import { relayStylePagination } from '@apollo/client/utilities'
 import { onError } from '@apollo/client/link/error'
 
-import { config } from '@/config'
-
 function makeClient() {
   const httpLink = new HttpLink({
-    uri: `${config.client.url}/graphql`,
+    uri: '/graphql',
     credentials: 'include',
     fetch: (url, options) => fetch(url, options),
   })
